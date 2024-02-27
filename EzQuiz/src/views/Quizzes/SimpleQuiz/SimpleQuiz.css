@@ -1,0 +1,34 @@
+.quiz-container {
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  background-color: #000000;
+}
+
+.question-container {
+  margin-bottom: 20px;
+  border: 1px solid #ccc;
+  padding: 20px;
+  border-radius: 10px;
+  /* display: grid;
+  grid-template-areas: auto
+  auto auto auto auto; */
+  text-align: center;
+}
+
+.answer-option {
+  display: block;
+  /* margin-top: 10px; */
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  width: 50%;
+  padding: 20px;
+}
+
+.answer-options {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr); /* Two columns */
+  grid-template-rows: repeat(2, auto); /* Two rows */
+  gap: 10px; /* Gap between answer options */
+  justify-items: center; /* Center items horizontally within each cell */
+}
