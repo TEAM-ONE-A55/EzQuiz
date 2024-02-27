@@ -10,6 +10,7 @@ import Header from "./components/Header/Header";
 import Login from "./views/Login/Login";
 import Home from "./views/Home/Home";
 import Registration from "./views/Registration/Registration";
+import Profile from "./views/Profile/Profile";
 
 export default function App() {
   const [user] = useAuthState(auth);
@@ -40,6 +41,7 @@ export default function App() {
             <Route path="/" element={<Home />}></Route>
             <Route path="/signup" element={<Registration />}></Route>
             <Route path="/signin" element={<Login />}></Route>
+            <Route path = "/profile" element = {<Profile/>}></Route>
           </Routes>
         </AppContext.Provider>
       </BrowserRouter>
