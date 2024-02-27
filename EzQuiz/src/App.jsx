@@ -10,7 +10,9 @@ import Header from "./components/Header/Header";
 import Login from "./views/Login/Login";
 import Home from "./views/Home/Home";
 import Registration from "./views/Registration/Registration";
-import SimpleQuiz from "./views/Quizzes/SimpleQuiz/SimpleQuiz";
+import SingleQuiz from "./views/Quizzes/SingleQuiz/SingleQuiz";
+import SampleQuiz from "./views/Quizzes/SampleQuiz/SampleQuiz";
+import { defaultQuizAmountSample, defaultQuizDifficultySamle } from "./constants/constants";
 
 export default function App() {
   const [user] = useAuthState(auth);
@@ -18,6 +20,9 @@ export default function App() {
     user: null,
     userData: null,
   });
+
+  const [difficulty, setDifficulty] = useState(defaultQuizDifficultySamle)
+  const [quizAmount, setQuizAmount] = useState(defaultQuizAmountSample)
 
   useEffect(() => {
     if (user) {
@@ -41,7 +46,8 @@ export default function App() {
             <Route path="/" element={<Home />}></Route>
             <Route path="/signup" element={<Registration />}></Route>
             <Route path="/signin" element={<Login />}></Route>
-            <Route path="/quizzes" element={<SimpleQuiz />}></Route>
+            <Route path="/sample-quiz/:id" element={<SingleQuiz difficulty={difficulty} setDifficulty={setDifficulty} quizAmount={quizAmount} setQuizAmount={setQuizAmount}/>}></Route>
+            <Route path="/sample-quiz" element={<SampleQuiz setDifficulty={setDifficulty} setQuizAmount={setQuizAmount}/>}></Route>
           </Routes>
         </AppContext.Provider>
       </BrowserRouter>
