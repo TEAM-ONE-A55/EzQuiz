@@ -11,17 +11,14 @@ export default function SetAvatar() {
   const [attachImage, setAttachImage] = useState(null);
 
   useEffect(() => {
-    if(userData) {
-        console.log(userData.avatar);
-        updateUserData(userData.handle, "avatar", userData.avatar)
-        console.log(userData.avatar);
+    if (userData) {
+      updateUserData(userData.handle, "avatar", userData.avatar);
     }
   }, [userData]);
 
   const uploadImage = async () => {
     try {
       const url = await uploadAvatar(attachImage, userData.handle, "avatar");
-        console.log(url);
       setContext((prevState) => ({
         ...prevState,
         userData: {
