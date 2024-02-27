@@ -1,7 +1,6 @@
-import { ref } from "firebase/database"
 import { storage } from "../config/firebase.config"
 import { v4 } from "uuid"
-import { getDownloadURL, uploadBytes } from "firebase/storage";
+import { getDownloadURL, uploadBytes, ref } from "firebase/storage";
 
 export const uploadAvatar = async (image, handle, key) => {
     try {
