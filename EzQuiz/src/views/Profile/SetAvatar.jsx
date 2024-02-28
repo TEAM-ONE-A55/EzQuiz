@@ -11,7 +11,6 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 export default function SetAvatar() {
   const { userData, setContext } = useContext(AppContext);
   const [attachImage, setAttachImage] = useState(null);
-  const pen = <FontAwesomeIcon icon={faPen} />;
 
   useEffect(() => {
     if (userData) {
