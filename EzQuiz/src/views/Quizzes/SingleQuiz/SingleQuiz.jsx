@@ -19,8 +19,8 @@ export default function SingleQuiz({
   const [questions, setQuestions] = useState([]);
   const [error, setError] = useState(null);
   const [currentIndex, setCurrentIndex] = useState(0);
-  const [answers, setAnswers] = useState(new Map());
-  const [score, setScore] = useState(0);
+
+  console.log(questions);
 
   const { id } = useParams();
   const navigate = useNavigate();
@@ -35,30 +35,24 @@ export default function SingleQuiz({
       quizAmount
     );
   }, []);
-  console.log(answers);
-  console.log(questions)
 
-  const handleAnswerChange = (questionIndex, selectedAnswer) => {
+  const handleAnswerChange = (questionIndex, selectedAnswer, answerIndex) => {
     const updatedQuestions = [...questions];
-    updatedQuestions[questionIndex].selectedAnswer = selectedAnswer;
+    updatedQuestions[questionIndex].selected_answer = selectedAnswer;
+    updatedQuestions[questionIndex].selected_answerIndex = answerIndex;
     setQuestions(updatedQuestions);
-    setAnswers(
-      answers.set(questionIndex, selectedAnswer)
-    );
-    if (selectedAnswer === updatedQuestions[questionIndex].correct_answer) setScore((prev) => prev + 10);
   };
-
-  console.log(score)
 
   const handleNext = () => {
     setCurrentIndex((prev) => prev + 1);
   };
+
   if (error) {
     return <div>{error}</div>;
   }
 
   if (finishQuiz) {
-    return <Score score={score} answers={answers} questions={questions}/>
+    return <Score questions={questions} />;
   }
 
   const handleBack = () => {
@@ -87,17 +81,23 @@ export default function SingleQuiz({
                 <div className="answer-options">
                   {questions[currentIndex].mixedAnswers.map(
                     (answer, answerIndex) => (
-                      <label key={answerIndex} className="answer-option">
-                        <input
-                          type="radio"
-                          value={answer}
-                          checked={
-                            questions[currentIndex].selectedAnswer === answer
-                          }
-                          onChange={() =>
-                            handleAnswerChange(currentIndex, answer)
-                          }
-                        />
+                      <label
+                        key={answerIndex}
+                        className="answer-option"
+                        style={{
+                          marginRight: "8px",
+                          cursor: "pointer",
+                          display: "block",
+                          backgroundColor:
+                            questions[currentIndex].selected_answerIndex ===
+                            answerIndex
+                              ? "grey"
+                              : null,
+                        }}
+                        onClick={() =>
+                          handleAnswerChange(currentIndex, answer, answerIndex)
+                        }
+                      >
                         <span dangerouslySetInnerHTML={{ __html: answer }} />
                       </label>
                     )
