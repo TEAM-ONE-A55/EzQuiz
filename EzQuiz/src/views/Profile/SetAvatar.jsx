@@ -5,10 +5,13 @@ import { uploadAvatar } from "../../services/storage.service";
 import toast from "react-hot-toast";
 import { defaultAvatar } from "../../constants/constants";
 import Avatar from "../../components/Avatar/Avatar";
+import { faPen, faTrash, faUpload } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 export default function SetAvatar() {
   const { userData, setContext } = useContext(AppContext);
   const [attachImage, setAttachImage] = useState(null);
+  const pen = <FontAwesomeIcon icon={faPen} />;
 
   useEffect(() => {
     if (userData) {
@@ -58,27 +61,36 @@ export default function SetAvatar() {
         onClick={() => {}}
       />
       <div>
-        <label className="attach-avatar" htmlFor="attach-avatar">
-          Choose...
-        </label>
-        <input
-          type="file"
-          id="attach-avatar"
-          onChange={(e) => setAttachImage(e.target.files[0])}
-        />
-        {attachImage ? (
-          <button onClick={uploadImage}>Upload</button>
-        ) : (
-          <button
-            onClick={() => {
-              toast.error("No image selected");
-            }}
-          >
-            Upload
-          </button>
+        {userData.avatar === defaultAvatar && (
+          <div>
+            <label className="attach-avatar" htmlFor="attach-avatar">
+              Choose...
+            </label>
+            <input
+              type="file"
+              id="attach-avatar"
+              onChange={(e) => setAttachImage(e.target.files[0])}
+            />
+            {attachImage ? (
+              <button onClick={uploadImage}>
+                <FontAwesomeIcon icon={faUpload}></FontAwesomeIcon>
+              </button>
+            ) : (
+              <button
+                onClick={() => {
+                  toast.error("No image selected");
+                }}
+              >
+                <FontAwesomeIcon icon={faUpload}></FontAwesomeIcon>
+              </button>
+            )}
+          </div>
         )}
+
         {userData.avatar !== defaultAvatar && (
-          <button onClick={deleteImage}>Delete</button>
+          <button onClick={deleteImage}>
+            Delete <FontAwesomeIcon icon={faTrash}></FontAwesomeIcon>
+          </button>
         )}
       </div>
     </div>
