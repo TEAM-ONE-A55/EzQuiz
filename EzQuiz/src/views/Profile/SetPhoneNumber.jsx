@@ -4,6 +4,7 @@ import { AppContext } from "../../context/AppContext";
 import { updateUserData } from "../../services/user.service";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPen, faTrash } from "@fortawesome/free-solid-svg-icons";
+import { PHONE_NUMBER } from "../../constants/constants";
 
 export default function SetPhoneNumber() {
   const [phoneNumber, setPhoneNumber] = useState(null);
@@ -25,8 +26,8 @@ export default function SetPhoneNumber() {
   };
 
   const handleSave = () => {
-    if (newPhoneNumber.length < 10) {
-      toast.error("Phone number must be at least 10 digits");
+    if (newPhoneNumber.length !== PHONE_NUMBER) {
+      toast.error("Phone number must be exactly 10 digits");
       return;
     }
 
