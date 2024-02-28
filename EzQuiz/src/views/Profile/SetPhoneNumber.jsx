@@ -80,13 +80,18 @@ export default function SetPhoneNumber() {
             </div>
           ) : (
             <p>
-              Phone number: {userData.phoneNumber}
-              <button onClick={handleEdit}>
-                <FontAwesomeIcon icon={faPen}></FontAwesomeIcon>
-              </button>
-              <button onClick={handleDelete}>
-                <FontAwesomeIcon icon={faTrash}></FontAwesomeIcon>
-              </button>
+              Phone number: {userData.phoneNumber} &nbsp;
+              <FontAwesomeIcon
+                icon={faPen}
+                onClick={handleEdit}
+                style={{ cursor: "pointer" }}
+              ></FontAwesomeIcon>{" "}
+              &nbsp; &nbsp; 
+              <FontAwesomeIcon
+                icon={faTrash}
+                onClick={handleDelete}
+                style={{ cursor: "pointer"}}
+              ></FontAwesomeIcon>
             </p>
           )}
         </div>
