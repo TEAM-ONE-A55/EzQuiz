@@ -2,6 +2,8 @@ import { useContext } from "react";
 import { AppContext } from "../../context/AppContext";
 import SetAvatar from "./SetAvatar";
 import SetPhoneNumber from "./SetPhoneNumber";
+import SetFirstName from "./SetFirstName";
+import SetLastName from "./SetLastName";
 
 export default function Profile() {
   const { userData } = useContext(AppContext);
@@ -11,6 +13,8 @@ export default function Profile() {
         <p>Username: {userData?.handle}</p>
         <SetAvatar />
         <SetPhoneNumber/>
+        <SetFirstName/>
+        <SetLastName/>
         </div>
     );
 }
