@@ -4,17 +4,27 @@ import { useNavigate, useParams } from "react-router";
 import Button from "../../../components/Button/Button";
 import PropTypes from "prop-types";
 import { fetchQuizData } from "../../../services/quiz-api.service";
-import { defaultQuizAmountSample, defaultQuizDifficultySamle } from "../../../constants/constants";
+import {
+  defaultQuizAmountSample,
+  defaultQuizDifficultySamle,
+} from "../../../constants/constants";
+import Score from "../../../components/Score/Score";
 
-export default function SingleQuiz({ difficulty, setDifficulty, quizAmount, setQuizAmount }) {
-
+export default function SingleQuiz({
+  difficulty,
+  setDifficulty,
+  quizAmount,
+  setQuizAmount,
+}) {
   const [questions, setQuestions] = useState([]);
   const [error, setError] = useState(null);
   const [currentIndex, setCurrentIndex] = useState(0);
+  const [answers, setAnswers] = useState(new Map());
+  const [score, setScore] = useState(0);
 
   const { id } = useParams();
-  const navigate = useNavigate()
-  // const [complete, setComplete] = useState(null);
+  const navigate = useNavigate();
+  const [finishQuiz, setFinishQuiz] = useState(false);
 
   useEffect(() => {
     fetchQuizData(
@@ -25,25 +35,37 @@ export default function SingleQuiz({ difficulty, setDifficulty, quizAmount, setQ
       quizAmount
     );
   }, []);
+  console.log(answers);
+  console.log(questions)
 
   const handleAnswerChange = (questionIndex, selectedAnswer) => {
     const updatedQuestions = [...questions];
     updatedQuestions[questionIndex].selectedAnswer = selectedAnswer;
     setQuestions(updatedQuestions);
+    setAnswers(
+      answers.set(questionIndex, selectedAnswer)
+    );
+    if (selectedAnswer === updatedQuestions[questionIndex].correct_answer) setScore((prev) => prev + 10);
   };
+
+  console.log(score)
 
   const handleNext = () => {
     setCurrentIndex((prev) => prev + 1);
   };
   if (error) {
-    return <div>{error}</div>
+    return <div>{error}</div>;
+  }
+
+  if (finishQuiz) {
+    return <Score score={score} answers={answers} questions={questions}/>
   }
 
   const handleBack = () => {
-    setQuizAmount(defaultQuizAmountSample)
-    setDifficulty(defaultQuizDifficultySamle)
-    return navigate(-1)
-  }
+    setQuizAmount(defaultQuizAmountSample);
+    setDifficulty(defaultQuizDifficultySamle);
+    return navigate(-1);
+  };
 
   return (
     <>
@@ -72,7 +94,9 @@ export default function SingleQuiz({ difficulty, setDifficulty, quizAmount, setQ
                           checked={
                             questions[currentIndex].selectedAnswer === answer
                           }
-                          onChange={() => handleAnswerChange(answer)}
+                          onChange={() =>
+                            handleAnswerChange(currentIndex, answer)
+                          }
                         />
                         <span dangerouslySetInnerHTML={{ __html: answer }} />
                       </label>
@@ -87,7 +111,7 @@ export default function SingleQuiz({ difficulty, setDifficulty, quizAmount, setQ
             {currentIndex < questions.length - 1 ? (
               <Button onClick={handleNext}>Next Question</Button>
             ) : (
-              <Button onClick={() => {}}>Finish Quiz</Button>
+              <Button onClick={() => setFinishQuiz(true)}>Finish Quiz</Button>
             )}
           </>
         )}
@@ -101,5 +125,5 @@ SingleQuiz.propTypes = {
   difficulty: PropTypes.string,
   setDifficulty: PropTypes.func,
   quizAmount: PropTypes.string,
-  setQuizAmount: PropTypes.func
+  setQuizAmount: PropTypes.func,
 };
