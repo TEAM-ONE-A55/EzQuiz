@@ -50,9 +50,7 @@ import {
     );
   
     return Promise.all(users);
-  };
-  
-  
+  }; 
 //   export const deleteOrganizer = async (handle) => {
 //     const topics = await getTopicsByAuthor(handle)
 //     topics.map(async topic => {
