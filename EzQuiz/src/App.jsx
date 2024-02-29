@@ -13,6 +13,7 @@ import Registration from "./views/Registration/Registration";
 import SingleQuiz from "./views/Quizzes/SingleQuiz/SingleQuiz";
 import SampleQuiz from "./views/Quizzes/SampleQuiz/SampleQuiz";
 import { defaultQuizAmountSample, defaultQuizDifficultySamle } from "./constants/constants";
+import Timer from "./components/Timer/Timer";
 
 export default function App() {
   const [user] = useAuthState(auth);
@@ -23,6 +24,9 @@ export default function App() {
 
   const [difficulty, setDifficulty] = useState(defaultQuizDifficultySamle)
   const [quizAmount, setQuizAmount] = useState(defaultQuizAmountSample)
+
+  // const time = new Date();
+  // time.setMinutes(time.getMinutes() + 10);
 
   useEffect(() => {
     if (user) {
@@ -48,6 +52,7 @@ export default function App() {
             <Route path="/signin" element={<Login />}></Route>
             <Route path="/sample-quiz/:id" element={<SingleQuiz difficulty={difficulty} setDifficulty={setDifficulty} quizAmount={quizAmount} setQuizAmount={setQuizAmount}/>}></Route>
             <Route path="/sample-quiz" element={<SampleQuiz setDifficulty={setDifficulty} setQuizAmount={setQuizAmount}/>}></Route>
+            {/* <Route path="/timer" element={<Timer expiryTimestamp={time} />}></Route> */}
           </Routes>
         </AppContext.Provider>
       </BrowserRouter>
