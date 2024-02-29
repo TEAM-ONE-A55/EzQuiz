@@ -1,6 +1,6 @@
 import { storage } from "../config/firebase.config"
 import { v4 } from "uuid"
-import { getDownloadURL, uploadBytes, ref } from "firebase/storage";
+import { getDownloadURL, uploadBytes, ref, deleteObject, listAll } from "firebase/storage";
 
 export const uploadAvatar = async (image, handle, key) => {
     try {
@@ -12,3 +12,13 @@ export const uploadAvatar = async (image, handle, key) => {
         console.log(error.message);
     }
 }
+
+export const deleteAvatar = async (handle, key) => {
+    try {
+      const lastFolderRef = ref(storage, `avatars/${handle}/${key}`);
+      const res = await listAll(lastFolderRef);
+      await deleteObject(res.items[0]);
+    } catch (e) {
+      console.log(e.message);
+    }
+  };

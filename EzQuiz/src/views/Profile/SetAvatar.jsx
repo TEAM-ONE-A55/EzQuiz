@@ -1,7 +1,7 @@
 import { useContext, useEffect, useState } from "react";
 import { AppContext } from "../../context/AppContext";
 import { updateUserData } from "../../services/user.service";
-import { uploadAvatar } from "../../services/storage.service";
+import { deleteAvatar, uploadAvatar } from "../../services/storage.service";
 import toast from "react-hot-toast";
 import { defaultAvatar } from "../../constants/constants";
 import Avatar from "../../components/Avatar/Avatar";
@@ -44,6 +44,7 @@ export default function SetAvatar() {
           avatar: defaultAvatar,
         },
       }));
+      await deleteAvatar(userData.handle, "avatar");
       toast.success("Avatar deleted");
     } catch (e) {
       console.log(e.message);
