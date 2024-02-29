@@ -7,8 +7,9 @@ import { useAuthState } from "react-firebase-hooks/auth";
 import { getUserData } from "./services/user.service";
 import { AppContext } from "./context/AppContext";
 import Header from "./components/Header/Header";
-import Login from "./views/Login/Login";
 import Home from "./views/Home/Home";
+import Footer from "./components/Footer/Footer";
+import Login from "./views/Login/Login";
 import Registration from "./views/Registration/Registration";
 import SingleQuiz from "./views/Quizzes/SingleQuiz/SingleQuiz";
 import SampleQuiz from "./views/Quizzes/SampleQuiz/SampleQuiz";
@@ -36,6 +37,7 @@ export default function App() {
       });
     }
   }, [user]);
+
   return (
     <>
       <BrowserRouter>
@@ -49,6 +51,7 @@ export default function App() {
             <Route path="/sample-quiz/:id" element={<SingleQuiz difficulty={difficulty} setDifficulty={setDifficulty} quizAmount={quizAmount} setQuizAmount={setQuizAmount}/>}></Route>
             <Route path="/sample-quiz" element={<SampleQuiz setDifficulty={setDifficulty} setQuizAmount={setQuizAmount}/>}></Route>
           </Routes>
+          <Footer />
         </AppContext.Provider>
       </BrowserRouter>
     </>

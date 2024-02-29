@@ -6,6 +6,7 @@ export default function TeachersLandingPage() {
 
   return (
     <div>
+
       <nav>
         <span onClick={() => navigate("/")}>EzQuiz</span> &nbsp;
         <input
