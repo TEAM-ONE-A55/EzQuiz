@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from "react";
+import { useContext, useState } from "react";
 import toast from "react-hot-toast";
 import { AppContext } from "../../context/AppContext";
 import { updateUserData } from "../../services/user.service";
@@ -87,11 +87,11 @@ export default function SetPhoneNumber() {
                 onClick={handleEdit}
                 style={{ cursor: "pointer" }}
               ></FontAwesomeIcon>{" "}
-              &nbsp; &nbsp; 
+              &nbsp; &nbsp;
               <FontAwesomeIcon
                 icon={faTrash}
                 onClick={handleDelete}
-                style={{ cursor: "pointer"}}
+                style={{ cursor: "pointer" }}
               ></FontAwesomeIcon>
             </p>
           )}
