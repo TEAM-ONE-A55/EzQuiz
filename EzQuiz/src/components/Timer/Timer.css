@@ -1,0 +1,22 @@
+.timer {
+  text-align: center;
+  /* display: grid;
+  grid-template-columns: auto auto auto auto auto auto auto;
+  gap: 10px; */
+  max-width: 300px;
+}
+
+.timer-values {
+  font-size: 30px;
+  display: grid;
+  grid-template-columns: auto 1px auto 1px auto 1px auto;
+  grid-row: 1;
+  text-align: center;
+}
+
+.timer-str {
+  font-size: 0.25 * 30px;
+  display: grid;
+  grid-template-columns: auto auto auto auto;
+  grid-row: 2;
+}

@@ -9,6 +9,7 @@ import {
   defaultQuizDifficultySamle,
 } from "../../../constants/constants";
 import Score from "../../../components/Score/Score";
+import Timer from "../../../components/Timer/Timer";
 
 export default function SingleQuiz({
   difficulty,
@@ -19,22 +20,34 @@ export default function SingleQuiz({
   const [questions, setQuestions] = useState([]);
   const [error, setError] = useState(null);
   const [currentIndex, setCurrentIndex] = useState(0);
-
-  console.log(questions);
+  const [startTime, setStartTime] = useState(new Date().getTime());
+  const [finishTime, setFinishTime] = useState(new Date().getTime());
+  const [finishQuiz, setFinishQuiz] = useState(false);
 
   const { id } = useParams();
   const navigate = useNavigate();
-  const [finishQuiz, setFinishQuiz] = useState(false);
 
   useEffect(() => {
-    fetchQuizData(
+    const data = fetchQuizData(
       setQuestions,
       setError,
       id,
       difficulty.toLowerCase(),
       quizAmount
     );
+    if (data) setStartTime(new Date().getTime());
   }, []);
+
+  useEffect(() => {
+    if (finishQuiz) {
+      setFinishTime(new Date().getTime());
+    }
+  }, [finishQuiz]);
+
+  const time = new Date();
+  time.setMinutes(time.getMinutes() + +quizAmount);
+
+  const timeScore = +finishTime - +startTime;
 
   const handleAnswerChange = (questionIndex, selectedAnswer, answerIndex) => {
     const updatedQuestions = [...questions];
@@ -47,13 +60,9 @@ export default function SingleQuiz({
     setCurrentIndex((prev) => prev + 1);
   };
 
-  if (error) {
-    return <div>{error}</div>;
-  }
-
-  if (finishQuiz) {
-    return <Score questions={questions} />;
-  }
+  const handlePrev = () => {
+    setCurrentIndex((prev) => prev - 1);
+  };
 
   const handleBack = () => {
     setQuizAmount(defaultQuizAmountSample);
@@ -61,63 +70,74 @@ export default function SingleQuiz({
     return navigate(-1);
   };
 
+  if (error) {
+    return <div>{error}</div>;
+  }
+
+  if (finishQuiz) {
+    if (timeScore && !isNaN(timeScore))
+      return <Score finishTime={timeScore} questions={questions} />;
+  }
+
   return (
-    <>
-      <div className="quiz-container">
-        {questions.length !== 0 && (
-          <>
-            <h2
+    <div className="quiz-container">
+      {questions.length !== 0 && (
+        <>
+          <h2
+            dangerouslySetInnerHTML={{
+              __html: questions[currentIndex].category,
+            }}
+          />
+          <Timer expiryTimestamp={time} setFinishQuiz={setFinishQuiz} />
+          <div className="question-container">
+            <h3
               dangerouslySetInnerHTML={{
-                __html: questions[currentIndex].category,
+                __html: questions[currentIndex].question,
               }}
             />
-            <div className="question-container">
-              <h3
-                dangerouslySetInnerHTML={{
-                  __html: questions[currentIndex].question,
-                }}
-              />
-              <form>
-                <div className="answer-options">
-                  {questions[currentIndex].mixedAnswers.map(
-                    (answer, answerIndex) => (
-                      <label
-                        key={answerIndex}
-                        className="answer-option"
-                        style={{
-                          marginRight: "8px",
-                          cursor: "pointer",
-                          display: "block",
-                          backgroundColor:
-                            questions[currentIndex].selected_answerIndex ===
-                            answerIndex
-                              ? "grey"
-                              : null,
-                        }}
-                        onClick={() =>
-                          handleAnswerChange(currentIndex, answer, answerIndex)
-                        }
-                      >
-                        <span dangerouslySetInnerHTML={{ __html: answer }} />
-                      </label>
-                    )
-                  )}
-                </div>
-              </form>
-            </div>
-            <span className="question-count">
-              {currentIndex + 1} / {questions.length}
-            </span>
-            {currentIndex < questions.length - 1 ? (
-              <Button onClick={handleNext}>Next Question</Button>
-            ) : (
-              <Button onClick={() => setFinishQuiz(true)}>Finish Quiz</Button>
-            )}
-          </>
-        )}
-        <Button onClick={handleBack}>Back</Button>
-      </div>
-    </>
+            <form>
+              <div className="answer-options">
+                {questions[currentIndex].mixedAnswers.map(
+                  (answer, answerIndex) => (
+                    <label
+                      key={answerIndex}
+                      className="answer-option"
+                      style={{
+                        marginRight: "8px",
+                        cursor: "pointer",
+                        display: "block",
+                        backgroundColor:
+                          questions[currentIndex].selected_answerIndex ===
+                          answerIndex
+                            ? "grey"
+                            : null,
+                      }}
+                      onClick={() =>
+                        handleAnswerChange(currentIndex, answer, answerIndex)
+                      }
+                    >
+                      <span dangerouslySetInnerHTML={{ __html: answer }} />
+                    </label>
+                  )
+                )}
+              </div>
+            </form>
+          </div>
+          {currentIndex !== 0 && (
+            <Button onClick={handlePrev}>Previous Question</Button>
+          )}
+          <span className="question-count">
+            {currentIndex + 1} / {questions.length}
+          </span>
+          {currentIndex < questions.length - 1 ? (
+            <Button onClick={handleNext}>Next Question</Button>
+          ) : (
+            <Button onClick={() => setFinishQuiz(true)}>Finish Quiz</Button>
+          )}
+        </>
+      )}
+      <Button onClick={handleBack}>Back</Button>
+    </div>
   );
 }
 

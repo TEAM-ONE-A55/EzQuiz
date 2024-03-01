@@ -17,6 +17,7 @@ import { defaultQuizAmountSample, defaultQuizDifficultySamle } from "./constants
 import Profile from "./views/Profile/Profile";
 import Authenticated from "./hoc/Authenticated/Authenticated";
 
+
 export default function App() {
   const [user] = useAuthState(auth);
   const [context, setContext] = useState({
