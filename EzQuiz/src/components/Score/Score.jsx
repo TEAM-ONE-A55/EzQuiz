@@ -1,14 +1,17 @@
-import { useContext, useEffect, useState } from "react";
 import Button from "../Button/Button";
 import PropTypes from "prop-types";
+import { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router";
 import { AppContext } from "../../context/AppContext";
 import { updateUserData } from "../../services/user.service";
 
-export default function Score({ questions, startTime, setFinishTime, finishTime }) {
+export default function Score({
+  questions,
+  finishTime,
+}) {
   const { user, userData } = useContext(AppContext);
   const [showAnswers, setShowAnswers] = useState(false);
-  const [score, setScore] = useState(0)
+  const [score, setScore] = useState(0);
 
   const navigate = useNavigate();
 
@@ -17,11 +20,7 @@ export default function Score({ questions, startTime, setFinishTime, finishTime 
       (q) => q.selected_answer === q.correct_answer
     );
     setScore(correctAnswers.length * 10);
-    // setTime(timeLeft);
   }, []);
-
-  // console.log(time);
-  console.log(userData)
 
   useEffect(() => {
     if (user && userData && userData.role !== "educator") {
@@ -33,20 +32,9 @@ export default function Score({ questions, startTime, setFinishTime, finishTime 
     }
   }, [score]);
 
-  useEffect(() => {
-    const currentTime = new Date().getTime();
-      const elapsedTime = currentTime - startTime;
-      const remainingTime = questions.length * 60 * 1000 - elapsedTime; // Convert quizAmount to milliseconds
-
-      // Use the remainingTime value as needed
-      const remainingMinutes = Math.floor(remainingTime / (1000 * 60));
-      const remainingSeconds = Math.floor((remainingTime % (1000 * 60)) / 1000);
-      setFinishTime({
-        remainingMinutes: remainingMinutes,
-        remainingSeconds: remainingSeconds,
-      });
-
-  }, [])
+  const time = new Date(finishTime)
+  const minutes = time.getMinutes()
+  const seconds = time.getSeconds()
 
   const statusAnswers = (index, a) => {
     if (
@@ -70,7 +58,7 @@ export default function Score({ questions, startTime, setFinishTime, finishTime 
       <h1>
         Your score is {score} from {questions.length * 10}
       </h1>
-      <p>Best time: {finishTime.remainingMinutes} minutes {finishTime.remainingSeconds} seconds</p>
+      <p>Best time: {minutes} : {seconds}</p>
       <Button onClick={() => setShowAnswers(!showAnswers)}>
         View your answers
       </Button>
@@ -99,4 +87,5 @@ export default function Score({ questions, startTime, setFinishTime, finishTime 
 
 Score.propTypes = {
   questions: PropTypes.array,
+  finishTime: PropTypes.number
 };
