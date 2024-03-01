@@ -7,13 +7,16 @@ import { useAuthState } from "react-firebase-hooks/auth";
 import { getUserData } from "./services/user.service";
 import { AppContext } from "./context/AppContext";
 import Header from "./components/Header/Header";
-import Login from "./views/Login/Login";
 import Home from "./views/Home/Home";
+import Footer from "./components/Footer/Footer";
+import Login from "./views/Login/Login";
 import Registration from "./views/Registration/Registration";
 import SingleQuiz from "./views/Quizzes/SingleQuiz/SingleQuiz";
 import SampleQuiz from "./views/Quizzes/SampleQuiz/SampleQuiz";
 import { defaultQuizAmountSample, defaultQuizDifficultySamle } from "./constants/constants";
-import Timer from "./components/Timer/Timer";
+import Profile from "./views/Profile/Profile";
+import Authenticated from "./hoc/Authenticated/Authenticated";
+
 
 export default function App() {
   const [user] = useAuthState(auth);
@@ -24,9 +27,6 @@ export default function App() {
 
   const [difficulty, setDifficulty] = useState(defaultQuizDifficultySamle)
   const [quizAmount, setQuizAmount] = useState(defaultQuizAmountSample)
-
-  // const time = new Date();
-  // time.setMinutes(time.getMinutes() + 10);
 
   useEffect(() => {
     if (user) {
@@ -40,6 +40,7 @@ export default function App() {
       });
     }
   }, [user]);
+
   return (
     <>
       <BrowserRouter>
@@ -52,8 +53,9 @@ export default function App() {
             <Route path="/signin" element={<Login />}></Route>
             <Route path="/sample-quiz/:id" element={<SingleQuiz difficulty={difficulty} setDifficulty={setDifficulty} quizAmount={quizAmount} setQuizAmount={setQuizAmount}/>}></Route>
             <Route path="/sample-quiz" element={<SampleQuiz setDifficulty={setDifficulty} setQuizAmount={setQuizAmount}/>}></Route>
-            {/* <Route path="/timer" element={<Timer expiryTimestamp={time} />}></Route> */}
+            <Route path = "/profile" element = {<Authenticated><Profile/></Authenticated>}></Route>
           </Routes>
+          <Footer />
         </AppContext.Provider>
       </BrowserRouter>
     </>

@@ -1,10 +1,12 @@
 import { useNavigate } from "react-router";
+import { NavLink } from "react-router-dom";
 
 export default function TeachersLandingPage() {
   const navigate = useNavigate();
 
   return (
     <div>
+
       <nav>
         <span onClick={() => navigate("/")}>EzQuiz</span> &nbsp;
         <input

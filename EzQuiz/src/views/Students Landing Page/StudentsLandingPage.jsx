@@ -1,12 +1,12 @@
 import { NavLink, useNavigate } from "react-router-dom";
-import Footer from "../../components/Footer/Footer";
 
 export default function StudentsLandingPage() {
   const navigate = useNavigate();
   return (
     <div>
+      
       <nav>
-        <span onClick={() => navigate("/")}>EzQuiz</span> &nbsp;
+        <span style={{ cursor: "pointer" }} onClick={() => navigate("/")}>EzQuiz</span> &nbsp;
         <NavLink to="/invitations">Invitations</NavLink> &nbsp;
         <NavLink to="/scoreboard">Scoreboard</NavLink> &nbsp;
         <NavLink to="/groups">Groups</NavLink> &nbsp;
@@ -32,7 +32,6 @@ export default function StudentsLandingPage() {
         <p>Stamat</p>
       </div>
 
-      
     </div>
   );
 }
