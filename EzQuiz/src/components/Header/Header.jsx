@@ -11,6 +11,7 @@ export default function Header() {
 
   return (
     <header>
+      <h1 style={{ cursor: "pointer" }} onClick={() => navigate("/")}>EzQuiz</h1>
       {user ? (
         <>
           <Logout />

@@ -2,6 +2,7 @@ import { useContext } from "react";
 import { AppContext } from "../../context/AppContext";
 import { useNavigate } from "react-router";
 import { logoutUser } from "../../services/auth.service";
+import Button from "../Button/Button";
 
 export default function Logout() {
     const { setContext } = useContext(AppContext);
@@ -12,5 +13,5 @@ export default function Logout() {
       navigate("/");
     };
   
-    return <button className="logout-button" onClick={logout}>Sign Out</button>;
-  }
+    return <Button className="logout-button" onClick={logout}>Sign Out</Button>;
+}

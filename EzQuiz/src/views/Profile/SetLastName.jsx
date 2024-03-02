@@ -5,6 +5,7 @@ import { faPen } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import toast from "react-hot-toast";
 import { NAME_MAX_LENGTH, NAME_MIN_LENGTH } from "../../constants/constants";
+import Button from "../../components/Button/Button";
 
 export default function SetLastName() {
   const { userData, setContext } = useContext(AppContext);
@@ -68,8 +69,8 @@ export default function SetLastName() {
         {editing ? (
           <>
             <input type="text" value={lastName} onChange={handleChange} />
-            <button onClick={handleSave}>Save</button>
-            <button onClick={handleCancel}>Cancel</button>
+            <Button onClick={handleSave}>Save</Button>
+            <Button onClick={handleCancel}>Cancel</Button>
           </>
         ) : (
           <>

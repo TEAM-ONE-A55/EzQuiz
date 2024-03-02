@@ -1,4 +1,5 @@
 import { NavLink, useNavigate } from "react-router-dom";
+import Button from "../../components/Button/Button";
 
 export default function StudentsLandingPage() {
   const navigate = useNavigate();
@@ -20,8 +21,8 @@ export default function StudentsLandingPage() {
         <p>Hardcoded quiz</p>
         <p>Hardcoded quiz</p>
         <p>Hardcoded quiz</p>
-        <button>All quizzes</button>
-        <button>Random quiz</button>
+        <Button>All quizzes</Button>
+        <Button>Random quiz</Button>
       </div>
 
       <div style={{ border: "solid" }}>

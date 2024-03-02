@@ -5,6 +5,7 @@ import { updateUserData } from "../../services/user.service";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPen, faTrash } from "@fortawesome/free-solid-svg-icons";
 import { PHONE_NUMBER } from "../../constants/constants";
+import Button from "../../components/Button/Button";
 
 export default function SetPhoneNumber() {
   const [phoneNumber, setPhoneNumber] = useState(null);
@@ -76,8 +77,8 @@ export default function SetPhoneNumber() {
                 value={newPhoneNumber}
                 onChange={handleChange}
               />
-              <button onClick={handleSave}>Save</button>
-              <button onClick={handleCancel}>Cancel</button>
+              <Button onClick={handleSave}>Save</Button>
+              <Button onClick={handleCancel}>Cancel</Button>
             </div>
           ) : (
             <p>
@@ -105,7 +106,7 @@ export default function SetPhoneNumber() {
               setNewPhoneNumber(e.target.value);
             }}
           />
-          <button
+          <Button
             onClick={() => {
               if (Number.isNaN(Number(newPhoneNumber))) {
                 toast.error(
@@ -132,7 +133,7 @@ export default function SetPhoneNumber() {
             }}
           >
             Add
-          </button>
+          </Button>
         </div>
       )}
     </div>
