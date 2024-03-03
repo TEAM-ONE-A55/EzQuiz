@@ -1,17 +1,9 @@
-import { NavLink, useNavigate } from "react-router-dom";
+import Button from "../../components/Button/Button";
 
 export default function StudentsLandingPage() {
-  const navigate = useNavigate();
+
   return (
     <div>
-      
-      <nav>
-        <span style={{ cursor: "pointer" }} onClick={() => navigate("/")}>EzQuiz</span> &nbsp;
-        <NavLink to="/invitations">Invitations</NavLink> &nbsp;
-        <NavLink to="/scoreboard">Scoreboard</NavLink> &nbsp;
-        <NavLink to="/groups">Groups</NavLink> &nbsp;
-        <NavLink to="/profile">Profile</NavLink>
-      </nav>
 
       <div style={{ border: "solid" }}>
         <h2>Quizzes</h2>
@@ -20,8 +12,8 @@ export default function StudentsLandingPage() {
         <p>Hardcoded quiz</p>
         <p>Hardcoded quiz</p>
         <p>Hardcoded quiz</p>
-        <button>All quizzes</button>
-        <button>Random quiz</button>
+        <Button>All quizzes</Button>
+        <Button>Random quiz</Button>
       </div>
 
       <div style={{ border: "solid" }}>

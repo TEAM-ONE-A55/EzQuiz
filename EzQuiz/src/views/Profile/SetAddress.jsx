@@ -4,6 +4,7 @@ import { updateUserData } from "../../services/user.service";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPen, faTrash } from "@fortawesome/free-solid-svg-icons";
 import toast from "react-hot-toast";
+import Button from "../../components/Button/Button";
 
 export default function SetAddress() {
   const [address, setAddress] = useState(null);
@@ -68,8 +69,8 @@ export default function SetAddress() {
                 value={newAddress}
                 onChange={handleChange}
               />
-              <button onClick={handleSave}>Save</button>
-              <button onClick={handleCancel}>Cancel</button>
+              <Button onClick={handleSave}>Save</Button>
+              <Button onClick={handleCancel}>Cancel</Button>
             </div>
           ) : (
             <p>
@@ -97,7 +98,7 @@ export default function SetAddress() {
               setNewAddress(e.target.value);
             }}
           />
-          <button
+          <Button
             onClick={() => {
                 if(newAddress.length < 2){
                     toast.error("Address must be at least 2 characters long");
@@ -114,7 +115,7 @@ export default function SetAddress() {
             }}
           >
             Add
-          </button>
+          </Button>
         </div>
       )}
     </div>

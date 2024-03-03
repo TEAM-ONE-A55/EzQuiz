@@ -5,8 +5,9 @@ import { deleteAvatar, uploadAvatar } from "../../services/storage.service";
 import toast from "react-hot-toast";
 import { defaultAvatar } from "../../constants/constants";
 import Avatar from "../../components/Avatar/Avatar";
-import { faPen, faTrash, faUpload } from "@fortawesome/free-solid-svg-icons";
+import { faTrash, faUpload } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import Button from "../../components/Button/Button";
 
 export default function SetAvatar() {
   const { userData, setContext } = useContext(AppContext);
@@ -72,25 +73,25 @@ export default function SetAvatar() {
               onChange={(e) => setAttachImage(e.target.files[0])}
             />
             {attachImage ? (
-              <button onClick={uploadImage}>
+              <Button onClick={uploadImage}>
                 <FontAwesomeIcon icon={faUpload}></FontAwesomeIcon>
-              </button>
+              </Button>
             ) : (
-              <button
+              <Button
                 onClick={() => {
                   toast.error("No image selected");
                 }}
               >
                 <FontAwesomeIcon icon={faUpload}></FontAwesomeIcon>
-              </button>
+              </Button>
             )}
           </div>
         )}
 
         {userData.avatar !== defaultAvatar && (
-          <button onClick={deleteImage}>
+          <Button onClick={deleteImage}>
             Delete <FontAwesomeIcon icon={faTrash}></FontAwesomeIcon>
-          </button>
+          </Button>
         )}
       </div>
     </div>

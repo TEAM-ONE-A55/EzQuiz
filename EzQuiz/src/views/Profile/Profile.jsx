@@ -11,7 +11,7 @@ export default function Profile() {
   return (
     <div>
       <h1>Profile</h1>
-      <p>Username: {userData?.handle}</p>
+      <p>{userData?.handle}</p>
       <SetAvatar />
       <SetPhoneNumber />
       <SetFirstName />
