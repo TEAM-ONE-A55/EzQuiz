@@ -49,3 +49,26 @@ export const defaultQuizDifficultySamle = "easy"
 export const difficultyOptionsSample = ['Easy', 'Medium', 'Hard']
 
 export const quizAmountSample = [5, 10, 15, 20]
+
+export const navigationEducator = [
+  { name: "Dashboard", href: "/educator-dashboard", current: true },
+  { name: "Browse Quizzes", href: "/browse-quizzes", current: false },
+  { name: "My Rooms", href: "/my-rooms", current: false },
+  { name: "My Quizzes", href: "/my-quizzes", current: false },
+  { name: "Create Room", href: "/create-room", current: false },
+  { name: "Create Quiz", href: "/create-quiz", current: false },
+];
+
+export const navigationParticipant = [
+  { name: "Dashboard", href: "/educator-dashboard", current: true },
+  { name: "Browse Quizzes", href: "/browse-quizzes", current: false },
+  { name: "Sample Quiz", href: "/sample-quiz", current: false },
+  { name: "My Rooms", href: "/my-rooms", current: false },
+  { name: "Scoreboard", href: "/scoreboard", current: false },
+];
+
+export const navigationLogout = [
+  { name: "Browse Quizzes", href: "/browse-quizzes", current: false },
+  { name: "Sample Quiz", href: "/sample-quiz", current: false },
+  { name: "Scoreboard", href: "/scoreboard", current: false },
+];
