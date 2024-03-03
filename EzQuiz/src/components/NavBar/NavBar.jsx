@@ -33,7 +33,7 @@ export default function NavBar() {
     } else {
       setNavigation(navigationLogout);
     }
-  }, [user]);
+  }, [user, userData]);
 
   const logout = () => {
     logoutUser();
@@ -61,7 +61,7 @@ export default function NavBar() {
               </div>
               <div className="flex flex-1 items-center justify-center sm:items-stretch sm:justify-start">
                 <div className="flex flex-shrink-0 items-center">
-                  <img className="h-8 w-auto" src="EzQuiz" alt="ezquiz-logo" />
+                  <img className="h-8 w-auto" src="EzQuiz" alt="ezquiz-logo" onClick={() => navigate('/')} />
                 </div>
                 <div className="hidden sm:ml-6 sm:block">
                   <div className="flex space-x-4">
@@ -83,7 +83,7 @@ export default function NavBar() {
                   </div>
                 </div>
               </div>
-              {user ? (
+              {user && userData ? (
                 <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
                   <button
                     type="button"
@@ -101,7 +101,7 @@ export default function NavBar() {
                         <span className="sr-only">Open user menu</span>
                         <img
                           className="h-10 w-10 rounded-full"
-                          src={userData && userData.avatar}
+                          src={userData.avatar}
                           alt={`${userData.handle}-avatar`}
                         />
                       </Menu.Button>
