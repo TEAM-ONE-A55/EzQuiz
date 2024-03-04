@@ -50,6 +50,8 @@ export const difficultyOptionsSample = ['Easy', 'Medium', 'Hard']
 
 export const quizAmountSample = [5, 10, 15, 20]
 
+export const verificationCode = "1234";
+
 export const navigationEducator = [
   { name: "Dashboard", href: "/educator-dashboard", current: true },
   { name: "Browse Quizzes", href: "/browse-quizzes", current: false },
