@@ -29,7 +29,7 @@ export default function Registration() {
       e.target.type === "checkbox" ? e.target.checked : e.target.value;
     setForm({
       ...form,
-      [e.target.name]: value,
+      role: value,
     });
   }
 
