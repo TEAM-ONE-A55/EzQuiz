@@ -7,6 +7,7 @@ import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
 import Button from "../../../components/Button/Button";
 import { createRoom, updateRoom } from "../../../services/room.service";
+import toast from "react-hot-toast";
 
 export default function ClassRoom() {
   const { userData } = useContext(AppContext);
@@ -40,10 +41,42 @@ export default function ClassRoom() {
   };
 
   const handleCreateRoom = async () => {
-    const id = await createRoom(room.name, userData.handle);
-    for (const user in selectedParticipants) {
-      await updateRoom(id, "participants", selectedParticipants[user].value, false);
+    try {
+      if (!room.name) {
+        throw new Error("Please provide a Room name!")
+      }
+      const id = await createRoom(room.name, userData.handle);
+      for (const user in selectedParticipants) {
+        await updateRoom(
+          id,
+          "participants",
+          selectedParticipants[user].value,
+          false
+        );
+      }
+      for (const quiz in selectedQuizzes) {
+        await updateRoom(
+          id,
+          "quizzes",
+          selectedParticipants[quiz].value,
+          false
+        );
+      }
+      toast.success("Your room has been successfully created!")
+    } catch (e) {
+      toast.error(e.message);
+    } finally {
+      reset();
     }
+  };
+
+  const reset = () => {
+    setRoom({
+      name: "",
+      creator: userData.handle,
+    });
+    setSelectedQuizzes([]);
+    setSelectedParticipants([]);
   };
 
   return (
@@ -143,6 +176,7 @@ export default function ClassRoom() {
         />
         <br />
         <Button onClick={handleCreateRoom}>Create Room</Button>
+        <Button onClick={reset}>Reset Settings</Button>
       </div>
     </div>
   );
