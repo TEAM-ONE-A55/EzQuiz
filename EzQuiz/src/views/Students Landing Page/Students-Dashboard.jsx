@@ -1,10 +1,9 @@
 import Button from "../../components/Button/Button";
+import BestPlayers from "../../components/BestPlayers/BestPlayers";
 
-export default function StudentsLandingPage() {
-
+export default function StudentsDashboard() {
   return (
     <div>
-
       <div style={{ border: "solid" }}>
         <h2>Quizzes</h2>
         <h4>Trending Quizzess</h4>
@@ -17,13 +16,8 @@ export default function StudentsLandingPage() {
       </div>
 
       <div style={{ border: "solid" }}>
-        <h2>Best Players</h2>
-        <p>Dancho</p>
-        <p>Pesho</p>
-        <p>Gosho</p>
-        <p>Stamat</p>
+        <BestPlayers />
       </div>
-
     </div>
   );
 }

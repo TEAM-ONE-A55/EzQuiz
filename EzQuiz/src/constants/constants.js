@@ -60,7 +60,7 @@ export const navigationEducator = [
 ];
 
 export const navigationParticipant = [
-  { name: "Dashboard", href: "/educator-dashboard", current: true },
+  { name: "Dashboard", href: "/dashboard", current: true },
   { name: "Browse Quizzes", href: "/browse-quizzes", current: false },
   { name: "Sample Quiz", href: "/sample-quiz", current: false },
   { name: "My Rooms", href: "/my-rooms", current: false },

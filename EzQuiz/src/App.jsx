@@ -17,6 +17,7 @@ import Profile from "./views/Profile/Profile";
 import Authenticated from "./hoc/Authenticated/Authenticated";
 import CreateRoom from "./views/EducatorDashboard/CreateRoom/CreateRoom";
 import NavBar from "./components/NavBar/NavBar";
+import StudentsDashboard from "./views/Students Landing Page/Students-Dashboard";
 
 export default function App() {
   const [user] = useAuthState(auth);
@@ -56,6 +57,7 @@ export default function App() {
             <Route path="/sample-quiz" element={<SampleQuiz setDifficulty={setDifficulty} setQuizAmount={setQuizAmount}/>}></Route>
             <Route path = "/profile" element = {<Authenticated><Profile/></Authenticated>}></Route>
             <Route path = "/create-room" element = {<Authenticated><CreateRoom/></Authenticated>}></Route>
+            <Route path="/dashboard" element= {<Authenticated><StudentsDashboard/></Authenticated>}></Route>
           </Routes>
           <Footer />
         </AppContext.Provider>
