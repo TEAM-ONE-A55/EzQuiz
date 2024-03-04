@@ -2,7 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-
 :root {
   font-family: "Montserrat", sans-serif;
   line-height: 1.5;
@@ -38,11 +37,10 @@ a:hover {
   min-height: 100vh;
 } */
 
- h1 {
+h1 {
   font-size: 3.2em;
   line-height: 1.1;
 }
-
 
 button {
   border-radius: 8px;
@@ -55,11 +53,10 @@ button {
   cursor: pointer;
   transition: border-color 0.25s;
 }
-button:hover {
+/* button:hover {
   border-color: #646cff;
 }
 button:focus,
 button:focus-visible {
   outline: 4px auto -webkit-focus-ring-color;
-}
-
+} */

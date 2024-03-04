@@ -6,9 +6,7 @@ export default {
   ],
   theme: {
     extend: {
-      fontFamily: {
-        sans: ['Montserrat', 'sans-serif'], // Use Montserrat as the default sans-serif font
-      },
+      
     },
   },
   plugins: [],
