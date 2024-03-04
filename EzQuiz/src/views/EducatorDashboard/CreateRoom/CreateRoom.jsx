@@ -1,28 +1,49 @@
 import { useContext, useEffect, useState } from "react";
 import { AppContext } from "../../../context/AppContext";
-import { getAllUsers, updateUserData } from "../../../services/user.service";
+import { getAllUsers } from "../../../services/user.service";
 import Select from "react-select";
 import "./CreateRoom.css";
 import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
 import Button from "../../../components/Button/Button";
+import { createRoom, updateRoom } from "../../../services/room.service";
 
 export default function ClassRoom() {
   const { userData } = useContext(AppContext);
   const [users, setUsers] = useState([]);
   const [quizzes, setQuizzes] = useState([]);
+  const [room, setRoom] = useState({
+    name: "",
+    creator: userData.handle,
+  });
+
+  const [selectedParticipants, setSelectedParticipants] = useState([]);
+  const [selectedQuizzes, setSelectedQuizzes] = useState([]);
 
   useEffect(() => {
     getAllUsers()
       .then((users) => users.map((user) => user.val()))
+      .then((userData) => userData.filter((u) => u.role !== "educator"))
       .then((userData) =>
         setUsers(userData.map((u) => ({ value: u.handle, label: u.handle })))
       )
+
       .catch((error) => console.log(error));
   }, []);
 
-  const handleChange = () => {
-    updateUserData(userData.handle, "rooms");
+  const handleOnChange = (key) => (e) => {
+    setRoom({ ...room, [key]: e.target.value });
+  };
+
+  const handleSelectedOptions = (selected) => {
+    setSelectedParticipants(selected);
+  };
+
+  const handleCreateRoom = async () => {
+    const id = await createRoom(room.name, userData.handle);
+    for (const user in selectedParticipants) {
+      await updateRoom(id, "participants", selectedParticipants[user].value, false);
+    }
   };
 
   return (
@@ -85,9 +106,11 @@ export default function ClassRoom() {
               "& .MuiInputBase-root": {
                 color: "black",
                 backgroundColor: "white",
-                fontFamily:  "Montserrat, sans-serif",
+                fontFamily: "Montserrat, sans-serif",
               },
             }}
+            value={room.name}
+            onChange={handleOnChange("name")}
           />
         </Box>
         <br />
@@ -101,6 +124,8 @@ export default function ClassRoom() {
           options={users.map((user) => user)}
           className="basic-multi-select"
           classNamePrefix="select"
+          value={selectedParticipants}
+          onChange={handleSelectedOptions}
         />
         <br />
         <p className="text-lg font-normal text-gray-500 lg:text-xl dark:text-gray-400">
@@ -113,9 +138,11 @@ export default function ClassRoom() {
           options={quizzes.map((quiz) => quiz)}
           className="basic-multi-select"
           classNamePrefix="select"
+          value={room.quizzes}
+          onChange={handleOnChange("quizzes")}
         />
         <br />
-        <Button onClick={() => {}}>Create Room</Button>
+        <Button onClick={handleCreateRoom}>Create Room</Button>
       </div>
     </div>
   );

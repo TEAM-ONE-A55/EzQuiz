@@ -12,7 +12,7 @@ export default function Registration() {
     firstName: "",
     lastName: "",
     role: "student",
-    isAdmin: false
+    isAdmin: false,
   });
   const navigate = useNavigate();
 
@@ -23,15 +23,6 @@ export default function Registration() {
   const handleOnKeyDown = (event) => {
     if (event.key === "Enter") return register(form, navigate);
   };
-
-  function handleChange(e) {
-    const value =
-      e.target.type === "checkbox" ? e.target.checked : e.target.value;
-    setForm({
-      ...form,
-      [e.target.name]: value,
-    });
-  }
 
   return (
     <div className="register-container">
@@ -101,7 +92,7 @@ export default function Registration() {
           <div>Select role:</div>
           <select
             name="selectedRole"
-            onChange={handleChange}
+            onChange={updateForm("role")}
             value={form.role}
             className="selected-role"
           >
