@@ -1,6 +1,6 @@
 import { useContext } from "react";
 import { AppContext } from "../../context/AppContext";
-import StudentsLandingPage from "../Students Landing Page/StudentsLandingPage";
+import StudentsLandingPage from "../Students Landing Page/Students-Dashboard";
 import TeachersLandingPage from "../Teachers Landing Page/TeachersLandingPage";
 import Login from "../Login/Login";
 
