@@ -36,6 +36,7 @@ export default function BestPlayers() {
   return (
     <div>
       <h1>Best Players</h1>
+        <h2>Top 10</h2> <br />
       <ul>
         {allPlayers.map(
           (player) =>

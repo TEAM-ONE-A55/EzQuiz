@@ -14,10 +14,6 @@ export default function StudentsDashboard() {
         <Button>All quizzes</Button>
         <Button>Random quiz</Button>
       </div>
-
-      <div style={{ border: "solid" }}>
-        <BestPlayers />
-      </div>
     </div>
   );
 }
