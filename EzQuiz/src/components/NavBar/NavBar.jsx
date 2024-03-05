@@ -13,7 +13,7 @@ import {
 } from "../../constants/constants";
 import "./NavBar.css";
 import Button from "../Button/Button";
-import { getAllRooms } from "../../services/room.service";
+import { getAllHubs } from "../../services/hub.service";
 import Notifications from "../Notifications/Notifications";
 
 function classNames(...classes) {
@@ -42,7 +42,7 @@ export default function NavBar() {
     } else {
       setNavigation(navigationLogout);
     }
-    getAllRooms().then(setRooms);
+    getAllHubs("rooms").then(setRooms);
   }, [user, userData]);
 
   useEffect(() => {

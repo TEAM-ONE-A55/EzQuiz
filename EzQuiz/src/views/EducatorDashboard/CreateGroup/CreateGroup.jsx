@@ -2,7 +2,7 @@ import { useContext, useEffect, useState } from "react";
 import { AppContext } from "../../../context/AppContext";
 import { getAllUsers, updateUserData } from "../../../services/user.service";
 import Select from "react-select";
-import "./CreateRoom.css";
+import "./CreateGroup.css";
 import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
 import Button from "../../../components/Button/Button";
@@ -14,18 +14,18 @@ export default function ClassRoom() {
   const [users, setUsers] = useState([]);
   // eslint-disable-next-line no-unused-vars
   const [quizzes, setQuizzes] = useState([]);
-  const [room, setRoom] = useState({
+  const [group, setGroup] = useState({
     name: "",
     creator: userData.handle,
   });
 
-  const [selectedParticipants, setSelectedParticipants] = useState([]);
+  const [selectedEducators, setSelectedEducators] = useState([]);
   const [selectedQuizzes, setSelectedQuizzes] = useState([]);
 
   useEffect(() => {
     getAllUsers()
       .then((users) => users.map((user) => user.val()))
-      .then((userData) => userData.filter((u) => u.role !== "educator"))
+      .then((userData) => userData.filter((u) => u.role === "educator"))
       .then((userData) =>
         setUsers(userData.map((u) => ({ value: u.handle, label: u.handle })))
       )
@@ -34,41 +34,41 @@ export default function ClassRoom() {
   }, []);
 
   const handleOnChange = (key) => (e) => {
-    setRoom({ ...room, [key]: e.target.value });
+    setGroup({ ...group, [key]: e.target.value });
   };
 
   const handleSelectedOptions = (selected) => {
-    setSelectedParticipants(selected);
+    setSelectedEducators(selected);
   };
 
-  const handleCreateRoom = async () => {
+  const handleCreateGroup = async () => {
     try {
-      if (!room.name) {
-        throw new Error("Please provide a Room name!");
+      if (!group.name) {
+        throw new Error("Please provide a Group name!");
       }
-      const id = await createHub(room.name, userData.handle, "rooms");
-      for (const user in selectedParticipants) {
+      const id = await createHub(group.name, userData.handle, "groups");
+      for (const user in selectedEducators) {
         await updateHub(
-          "rooms",
+          "groups",
           id,
           "participants",
-          selectedParticipants[user].value,
+          selectedEducators[user].value,
           "pending"
         );
 
-        await updateUserData(userData.handle, `rooms/${id}`, room);
+        await updateUserData(userData.handle, `groups/${id}`, group);
       }
       for (const quiz in selectedQuizzes) {
         await updateHub(
-          "rooms",
+          "groups",
           id,
           "quizzes",
-          selectedParticipants[quiz].value,
+          selectedEducators[quiz].value,
           "pending"
         );
       }
 
-      updateUserData(userData.handle, `rooms/${id}`, room);
+      updateUserData(userData.handle, `groups/${id}`, group);
       toast.success("Your room has been successfully created!");
     } catch (e) {
       toast.error(e.message);
@@ -78,42 +78,37 @@ export default function ClassRoom() {
   };
 
   const reset = () => {
-    setRoom({
+    setGroup({
       name: "",
       creator: userData.handle,
     });
     setSelectedQuizzes([]);
-    setSelectedParticipants([]);
+    setSelectedEducators([]);
   };
 
   return (
-    <div className="create-room-container">
+    <div className="create-group-container">
       <h2 className="mb-4 font-extrabold leading-none tracking-tight text-gray-900 md:text-5xl lg:text-4xl dark:text-white">
-        Create a{" "}
-        <span className="text-blue-600 dark:text-blue-500">
-          personalized room
-        </span>{" "}
-        where you can{" "}
-        <span className="text-blue-600 dark:text-blue-500">
-          invite participants
-        </span>{" "}
-        for exclusive quizzes and assessments.
+        Create exclusive {" "}
+        <span className="text-blue-600 dark:text-blue-500">educator rooms</span>{" "}
+        for collaborative{" "}
+        <span className="text-blue-600 dark:text-blue-500">quiz creation and assessment</span>
       </h2>
       <br />
 
       <p className="text-lg font-normal text-gray-500 lg:text-xl dark:text-gray-400">
-        Assess participants&apos; scores and customize quizzes tailored to your
-        preferences. Whether you&apos;re planning an educational assessment, a
-        recruitment evaluation, or simply a fun quiz night with friends, this
-        feature allows you to host engaging activities while managing and
-        analyzing participants&apos; performance effectively.
+        Collaborate with fellow educators to tailor quizzes to your teaching
+        needs and analyze participant performance. Whether refining teaching
+        materials, conducting assessments, or hosting engaging quiz nights, this
+        feature ensures effective management and analysis of participant
+        performance.
       </p>
 
       <br />
 
-      <div className="create-room-box">
+      <div className="create-group-box">
         <p className="text-lg font-normal text-gray-500 lg:text-xl dark:text-gray-400">
-          Set Room name:
+          Set Group name:
         </p>
         <Box
           component="form"
@@ -140,7 +135,7 @@ export default function ClassRoom() {
           <TextField
             id="outlined-basic"
             // label="Room name"
-            placeholder="Room name"
+            placeholder="Group name"
             variant="outlined"
             sx={{
               "& .MuiInputBase-root": {
@@ -149,13 +144,13 @@ export default function ClassRoom() {
                 fontFamily: "Montserrat, sans-serif",
               },
             }}
-            value={room.name}
+            value={group.name}
             onChange={handleOnChange("name")}
           />
         </Box>
         <br />
         <p className="text-lg font-normal text-gray-500 lg:text-xl dark:text-gray-400">
-          Select participants to invite:
+          Select educators to join your group:
         </p>
         <br />
         <Select
@@ -164,7 +159,7 @@ export default function ClassRoom() {
           options={users.map((user) => user)}
           className="basic-multi-select"
           classNamePrefix="select"
-          value={selectedParticipants}
+          value={selectedEducators}
           onChange={handleSelectedOptions}
         />
         <br />
@@ -178,11 +173,11 @@ export default function ClassRoom() {
           options={quizzes.map((quiz) => quiz)}
           className="basic-multi-select"
           classNamePrefix="select"
-          value={room.quizzes}
+          value={group.quizzes}
           onChange={handleOnChange("quizzes")}
         />
         <br />
-        <Button onClick={handleCreateRoom}>Create Room</Button>
+        <Button onClick={handleCreateGroup}>Create Group</Button>
         <Button onClick={reset}>Reset Settings</Button>
       </div>
     </div>

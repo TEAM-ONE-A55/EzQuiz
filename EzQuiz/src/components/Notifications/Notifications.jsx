@@ -2,7 +2,7 @@ import { BellIcon } from "@heroicons/react/24/outline";
 import { useContext } from "react";
 import { Menu, Transition } from "@headlessui/react";
 import { Fragment } from "react";
-import { updateRoom } from "../../services/room.service";
+import { updateHub } from "../../services/hub.service";
 import { AppContext } from "../../context/AppContext";
 import { updateUserData } from "../../services/user.service";
 import PropTypes from "prop-types";
@@ -20,7 +20,7 @@ export default function Notifications({ notifications, setNotifications }) {
 
   const acceptInvitation = async (e) => {
     const id = e.target.parentNode.id;
-    await updateRoom(id, "participants", userData.handle, "accepted");
+    await updateHub("rooms", id, "participants", userData.handle, "accepted");
     await updateUserData(userData.handle, `rooms/${id}`, id);
     setNotifications((prevNotifications) => ({
       ...prevNotifications,

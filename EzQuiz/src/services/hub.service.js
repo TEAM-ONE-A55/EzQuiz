@@ -25,9 +25,9 @@ import { db } from "../config/firebase.config";
 //   });
 // };
 
-export const createRoom = async (roomName, educator) => {
-  const room = push(ref(db, `rooms`), {
-    name: roomName,
+export const createHub = async (hubName, educator, hub) => {
+  const room = push(ref(db, hub), {
+    name: hubName,
     creator: educator,
     participants: {},
     quizzes: {},
@@ -39,19 +39,19 @@ export const createRoom = async (roomName, educator) => {
 
 // key could be title, author, etc... and it would replace 'title' => equalTo(search, key)
 // eslint-disable-next-line no-unused-vars
-export const getAllRooms = async (key = "creator") => {
-  const snapshot = await get(query(ref(db, "rooms"), orderByChild(key)));
+export const getAllHubs = async (hub, key = "creator") => {
+  const snapshot = await get(query(ref(db, hub), orderByChild(key)));
   if (!snapshot.exists()) {
     return [];
   }
-  const rooms = Object.keys(snapshot.val()).map((key) => ({
+  const hubs = Object.keys(snapshot.val()).map((key) => ({
     id: key,
     ...snapshot.val()[key],
   }));
-  return rooms;
+  return hubs;
 };
 
-export const updateRoom = async (id, key, dataName, value) => {
-  const path = `rooms/${id}/${key}/${dataName}`;
+export const updateHub = async (hub, id, key, dataName, value) => {
+  const path = `${hub}/${id}/${key}/${dataName}`;
   return update(ref(db), { [path]: value });
 };

@@ -19,6 +19,7 @@ import {
 import Profile from "./views/Profile/Profile";
 import Authenticated from "./hoc/Authenticated/Authenticated";
 import CreateRoom from "./views/EducatorDashboard/CreateRoom/CreateRoom";
+import CreateGroup from "./views/EducatorDashboard/CreateGroup/CreateGroup";
 import NavBar from "./components/NavBar/NavBar";
 import StudentsDashboard from "./views/Students Landing Page/Students-Dashboard";
 import Scoreboards from "./views/Scoreboard/Scoreboards";
@@ -90,6 +91,14 @@ export default function App() {
               element={
                 <Authenticated>
                   <CreateRoom />
+                </Authenticated>
+              }
+            ></Route>
+            <Route
+              path="/create-group"
+              element={
+                <Authenticated>
+                  <CreateGroup />
                 </Authenticated>
               }
             ></Route>

@@ -1,5 +1,5 @@
 import Button from "../../components/Button/Button";
-import BestPlayers from "../../components/BestPlayers/BestPlayers";
+// import BestPlayers from "../../components/BestPlayers/BestPlayers";
 
 export default function StudentsDashboard() {
   return (
