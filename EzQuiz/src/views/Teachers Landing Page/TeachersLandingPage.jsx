@@ -7,7 +7,7 @@ export default function TeachersLandingPage() {
 
       <div>
         <h2>Create a Quiz</h2>
-        <Button>Add Quiz</Button>
+        <Button onClick={() => {}}>Add Quiz</Button>
       </div>
 
       <div style={{ border: "solid" }}>

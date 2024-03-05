@@ -5,7 +5,7 @@ import { NavLink } from "react-router-dom";
 import { logoutUser } from "../../services/auth.service";
 import { Fragment } from "react";
 import { Disclosure, Menu, Transition } from "@headlessui/react";
-import { Bars3Icon, BellIcon, XMarkIcon } from "@heroicons/react/24/outline";
+import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
 import {
   navigationEducator,
   navigationLogout,
@@ -13,6 +13,8 @@ import {
 } from "../../constants/constants";
 import "./NavBar.css";
 import Button from "../Button/Button";
+import { getAllRooms } from "../../services/room.service";
+import Notifications from "../Notifications/Notifications";
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
@@ -21,6 +23,13 @@ function classNames(...classes) {
 export default function NavBar() {
   const { userData, user, setContext } = useContext(AppContext);
   const [navigation, setNavigation] = useState([]);
+  const [notifications, setNotifications] = useState({
+    quizInvitations: [],
+    roomInvitations: [],
+    groupInvitations: [],
+    feedback: [],
+  });
+  const [rooms, setRooms] = useState([]);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -33,12 +42,47 @@ export default function NavBar() {
     } else {
       setNavigation(navigationLogout);
     }
+    getAllRooms().then(setRooms);
   }, [user, userData]);
+
+  useEffect(() => {
+    if (userData && rooms.length > 0) {
+      const newRoomInvitations = rooms.reduce((acc, room) => {
+        if (
+          room.participants &&
+          Object.keys(room.participants).includes(userData.handle) &&
+          room.participants[userData.handle] === "pending" &&
+          !notifications.roomInvitations.some(
+            (invitation) => invitation.id === room.id
+          )
+        ) {
+          return [...acc, room];
+        }
+        return acc;
+      }, []);
+
+      if (newRoomInvitations.length > 0) {
+        setNotifications((prevNotifications) => ({
+          ...prevNotifications,
+          roomInvitations: [
+            ...prevNotifications.roomInvitations,
+            ...newRoomInvitations,
+          ],
+        }));
+      }
+    }
+  }, [userData, rooms]);
 
   const logout = () => {
     logoutUser();
     setContext({ user: null, userData: null });
     navigate("/");
+    setNotifications({
+      quizInvitations: [],
+      roomInvitations: [],
+      groupInvitations: [],
+      feedback: [],
+    });
   };
 
   return (
@@ -61,7 +105,12 @@ export default function NavBar() {
               </div>
               <div className="flex flex-1 items-center justify-center sm:items-stretch sm:justify-start">
                 <div className="flex flex-shrink-0 items-center">
-                  <img className="h-8 w-auto" src="EzQuiz" alt="ezquiz-logo" onClick={() => navigate('/dashboard')} />
+                  <img
+                    className="h-8 w-auto"
+                    src="EzQuiz"
+                    alt="ezquiz-logo"
+                    onClick={() => navigate("/dashboard")}
+                  />
                 </div>
                 <div className="hidden sm:ml-6 sm:block">
                   <div className="flex space-x-4">
@@ -85,18 +134,15 @@ export default function NavBar() {
               </div>
               {user && userData ? (
                 <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
-                  <button
-                    type="button"
-                    className="relative rounded-full p-1 text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800"
-                  >
-                    <span className="absolute -inset-1.5" />
-                    <span className="sr-only">View notifications</span>
-                    <BellIcon className="h-7 w-7" aria-hidden="true" />
-                  </button>
+                  <Notifications
+                    notifications={notifications}
+                    setNotifications={setNotifications}
+                  />
+
                   {/* Profile dropdown */}
                   <Menu as="div" className="relative ml-3">
                     <div>
-                      <Menu.Button className="relative flex rounded-full text-sm focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800">
+                      <Menu.Button className="relative flex rounded-full text-sm focus:outline-none">
                         <span className="absolute -inset-1.5" />
                         <span className="sr-only">Open user menu</span>
                         <img

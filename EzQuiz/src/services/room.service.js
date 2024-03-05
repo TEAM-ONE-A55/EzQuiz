@@ -5,26 +5,25 @@ import {
   query,
   orderByChild,
   update,
-  equalTo,
-  set,
-  remove,
+//   equalTo,
+//   set,
+//   remove,
 } from "firebase/database";
 import { db } from "../config/firebase.config";
-import { v4 } from "uuid";
 
-const fromRoomDocument = (snapshot) => {
-  const roomDocument = snapshot.val();
+// const fromRoomDocument = (snapshot) => {
+//   const roomDocument = snapshot.val();
 
-  return Object.keys(roomDocument).map((key) => {
-    const room = roomDocument[key];
+//   return Object.keys(roomDocument).map((key) => {
+//     const room = roomDocument[key];
 
-    return {
-      ...room,
-      id: key,
-      createdOn: new Date(room.createdOn),
-    };
-  });
-};
+//     return {
+//       ...room,
+//       id: key,
+//       createdOn: new Date(room.createdOn),
+//     };
+//   });
+// };
 
 export const createRoom = async (roomName, educator) => {
   const room = push(ref(db, `rooms`), {

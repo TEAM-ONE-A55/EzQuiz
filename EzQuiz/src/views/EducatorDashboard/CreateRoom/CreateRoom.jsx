@@ -1,6 +1,6 @@
 import { useContext, useEffect, useState } from "react";
 import { AppContext } from "../../../context/AppContext";
-import { getAllUsers } from "../../../services/user.service";
+import { getAllUsers, updateUserData } from "../../../services/user.service";
 import Select from "react-select";
 import "./CreateRoom.css";
 import Box from "@mui/material/Box";
@@ -12,6 +12,7 @@ import toast from "react-hot-toast";
 export default function ClassRoom() {
   const { userData } = useContext(AppContext);
   const [users, setUsers] = useState([]);
+  // eslint-disable-next-line no-unused-vars
   const [quizzes, setQuizzes] = useState([]);
   const [room, setRoom] = useState({
     name: "",
@@ -43,7 +44,7 @@ export default function ClassRoom() {
   const handleCreateRoom = async () => {
     try {
       if (!room.name) {
-        throw new Error("Please provide a Room name!")
+        throw new Error("Please provide a Room name!");
       }
       const id = await createRoom(room.name, userData.handle);
       for (const user in selectedParticipants) {
@@ -51,7 +52,12 @@ export default function ClassRoom() {
           id,
           "participants",
           selectedParticipants[user].value,
-          false
+          "pending"
+        );
+
+        await updateUserData(
+          userData.handle,
+          `rooms/${id}`, room
         );
       }
       for (const quiz in selectedQuizzes) {
@@ -59,10 +65,12 @@ export default function ClassRoom() {
           id,
           "quizzes",
           selectedParticipants[quiz].value,
-          false
+          "pending"
         );
       }
-      toast.success("Your room has been successfully created!")
+
+      updateUserData(userData.handle, `rooms/${id}`, room);
+      toast.success("Your room has been successfully created!");
     } catch (e) {
       toast.error(e.message);
     } finally {

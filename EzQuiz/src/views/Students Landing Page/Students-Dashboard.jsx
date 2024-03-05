@@ -11,8 +11,8 @@ export default function StudentsDashboard() {
         <p>Hardcoded quiz</p>
         <p>Hardcoded quiz</p>
         <p>Hardcoded quiz</p>
-        <Button>All quizzes</Button>
-        <Button>Random quiz</Button>
+        <Button onClick={() => {}}>All quizzes</Button>
+        <Button onClick={() => {}}>Random quiz</Button>
       </div>
 
       <div style={{ border: "solid" }}>
