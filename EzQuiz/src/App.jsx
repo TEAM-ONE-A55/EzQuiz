@@ -23,6 +23,8 @@ import CreateGroup from "./views/EducatorDashboard/CreateGroup/CreateGroup";
 import NavBar from "./components/NavBar/NavBar";
 import StudentsDashboard from "./views/Students Landing Page/Students-Dashboard";
 import Scoreboards from "./views/Scoreboard/Scoreboards";
+import MyRooms from "./views/Rooms/MyRooms/MyRooms";
+import SingleRoom from "./views/Rooms/SingleRoom/SingleRoom";
 
 export default function App() {
   const [user] = useAuthState(auth);
@@ -99,6 +101,22 @@ export default function App() {
               element={
                 <Authenticated>
                   <CreateGroup />
+                </Authenticated>
+              }
+            ></Route>
+            <Route
+              path="/my-rooms"
+              element={
+                <Authenticated>
+                  <MyRooms />
+                </Authenticated>
+              }
+            ></Route>
+             <Route
+              path="/my-rooms/:id"
+              element={
+                <Authenticated>
+                  <SingleRoom />
                 </Authenticated>
               }
             ></Route>

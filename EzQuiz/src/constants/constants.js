@@ -74,3 +74,5 @@ export const navigationLogout = [
   { name: "Sample Quiz", href: "/sample-quiz", current: false },
   { name: "Scoreboard", href: "/scoreboard", current: false },
 ];
+
+export const PEXELS_API_KEY = "IBg8l6MOjHfQQO3R0LQ5tNYtWpmJKHHUNqlBADa6nY7KTfUON4rYpDOc"
