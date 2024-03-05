@@ -1,5 +1,5 @@
 import toast from "react-hot-toast";
-import { NAME_MAX_LENGTH, NAME_MIN_LENGTH, USERNAME_MAX_LENGTH, USERNAME_MIN_LENGTH } from "../constants/constants";
+import { NAME_MAX_LENGTH, NAME_MIN_LENGTH, USERNAME_MAX_LENGTH, USERNAME_MIN_LENGTH, verificationCode } from "../constants/constants";
 import { createUserHandle, getUserByHandle } from "./user.service";
 import { registerUser } from "./auth.service";
 
@@ -41,7 +41,10 @@ export const register = async (form, navigate) => {
     )
       return toast.error("Username must be between 3 and 30 characters long.");
 
-    try {
+    if (form.role === "educator" && form.code !== verificationCode) {
+      return toast.error("Oops! Looks like you entered the wrong code. Try again!");
+    }
+        try {
       const user = await getUserByHandle(form.username);
       if (user.exists()) {
         return toast.error("Oops! This username is already taken!");

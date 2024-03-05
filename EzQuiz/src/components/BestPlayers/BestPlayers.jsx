@@ -36,12 +36,14 @@ export default function BestPlayers() {
   return (
     <div>
       <h1>Best Players</h1>
+      <h2>Top 10</h2> <br />
       <ul>
         {allPlayers.map(
-          (player) =>
-            player.score && (
+          (player, index) =>
+            player.score &&
+            index < 10 && (
               <div key={player.handle}>
-                {player.handle} - {player.score} points
+                {index + 1}. {player.handle} - {player.score} points
               </div>
             )
         )}

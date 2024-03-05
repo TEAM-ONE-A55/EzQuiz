@@ -14,10 +14,6 @@ export default function StudentsDashboard() {
         <Button onClick={() => {}}>All quizzes</Button>
         <Button onClick={() => {}}>Random quiz</Button>
       </div>
-
-      <div style={{ border: "solid" }}>
-        <BestPlayers />
-      </div>
     </div>
   );
 }

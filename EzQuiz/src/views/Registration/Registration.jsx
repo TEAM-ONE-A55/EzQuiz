@@ -13,6 +13,7 @@ export default function Registration() {
     lastName: "",
     role: "student",
     isAdmin: false,
+    code: "",
   });
   const navigate = useNavigate();
 
@@ -99,6 +100,15 @@ export default function Registration() {
             <option value="educator">Educator</option>
             <option value="student">Student</option>
           </select>
+          {form.role === "educator" && (
+            <div>
+              <input 
+              type="text" 
+              placeholder="Please enter verification code"
+              onChange={updateForm("code")}
+              />
+            </div>
+          )}
         </label>
       </div>
       <Button onClick={() => register(form, navigate)}>Sign up</Button>

@@ -12,12 +12,16 @@ import Login from "./views/Login/Login";
 import Registration from "./views/Registration/Registration";
 import SingleQuiz from "./views/Quizzes/SingleQuiz/SingleQuiz";
 import SampleQuiz from "./views/Quizzes/SampleQuiz/SampleQuiz";
-import { defaultQuizAmountSample, defaultQuizDifficultySamle } from "./constants/constants";
+import {
+  defaultQuizAmountSample,
+  defaultQuizDifficultySamle,
+} from "./constants/constants";
 import Profile from "./views/Profile/Profile";
 import Authenticated from "./hoc/Authenticated/Authenticated";
 import CreateRoom from "./views/EducatorDashboard/CreateRoom/CreateRoom";
 import NavBar from "./components/NavBar/NavBar";
 import StudentsDashboard from "./views/Students Landing Page/Students-Dashboard";
+import Scoreboards from "./views/Scoreboard/Scoreboards";
 
 export default function App() {
   const [user] = useAuthState(auth);
@@ -26,8 +30,8 @@ export default function App() {
     userData: null,
   });
 
-  const [difficulty, setDifficulty] = useState(defaultQuizDifficultySamle)
-  const [quizAmount, setQuizAmount] = useState(defaultQuizAmountSample)
+  const [difficulty, setDifficulty] = useState(defaultQuizDifficultySamle);
+  const [quizAmount, setQuizAmount] = useState(defaultQuizAmountSample);
 
   useEffect(() => {
     if (user) {
@@ -53,11 +57,58 @@ export default function App() {
             <Route path="/" element={<Home />}></Route>
             <Route path="/signup" element={<Registration />}></Route>
             <Route path="/signin" element={<Login />}></Route>
-            <Route path="/sample-quiz/:id" element={<SingleQuiz difficulty={difficulty} setDifficulty={setDifficulty} quizAmount={quizAmount} setQuizAmount={setQuizAmount}/>}></Route>
-            <Route path="/sample-quiz" element={<SampleQuiz setDifficulty={setDifficulty} setQuizAmount={setQuizAmount}/>}></Route>
-            <Route path = "/profile" element = {<Authenticated><Profile/></Authenticated>}></Route>
-            <Route path = "/create-room" element = {<Authenticated><CreateRoom/></Authenticated>}></Route>
-            <Route path="/dashboard" element= {<Authenticated><StudentsDashboard/></Authenticated>}></Route>
+            <Route
+              path="/sample-quiz/:id"
+              element={
+                <SingleQuiz
+                  difficulty={difficulty}
+                  setDifficulty={setDifficulty}
+                  quizAmount={quizAmount}
+                  setQuizAmount={setQuizAmount}
+                />
+              }
+            ></Route>
+            <Route
+              path="/sample-quiz"
+              element={
+                <SampleQuiz
+                  setDifficulty={setDifficulty}
+                  setQuizAmount={setQuizAmount}
+                />
+              }
+            ></Route>
+            <Route
+              path="/profile"
+              element={
+                <Authenticated>
+                  <Profile />
+                </Authenticated>
+              }
+            ></Route>
+            <Route
+              path="/create-room"
+              element={
+                <Authenticated>
+                  <CreateRoom />
+                </Authenticated>
+              }
+            ></Route>
+            <Route
+              path="/dashboard"
+              element={
+                <Authenticated>
+                  <StudentsDashboard />
+                </Authenticated>
+              }
+            ></Route>
+            <Route
+              path="scoreboard"
+              element={
+                <Authenticated>
+                  <Scoreboards />
+                </Authenticated>
+              }
+            ></Route>
           </Routes>
           <Footer />
         </AppContext.Provider>
