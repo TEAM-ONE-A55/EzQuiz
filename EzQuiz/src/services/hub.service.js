@@ -25,10 +25,12 @@ import { db } from "../config/firebase.config";
 //   });
 // };
 
-export const createHub = async (hubName, educator, hub) => {
+export const createHub = async (hubName, educator, cover, hub, uuid) => {
   const room = push(ref(db, hub), {
     name: hubName,
     creator: educator,
+    image_cover: cover,
+    uuid: uuid,
     participants: {},
     quizzes: {},
   });

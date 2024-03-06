@@ -23,10 +23,11 @@ export default function RoomSimpleView() {
             <div className="relative overflow-hidden bg-cover bg-no-repeat">
               <img
                 className="rounded-t-lg"
-                src="https://img.freepik.com/free-vector/students-watching-recorded-lecture-with-professor-talking-from-tablet_335657-319.jpg?w=2000&t=st=1709673381~exp=1709673981~hmac=098d5b7e2b7c71f82c62d71ce642b30cba6545c3afdd1049b43a7c44f4a0b8f7"
+                src={room.image_cover}
                 alt=""
               />
             </div>
+            <br/>
             <h5 className="mb-2 text-xl font-medium leading-tight room-title">
               {room.name}
             </h5>
@@ -34,7 +35,6 @@ export default function RoomSimpleView() {
               <p className="text-base">Creator: {room.creator}</p>
             </div>
             <ul className="w-full">
-              {/* {room.participants} */}
               <li className="w-full border-b-2 border-neutral-100 border-opacity-100 px-6 py-3  dark:border-white/10">
                 Active Participants:{" "}
                 {(room.participants &&

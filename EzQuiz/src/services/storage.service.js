@@ -22,3 +22,15 @@ export const deleteAvatar = async (handle, key) => {
       console.log(e.message);
     }
   };
+
+
+  export const uploadCover = async (hubKey, key, image) => {
+    try {
+        const imageRef = ref(storage, `${hubKey}/${key}/${image.name + v4()}`);
+        await uploadBytes(imageRef, image);
+        const url = await getDownloadURL(imageRef);
+        return url;
+    } catch (error) {
+        console.log(error.message);
+    }
+}

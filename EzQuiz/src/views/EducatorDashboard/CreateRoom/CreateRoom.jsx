@@ -8,6 +8,9 @@ import TextField from "@mui/material/TextField";
 import Button from "../../../components/Button/Button";
 import toast from "react-hot-toast";
 import { createHub, updateHub } from "../../../services/hub.service";
+import { defaultCoverRoom } from "../../../constants/constants";
+import { uploadCover } from "../../../services/storage.service";
+import { v4 } from "uuid";
 
 export default function ClassRoom() {
   const { userData } = useContext(AppContext);
@@ -21,6 +24,11 @@ export default function ClassRoom() {
 
   const [selectedParticipants, setSelectedParticipants] = useState([]);
   const [selectedQuizzes, setSelectedQuizzes] = useState([]);
+  const [attachedImg, setAttachedImg] = useState(null);
+  const [imageUrl, setImageUrl] = useState(defaultCoverRoom);
+  const [loading, setLoading] = useState(false);
+  const [changeCover, setChangeCover] = useState(false);
+  const [uuid, setUuid] = useState(v4())
 
   useEffect(() => {
     getAllUsers()
@@ -32,6 +40,17 @@ export default function ClassRoom() {
 
       .catch((error) => console.log(error));
   }, []);
+
+  useEffect(() => {
+    if (attachedImg) {
+      setLoading(true);
+        uploadCover("roomCovers", uuid, attachedImg)
+            .then((url) => setImageUrl(url))
+            .then(() => toast.success("Image uploaded successfully!"))
+            .catch((e) => toast(e.message))
+            .finally(() => setLoading(false));
+    }
+  }, [attachedImg]);
 
   const handleOnChange = (key) => (e) => {
     setRoom({ ...room, [key]: e.target.value });
@@ -46,7 +65,7 @@ export default function ClassRoom() {
       if (!room.name) {
         throw new Error("Please provide a Room name!");
       }
-      const id = await createHub(room.name, userData.handle, "rooms");
+      const id = await createHub(room.name, userData.handle, imageUrl, "rooms", uuid);
       for (const user in selectedParticipants) {
         await updateHub(
           "rooms",
@@ -81,10 +100,50 @@ export default function ClassRoom() {
     setRoom({
       name: "",
       creator: userData.handle,
+      uuid: ""
     });
     setSelectedQuizzes([]);
     setSelectedParticipants([]);
+    setUuid(v4())
+    setImageUrl(defaultCoverRoom)
+    setChangeCover(false)
   };
+
+  const changeCoverRender = (
+    <div className="create-thread-type-inputs">
+      <input
+        id="upload-photo-input"
+        type="file"
+        onChange={(e) => setAttachedImg(e.target.files[0])}
+      />
+      {!attachedImg && (
+        <label
+          className="upload-photo-input-button"
+          htmlFor="upload-photo-input"
+        >
+          Upload an image
+        </label>
+      )}
+      {loading && <p>Uploading...</p>}
+      <div className="attached-thread-image-container">
+        {imageUrl && (
+          <img
+            className="attached-thread-image"
+            src={imageUrl}
+            alt="Attached"
+          />
+        )}
+        {imageUrl && (
+          <button
+            className="attached-thread-image-remove-button"
+            onClick={() => {}}
+          >
+            Remove
+          </button>
+        )}
+      </div>
+    </div>
+  );
 
   return (
     <div className="create-room-container">
@@ -112,6 +171,29 @@ export default function ClassRoom() {
       <br />
 
       <div className="create-room-box">
+        {!changeCover ? (
+          <div>
+            <img
+              className="dark-mask"
+              src={imageUrl}
+              style={{ backgroundPosition: "50%" }}
+            />
+            <button
+              style={{
+                position: "absolute",
+                top: "70%",
+                left: "46%",
+              }}
+              onClick={() => setChangeCover(true)}
+            >
+              Change Cover
+            </button>
+          </div>
+        ) : (
+          changeCoverRender
+        )}
+
+        <br />
         <p className="text-lg font-normal text-gray-500 lg:text-xl dark:text-gray-400">
           Set Room name:
         </p>
