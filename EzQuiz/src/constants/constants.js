@@ -74,7 +74,8 @@ export const navigationAdmin = [
   { name: "All Users", href: "/all-users", current: false },
   { name: "All Rooms", href: "/all-rooms", current: false },
   { name: "All Groups", href: "/all-groups", current: false},
-  { name: "Scoreboard", href: "/scoreboard", current: false}
+  { name: "Scoreboard", href: "/scoreboard", current: false},
+  { name: "Search", href: "/search", current: false },
 ]
 
 export const navigationLogout = [
