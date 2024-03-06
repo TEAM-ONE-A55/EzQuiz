@@ -37,7 +37,7 @@ export default function NavBar() {
     if (userData) {
       if (userData.role === "admin") {
         setNavigation(navigationAdmin);
-      } else if (user && user.role === "educator") {
+      } else if (user && userData.role === "educator") {
         setNavigation(navigationEducator);
       } else {
         setNavigation(navigationParticipant);
