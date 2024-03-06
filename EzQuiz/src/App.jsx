@@ -26,6 +26,7 @@ import Scoreboards from "./views/Scoreboard/Scoreboards";
 import MyRooms from "./views/Rooms/MyRooms/MyRooms";
 import SingleRoom from "./views/Rooms/SingleRoom/SingleRoom";
 import AllUsers from "./views/Admin/AllUsers";
+import AllRooms from "./views/Admin/AllRooms";
 
 export default function App() {
   const [user] = useAuthState(auth);
@@ -142,6 +143,15 @@ export default function App() {
             element={
               <Authenticated> 
                 <AllUsers />
+              </Authenticated>
+            }
+            >
+            </Route>
+            <Route
+            path="all-rooms"
+            element={
+              <Authenticated> 
+                <AllRooms />
               </Authenticated>
             }
             >

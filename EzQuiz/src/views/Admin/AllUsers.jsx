@@ -37,7 +37,7 @@ export default function AllUsers() {
       setUsers(users.filter((user) => user.handle !== handle));
       toast.success(`User ${handle} has been deleted`);
     } catch (error) {
-      toast.error(`Could not delete user ${userHandle}`);
+      toast.error(`Could not delete user ${user.handle}`);
     }
   };
 
@@ -52,6 +52,9 @@ export default function AllUsers() {
           onChange={handleUsersSortChange}
         />
       }
+      <div>
+        <br />
+      </div>
       <table>
         <thead>
           <tr>
