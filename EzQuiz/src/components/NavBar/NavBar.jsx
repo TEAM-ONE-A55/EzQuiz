@@ -34,10 +34,11 @@ export default function NavBar() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (user) {
+    if (userData) {
+      console.log(userData);
       if (userData.role === "admin") {
         setNavigation(navigationAdmin);
-      } else if (userData && userData.role === "educator") {
+      } else if (user && user.role === "educator") {
         setNavigation(navigationEducator);
       } else {
         setNavigation(navigationParticipant);
