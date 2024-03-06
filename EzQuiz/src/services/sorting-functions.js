@@ -1,5 +1,5 @@
 export const sortUsers = (users, sortBy) => {
-    if(users) {
+    if (users) {
         switch (sortBy) {
             case "dateDescending":
                 return users.sort((a, b) => b.createdOn - a.createdOn);
@@ -11,12 +11,12 @@ export const sortUsers = (users, sortBy) => {
                 return users.sort((a, b) => a.handle.localeCompare(b.handle));
             default:
                 return users
-          .slice()
-          .sort(
-            (a, b) =>
-              (b ? new Date(b.createdOn) : 0) -
-              (a ? new Date(a.createdOn) : 0)
-          );
+                    .slice()
+                    .sort(
+                        (a, b) =>
+                            (b ? new Date(b.createdOn) : 0) -
+                            (a ? new Date(a.createdOn) : 0)
+                    );
         }
     }
 }
