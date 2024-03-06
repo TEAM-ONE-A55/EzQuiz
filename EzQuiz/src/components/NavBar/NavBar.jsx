@@ -35,7 +35,7 @@ export default function NavBar() {
 
   useEffect(() => {
     if (user) {
-      if (userData.isAdmin) {
+      if (userData.role === "admin") {
         setNavigation(navigationAdmin);
       } else if (userData && userData.role === "educator") {
         setNavigation(navigationEducator);

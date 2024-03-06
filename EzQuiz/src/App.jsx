@@ -22,6 +22,7 @@ import CreateRoom from "./views/EducatorDashboard/CreateRoom/CreateRoom";
 import NavBar from "./components/NavBar/NavBar";
 import StudentsDashboard from "./views/Students Landing Page/Students-Dashboard";
 import Scoreboards from "./views/Scoreboard/Scoreboards";
+import AllUsers from "./views/Admin/AllUsers";
 
 export default function App() {
   const [user] = useAuthState(auth);
@@ -109,6 +110,15 @@ export default function App() {
                 </Authenticated>
               }
             ></Route>
+            <Route
+            path="all-users"
+            element={
+              <Authenticated> 
+                <AllUsers />
+              </Authenticated>
+            }
+            >
+            </Route>
           </Routes>
           <Footer />
         </AppContext.Provider>

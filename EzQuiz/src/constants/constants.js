@@ -70,8 +70,8 @@ export const navigationParticipant = [
 ];
 
 export const navigationAdmin = [
-  { name: "All Quizzes", href: "/all-quizzes", current: true },
-  { name: "All Users", href: "/all-users", current: false },
+  { name: "All Quizzes", href: "/all-quizzes", current: false },
+  { name: "All Users", href: "/all-users", current: true },
   { name: "All Rooms", href: "/all-rooms", current: false },
   { name: "All Groups", href: "/all-groups", current: false},
   { name: "Scoreboard", href: "/scoreboard", current: false},
