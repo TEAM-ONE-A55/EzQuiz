@@ -69,6 +69,14 @@ export const navigationParticipant = [
   { name: "Scoreboard", href: "/scoreboard", current: false },
 ];
 
+export const navigationAdmin = [
+  { name: "All Quizzes", href: "/all-quizzes", current: true },
+  { name: "All Users", href: "/all-users", current: false },
+  { name: "All Rooms", href: "/all-rooms", current: false },
+  { name: "All Groups", href: "/all-groups", current: false},
+  { name: "Scoreboard", href: "/scoreboard", current: false}
+]
+
 export const navigationLogout = [
   { name: "Browse Quizzes", href: "/browse-quizzes", current: false },
   { name: "Sample Quiz", href: "/sample-quiz", current: false },
