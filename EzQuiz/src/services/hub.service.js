@@ -5,9 +5,10 @@ import {
   query,
   orderByChild,
   update,
-//   equalTo,
-//   set,
-//   remove,
+  remove,
+  //   equalTo,
+  //   set,
+  //   remove,
 } from "firebase/database";
 import { db } from "../config/firebase.config";
 
@@ -57,3 +58,7 @@ export const updateHub = async (hub, id, key, dataName, value) => {
   const path = `${hub}/${id}/${key}/${dataName}`;
   return update(ref(db), { [path]: value });
 };
+
+export const deleteHub = async (hub, id) => {
+  return remove(ref(db, `${hub}/${id}`));
+}

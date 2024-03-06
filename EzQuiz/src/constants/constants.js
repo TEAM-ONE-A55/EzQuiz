@@ -69,6 +69,15 @@ export const navigationParticipant = [
   { name: "Scoreboard", href: "/scoreboard", current: false },
 ];
 
+export const navigationAdmin = [
+  { name: "All Quizzes", href: "/all-quizzes", current: false },
+  { name: "All Users", href: "/all-users", current: true },
+  { name: "All Rooms", href: "/all-rooms", current: false },
+  { name: "All Groups", href: "/all-groups", current: false },
+  { name: "Scoreboard", href: "/scoreboard", current: false },
+  { name: "Search", href: "/search", current: false },
+]
+
 export const navigationLogout = [
   { name: "Browse Quizzes", href: "/browse-quizzes", current: false },
   { name: "Sample Quiz", href: "/sample-quiz", current: false },
@@ -76,3 +85,10 @@ export const navigationLogout = [
 ];
 
 export const defaultCoverRoom = "https://img.freepik.com/free-vector/students-watching-recorded-lecture-with-professor-talking-from-tablet_335657-319.jpg?w=2000&t=st=1709673381~exp=1709673981~hmac=098d5b7e2b7c71f82c62d71ce642b30cba6545c3afdd1049b43a7c44f4a0b8f7"
+export const PEXELS_API_KEY = "IBg8l6MOjHfQQO3R0LQ5tNYtWpmJKHHUNqlBADa6nY7KTfUON4rYpDOc"
+export const usersSortingOptions = [
+  { label: "Sort by Date {descending)", value: "dateDescending" },
+  { label: "Sort by Date {ascending)", value: "dateAscending" },
+  { label: "Sort by Username (ascending)", value: "usernameAscending" },
+  { label: "Sort by Username (descending)", value: "usernameDescending" },
+]

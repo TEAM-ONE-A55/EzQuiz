@@ -10,6 +10,7 @@ import {
   navigationEducator,
   navigationLogout,
   navigationParticipant,
+  navigationAdmin,
 } from "../../constants/constants";
 import "./NavBar.css";
 import Button from "../Button/Button";
@@ -33,8 +34,10 @@ export default function NavBar() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (user) {
-      if (userData && userData.role === "educator") {
+    if (userData) {
+      if (userData.role === "admin") {
+        setNavigation(navigationAdmin);
+      } else if (user && userData.role === "educator") {
         setNavigation(navigationEducator);
       } else {
         setNavigation(navigationParticipant);
