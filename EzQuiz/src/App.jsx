@@ -25,8 +25,8 @@ import StudentsDashboard from "./views/Students Landing Page/Students-Dashboard"
 import Scoreboards from "./views/Scoreboard/Scoreboards";
 import MyRooms from "./views/Rooms/MyRooms/MyRooms";
 import SingleRoom from "./views/Rooms/SingleRoom/SingleRoom";
-import AllUsers from "./views/Admin/AllUsers";
-import AllRooms from "./views/Admin/AllRooms";
+import AllUsers from "./views/Admin/AllUsers/AllUsers";
+import AllRooms from "./views/Admin/AllRooms/AllRooms";
 
 export default function App() {
   const [user] = useAuthState(auth);

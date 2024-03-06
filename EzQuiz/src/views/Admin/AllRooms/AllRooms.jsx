@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { deleteHub, getAllHubs } from "../../services/hub.service";
+import { deleteHub, getAllHubs } from "../../../services/hub.service";
 import "./AllRooms.css";
 import toast from "react-hot-toast";
 
@@ -34,7 +34,10 @@ export default function AllRooms() {
         if (room) {
           return (
             <div key={room.id} className="single-room">
-              <h3>{room.name}</h3>
+              <h3>
+                {room.name} <br />
+                Created by {room.creator}
+              </h3>
               <img src={`${room.image_cover}`} alt="" />
               {room.participants ? (
                 <div>
@@ -44,7 +47,7 @@ export default function AllRooms() {
               ) : (
                 <p>No participants</p>
               )}
-              <button onClick={() => removeRoom(room.id)}>Delete</button>
+              <button className="remove-btn" onClick={() => removeRoom(room.id)}>Delete</button>
             </div>
           );
         }

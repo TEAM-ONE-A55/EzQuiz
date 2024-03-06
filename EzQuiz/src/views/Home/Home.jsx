@@ -3,7 +3,7 @@ import { AppContext } from "../../context/AppContext";
 import StudentsLandingPage from "../Students Landing Page/Students-Dashboard";
 import TeachersLandingPage from "../Teachers Landing Page/TeachersLandingPage";
 import Login from "../Login/Login";
-import AllUsers from "../Admin/AllUsers";
+import AllUsers from "../Admin/AllUsers/AllUsers";
 
 export default function Home() {
   const { userData } = useContext(AppContext);

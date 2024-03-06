@@ -1,11 +1,11 @@
 import { useContext, useEffect, useState } from "react";
-import { getAllUsers, getUserByHandle } from "../../services/user.service";
-import { changeRole, deleteUser } from "../../services/admin-functions";
-import { AppContext } from "../../context/AppContext";
+import { getAllUsers, getUserByHandle } from "../../../services/user.service";
+import { changeRole, deleteUser } from "../../../services/admin-functions";
+import { AppContext } from "../../../context/AppContext";
 import toast from "react-hot-toast";
-import SortingDropdown from "../../components/Dropdown/Dropdown";
-import { usersSortingOptions } from "../../constants/constants";
-import { sortUsers } from "../../services/sorting-functions";
+import SortingDropdown from "../../../components/Dropdown/Dropdown";
+import { usersSortingOptions } from "../../../constants/constants";
+import { sortUsers } from "../../../services/sorting-functions";
 
 export default function AllUsers() {
   const { userData } = useContext(AppContext);
