@@ -73,8 +73,8 @@ export const navigationAdmin = [
   { name: "All Quizzes", href: "/all-quizzes", current: false },
   { name: "All Users", href: "/all-users", current: true },
   { name: "All Rooms", href: "/all-rooms", current: false },
-  { name: "All Groups", href: "/all-groups", current: false},
-  { name: "Scoreboard", href: "/scoreboard", current: false},
+  { name: "All Groups", href: "/all-groups", current: false },
+  { name: "Scoreboard", href: "/scoreboard", current: false },
   { name: "Search", href: "/search", current: false },
 ]
 
@@ -83,3 +83,10 @@ export const navigationLogout = [
   { name: "Sample Quiz", href: "/sample-quiz", current: false },
   { name: "Scoreboard", href: "/scoreboard", current: false },
 ];
+
+export const usersSortingOptions = [
+  { label: "Sort by Date {descending)", value: "dateDescending" },
+  { label: "Sort by Date {ascending)", value: "dateAscending" },
+  { label: "Sort by Username (ascending)", value: "usernameAscending" },
+  { label: "Sort by Username (descending)", value: "usernameDescending" },
+]
