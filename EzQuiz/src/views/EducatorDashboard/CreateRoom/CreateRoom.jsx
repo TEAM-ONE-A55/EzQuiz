@@ -9,13 +9,11 @@ import Button from "../../../components/Button/Button";
 import toast from "react-hot-toast";
 import { createHub, updateHub } from "../../../services/hub.service";
 import { defaultCoverRoom } from "../../../constants/constants";
-import {
-  deleteCoverImage,
-  uploadCover,
-} from "../../../services/storage.service";
 import { v4 } from "uuid";
+import ChangeCover from "../../../components/ChangeCover/ChangeCover";
+import { deleteCoverImage } from "../../../services/storage.service";
 
-export default function ClassRoom() {
+export default function CreateRoom() {
   const { userData } = useContext(AppContext);
   const [users, setUsers] = useState([]);
   // eslint-disable-next-line no-unused-vars
@@ -29,7 +27,6 @@ export default function ClassRoom() {
   const [selectedQuizzes, setSelectedQuizzes] = useState([]);
   const [attachedImg, setAttachedImg] = useState(null);
   const [imageUrl, setImageUrl] = useState(defaultCoverRoom);
-  const [loading, setLoading] = useState(false);
   const [changeCover, setChangeCover] = useState(false);
   const [uuid, setUuid] = useState(v4());
 
@@ -43,24 +40,6 @@ export default function ClassRoom() {
 
       .catch((error) => console.log(error));
   }, []);
-
-  useEffect(() => {
-    if (attachedImg) {
-      setLoading(true);
-      uploadCover("rooms", uuid, attachedImg)
-        .then((url) => setImageUrl(url))
-        .then(() => {
-          setTimeout(() => {
-            toast.success("Image uploaded successfully!");
-          }, 1500);
-        })
-        .catch((e) => toast(e.message))
-        .finally(() => {
-          setLoading(false);
-        });
-    }
-    console.log("render");
-  }, [attachedImg, uuid]);
 
   const handleOnChange = (key) => (e) => {
     setRoom({ ...room, [key]: e.target.value });
@@ -112,16 +91,17 @@ export default function ClassRoom() {
     }
   };
 
-  const removeAttachedImg = async () => {
-    try {
-      await deleteCoverImage("rooms", uuid);
-      setImageUrl(defaultCoverRoom);
-      setAttachedImg(null);
-      setChangeCover(false);
-    } catch (e) {
-      console.log(e.message);
-    }
-  };
+  // const removeAttachedImg = async () => {
+  //   try {
+  //     await deleteCoverImage("rooms", uuid);
+  //     setImageUrl(defaultCoverRoom);
+  //     setAttachedImg(null);
+  //     setChangeCover(false);
+  //     toast.success("Image has been removed successfully!");
+  //   } catch (e) {
+  //     console.log(e.message);
+  //   }
+  // };
 
   const reset = () => {
     setRoom({
@@ -136,35 +116,6 @@ export default function ClassRoom() {
     setAttachedImg(null);
     setChangeCover(false);
   };
-
-  const changeCoverRender = (
-    <div className="create-hub-type-inputs">
-      <input
-        id="upload-image-input"
-        type="file"
-        onChange={(e) => setAttachedImg(e.target.files[0])}
-      />
-      {!attachedImg && (
-        <label
-          className="upload-image-input-button"
-          htmlFor="upload-image-input"
-        >
-          Upload an image
-        </label>
-      )}
-      {loading && <p>Uploading...</p>}
-      <div className="attached-hub-image-container">
-        {imageUrl && (
-          <img className="attached-hub-image" src={imageUrl} alt="Attached" />
-        )}
-        {imageUrl !== defaultCoverRoom && (
-          <button className="hub-image-button" onClick={removeAttachedImg}>
-            Remove
-          </button>
-        )}
-      </div>
-    </div>
-  );
 
   return (
     <div className="create-room-container">
@@ -207,7 +158,15 @@ export default function ClassRoom() {
             </button>
           </div>
         ) : (
-          changeCoverRender
+          <ChangeCover
+            attachedImg={attachedImg}
+            setAttachedImg={setAttachedImg}
+            imageUrl={imageUrl}
+            setImageUrl={setImageUrl}
+            uuid={uuid}
+            setChangeCover={setChangeCover}
+            keyComponent="rooms"
+          />
         )}
 
         <br />
@@ -282,7 +241,14 @@ export default function ClassRoom() {
         />
         <br />
         <Button onClick={handleCreateRoom}>Create Room</Button>
-        <Button onClick={reset}>Reset Settings</Button>
+        <Button
+          onClick={() => {
+            reset();
+            attachedImg && deleteCoverImage("rooms", uuid);
+          }}
+        >
+          Reset Settings
+        </Button>
       </div>
     </div>
   );
