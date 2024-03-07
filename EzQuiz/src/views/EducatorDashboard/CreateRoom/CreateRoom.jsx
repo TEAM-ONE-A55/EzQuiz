@@ -9,7 +9,10 @@ import Button from "../../../components/Button/Button";
 import toast from "react-hot-toast";
 import { createHub, updateHub } from "../../../services/hub.service";
 import { defaultCoverRoom } from "../../../constants/constants";
-import { uploadCover } from "../../../services/storage.service";
+import {
+  deleteCoverImage,
+  uploadCover,
+} from "../../../services/storage.service";
 import { v4 } from "uuid";
 
 export default function ClassRoom() {
@@ -28,7 +31,7 @@ export default function ClassRoom() {
   const [imageUrl, setImageUrl] = useState(defaultCoverRoom);
   const [loading, setLoading] = useState(false);
   const [changeCover, setChangeCover] = useState(false);
-  const [uuid, setUuid] = useState(v4())
+  const [uuid, setUuid] = useState(v4());
 
   useEffect(() => {
     getAllUsers()
@@ -44,13 +47,20 @@ export default function ClassRoom() {
   useEffect(() => {
     if (attachedImg) {
       setLoading(true);
-        uploadCover("roomCovers", uuid, attachedImg)
-            .then((url) => setImageUrl(url))
-            .then(() => toast.success("Image uploaded successfully!"))
-            .catch((e) => toast(e.message))
-            .finally(() => setLoading(false));
+      uploadCover("rooms", uuid, attachedImg)
+        .then((url) => setImageUrl(url))
+        .then(() => {
+          setTimeout(() => {
+            toast.success("Image uploaded successfully!");
+          }, 1500);
+        })
+        .catch((e) => toast(e.message))
+        .finally(() => {
+          setLoading(false);
+        });
     }
-  }, [attachedImg]);
+    console.log("render");
+  }, [attachedImg, uuid]);
 
   const handleOnChange = (key) => (e) => {
     setRoom({ ...room, [key]: e.target.value });
@@ -65,7 +75,13 @@ export default function ClassRoom() {
       if (!room.name) {
         throw new Error("Please provide a Room name!");
       }
-      const id = await createHub(room.name, userData.handle, imageUrl, "rooms", uuid);
+      const id = await createHub(
+        room.name,
+        userData.handle,
+        imageUrl,
+        "rooms",
+        uuid
+      );
       for (const user in selectedParticipants) {
         await updateHub(
           "rooms",
@@ -96,48 +112,53 @@ export default function ClassRoom() {
     }
   };
 
+  const removeAttachedImg = async () => {
+    try {
+      await deleteCoverImage("rooms", uuid);
+      setImageUrl(defaultCoverRoom);
+      setAttachedImg(null);
+      setChangeCover(false);
+    } catch (e) {
+      console.log(e.message);
+    }
+  };
+
   const reset = () => {
     setRoom({
       name: "",
       creator: userData.handle,
-      uuid: ""
+      uuid: "",
     });
     setSelectedQuizzes([]);
     setSelectedParticipants([]);
-    setUuid(v4())
-    setImageUrl(defaultCoverRoom)
-    setChangeCover(false)
+    setUuid(v4());
+    setImageUrl(defaultCoverRoom);
+    setAttachedImg(null);
+    setChangeCover(false);
   };
 
   const changeCoverRender = (
-    <div className="create-thread-type-inputs">
+    <div className="create-hub-type-inputs">
       <input
-        id="upload-photo-input"
+        id="upload-image-input"
         type="file"
         onChange={(e) => setAttachedImg(e.target.files[0])}
       />
       {!attachedImg && (
         <label
-          className="upload-photo-input-button"
-          htmlFor="upload-photo-input"
+          className="upload-image-input-button"
+          htmlFor="upload-image-input"
         >
           Upload an image
         </label>
       )}
       {loading && <p>Uploading...</p>}
-      <div className="attached-thread-image-container">
+      <div className="attached-hub-image-container">
         {imageUrl && (
-          <img
-            className="attached-thread-image"
-            src={imageUrl}
-            alt="Attached"
-          />
+          <img className="attached-hub-image" src={imageUrl} alt="Attached" />
         )}
-        {imageUrl && (
-          <button
-            className="attached-thread-image-remove-button"
-            onClick={() => {}}
-          >
+        {imageUrl !== defaultCoverRoom && (
+          <button className="hub-image-button" onClick={removeAttachedImg}>
             Remove
           </button>
         )}
@@ -172,18 +193,14 @@ export default function ClassRoom() {
 
       <div className="create-room-box">
         {!changeCover ? (
-          <div>
+          <div className="attached-hub-image-container">
             <img
-              className="dark-mask"
+              className="attached-hub-image"
               src={imageUrl}
               style={{ backgroundPosition: "50%" }}
             />
             <button
-              style={{
-                position: "absolute",
-                top: "70%",
-                left: "46%",
-              }}
+              className="hub-image-button"
               onClick={() => setChangeCover(true)}
             >
               Change Cover

@@ -17,6 +17,55 @@
   /* background-color: rgb(29, 62, 128); */
 }
 
-.dark-mask {
-  filter: brightness(30%);
+.create-hub-type input#upload-image-input {
+  display: none;
+}
+
+.create-hub-type-inputs {
+  margin-top: 2em;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.upload-image-input-button {
+  border-radius: 10px;
+  cursor: pointer;
+  background-color: rgb(20, 20, 20);
+  display: inline-block;
+  width: 92%;
+  padding: 35px 10px;
+  font-size: 1.2rem;
+  color: rgb(110, 110, 110);
+  font-weight: 500;
+  text-align: center;
+  transition: 50ms ease-in-out;
+}
+
+.upload-image-input-button:hover {
+  background-color: rgb(17, 17, 17);
+  transition: 50ms ease-in-out;
+}
+
+.attached-hub-image-container {
+  position: relative;
+}
+
+.attached-hub-image {
+  max-width: 93.1%;
+  border-radius: 15px;
+  margin: 2em;
+  align-self: flex-start;
+  opacity: 0.5;
+}
+
+
+.hub-image-button {
+  align-self: flex-start;
+  margin-left: 34px;
+  position: absolute;
+  top: 50%;
+  left: 46%;
+  transform: translate(-50%, -50%);
 }

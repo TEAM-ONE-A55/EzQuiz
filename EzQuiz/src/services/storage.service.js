@@ -34,3 +34,13 @@ export const deleteAvatar = async (handle, key) => {
         console.log(error.message);
     }
 }
+
+export const deleteCoverImage = async (key, uuid) => {
+  try {
+    const lastFolderRef = ref(storage, `${key}/${uuid}`);
+    const res = await listAll(lastFolderRef);
+    await deleteObject(res.items[0]);
+  } catch (e) {
+    console.log(e.message);
+  }
+};
