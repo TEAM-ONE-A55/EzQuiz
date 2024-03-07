@@ -10,7 +10,7 @@ import toast from "react-hot-toast";
 import { createHub, updateHub } from "../../../services/hub.service";
 import { defaultCoverRoom } from "../../../constants/constants";
 import { v4 } from "uuid";
-import ChangeCover from "../../../components/ChangeCover/ChangeCover";
+import ChangeCover from "../../../components/ChangeCoverImage/ChangeCoverImage";
 import { deleteCoverImage } from "../../../services/storage.service";
 
 export default function CreateRoom() {
@@ -90,18 +90,6 @@ export default function CreateRoom() {
       reset();
     }
   };
-
-  // const removeAttachedImg = async () => {
-  //   try {
-  //     await deleteCoverImage("rooms", uuid);
-  //     setImageUrl(defaultCoverRoom);
-  //     setAttachedImg(null);
-  //     setChangeCover(false);
-  //     toast.success("Image has been removed successfully!");
-  //   } catch (e) {
-  //     console.log(e.message);
-  //   }
-  // };
 
   const reset = () => {
     setRoom({

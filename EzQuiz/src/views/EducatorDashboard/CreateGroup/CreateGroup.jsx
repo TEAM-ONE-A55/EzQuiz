@@ -8,8 +8,12 @@ import TextField from "@mui/material/TextField";
 import Button from "../../../components/Button/Button";
 import toast from "react-hot-toast";
 import { createHub, updateHub } from "../../../services/hub.service";
+import { defaultCoverGroup } from "../../../constants/constants";
+import { deleteCoverImage } from "../../../services/storage.service";
+import { v4 } from "uuid";
+import ChangeCover from "../../../components/ChangeCoverImage/ChangeCoverImage";
 
-export default function ClassRoom() {
+export default function CreateGroup() {
   const { userData } = useContext(AppContext);
   const [users, setUsers] = useState([]);
   // eslint-disable-next-line no-unused-vars
@@ -21,6 +25,10 @@ export default function ClassRoom() {
 
   const [selectedEducators, setSelectedEducators] = useState([]);
   const [selectedQuizzes, setSelectedQuizzes] = useState([]);
+  const [attachedImg, setAttachedImg] = useState(null);
+  const [imageUrl, setImageUrl] = useState(defaultCoverGroup);
+  const [changeCover, setChangeCover] = useState(false);
+  const [uuid, setUuid] = useState(v4());
 
   useEffect(() => {
     getAllUsers()
@@ -46,7 +54,13 @@ export default function ClassRoom() {
       if (!group.name) {
         throw new Error("Please provide a Group name!");
       }
-      const id = await createHub(group.name, userData.handle, "groups");
+      const id = await createHub(
+        group.name,
+        userData.handle,
+        imageUrl,
+        "groups",
+        uuid
+      );
       for (const user in selectedEducators) {
         await updateHub(
           "groups",
@@ -69,7 +83,7 @@ export default function ClassRoom() {
       }
 
       updateUserData(userData.handle, `groups/${id}`, group);
-      toast.success("Your room has been successfully created!");
+      toast.success("Your group has been successfully created!");
     } catch (e) {
       toast.error(e.message);
     } finally {
@@ -84,15 +98,23 @@ export default function ClassRoom() {
     });
     setSelectedQuizzes([]);
     setSelectedEducators([]);
+    setUuid(v4());
+    setImageUrl(defaultCoverGroup);
+    setAttachedImg(null);
+    setChangeCover(false);
   };
 
   return (
     <div className="create-group-container">
       <h2 className="mb-4 font-extrabold leading-none tracking-tight text-gray-900 md:text-5xl lg:text-4xl dark:text-white">
-        Create exclusive {" "}
-        <span className="text-blue-600 dark:text-blue-500">educator rooms</span>{" "}
+        Create exclusive{" "}
+        <span className="text-blue-600 dark:text-blue-500">
+          educator groups
+        </span>{" "}
         for collaborative{" "}
-        <span className="text-blue-600 dark:text-blue-500">quiz creation and assessment</span>
+        <span className="text-blue-600 dark:text-blue-500">
+          quiz creation and assessment
+        </span>
       </h2>
       <br />
 
@@ -107,6 +129,33 @@ export default function ClassRoom() {
       <br />
 
       <div className="create-group-box">
+        {!changeCover ? (
+          <div className="attached-hub-image-container">
+            <img
+              className="attached-hub-image"
+              src={imageUrl}
+              style={{ backgroundPosition: "50%" }}
+            />
+            <button
+              className="hub-image-button"
+              onClick={() => setChangeCover(true)}
+            >
+              Change Cover
+            </button>
+          </div>
+        ) : (
+          <ChangeCover
+            attachedImg={attachedImg}
+            setAttachedImg={setAttachedImg}
+            imageUrl={imageUrl}
+            setImageUrl={setImageUrl}
+            uuid={uuid}
+            setChangeCover={setChangeCover}
+            keyComponent="groups"
+          />
+        )}
+        <br />
+
         <p className="text-lg font-normal text-gray-500 lg:text-xl dark:text-gray-400">
           Set Group name:
         </p>
@@ -178,7 +227,14 @@ export default function ClassRoom() {
         />
         <br />
         <Button onClick={handleCreateGroup}>Create Group</Button>
-        <Button onClick={reset}>Reset Settings</Button>
+        <Button
+          onClick={() => {
+            reset();
+            attachedImg && deleteCoverImage("groups", uuid);
+          }}
+        >
+          Reset Settings
+        </Button>
       </div>
     </div>
   );

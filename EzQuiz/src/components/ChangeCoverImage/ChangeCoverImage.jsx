@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
 import { deleteCoverImage, uploadCover } from "../../services/storage.service";
-import { defaultCoverRoom } from "../../constants/constants";
-import PropTypes from "prop-types"
+import { defaultCoverGroup, defaultCoverRoom } from "../../constants/constants";
+import PropTypes from "prop-types";
 import toast from "react-hot-toast";
-import "./ChangeCover.css"
+import "./ChangeCoverImage.css";
 
 export default function ChangeCover({
   attachedImg,
@@ -30,13 +30,17 @@ export default function ChangeCover({
           setLoading(false);
         });
     }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [attachedImg, uuid]);
 
   const removeAttachedImg = async () => {
     try {
       await deleteCoverImage(keyComponent, uuid);
-      setImageUrl(defaultCoverRoom);
+      if (keyComponent === "rooms") {
+        setImageUrl(defaultCoverRoom);
+      } else if (keyComponent === "groups") {
+        setImageUrl(defaultCoverGroup);
+      }
       setAttachedImg(null);
       setChangeCover(false);
       toast.success("Image has been removed successfully!");
@@ -76,11 +80,11 @@ export default function ChangeCover({
 }
 
 ChangeCover.propTypes = {
-    attachedImg: PropTypes.object,
-    setAttachedImg: PropTypes.func,
-    imageUrl: PropTypes.string,
-    setImageUrl: PropTypes.func,
-    setChangeCover: PropTypes.func,
-    uuid: PropTypes.string,
-    keyComponent: PropTypes.string
-}
+  attachedImg: PropTypes.object,
+  setAttachedImg: PropTypes.func,
+  imageUrl: PropTypes.string,
+  setImageUrl: PropTypes.func,
+  setChangeCover: PropTypes.func,
+  uuid: PropTypes.string,
+  keyComponent: PropTypes.string,
+};

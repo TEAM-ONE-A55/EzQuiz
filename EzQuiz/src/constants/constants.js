@@ -6,29 +6,6 @@ export const defaultAvatar = "https://f4.bcbits.com/img/0031181820_25.jpg";
 export const PHONE_NUMBER = 10;
 export const API_QUIZZES = "gVtXSAjjwt0fKhfFM7g89w==plCrtWo5C8k58YoY";
 
-// export const quizzesEasy = [
-//   "https://opentdb.com/api.php?amount=20&category=10&difficulty=easy&type=multiple",
-//   "https://opentdb.com/api.php?amount=20&category=9&difficulty=easy&type=multiple",
-//   "https://opentdb.com/api.php?amount=20&category=11&difficulty=easy&type=multiple",
-//   "https://opentdb.com/api.php?amount=20&category=12&difficulty=easy&type=multiple",
-//   "https://opentdb.com/api.php?amount=20&category=15&difficulty=easy&type=multiple",
-//   "https://opentdb.com/api.php?amount=10&category=16&difficulty=easy&type=multiple",
-//   "https://opentdb.com/api.php?amount=100&category=17&difficulty=easy&type=multiple",
-//   "https://opentdb.com/api.php?amount=30&category=18&difficulty=easy&type=multiple",
-//   "https://opentdb.com/api.php?amount=8&category=19&difficulty=easy&type=multiple",
-//   "https://opentdb.com/api.php?amount=14&category=20&difficulty=easy&type=multiple",
-//   "https://opentdb.com/api.php?amount=40&category=21&difficulty=easy&type=multiple",
-//   "https://opentdb.com/api.php?amount=150&category=22&difficulty=easy&type=multiple",
-//   "https://opentdb.com/api.php?amount=100&category=23&difficulty=easy&type=multiple",
-//   "https://opentdb.com/api.php?amount=7&category=24&difficulty=easy&type=multiple",
-//   "https://opentdb.com/api.php?amount=10&category=25&difficulty=easy&type=multiple",
-//   "https://opentdb.com/api.php?amount=10&category=26&difficulty=easy&type=multiple",
-//   "https://opentdb.com/api.php?amount=10&category=27&difficulty=easy&type=multiple",
-//   "https://opentdb.com/api.php?amount=10&category=28&difficulty=easy&type=multiple",
-//   "https://opentdb.com/api.php?amount=10&category=29&difficulty=easy&type=multiple",
-//   "https://opentdb.com/api.php?amount=10&category=30&difficulty=easy&type=multiple",
-// ];
-
 export const getCategoryURL = (category, difficulty, amount) => {
   return `https://opentdb.com/api.php?amount=${amount}&category=${category}&difficulty=${difficulty}&type=multiple`;
 };
@@ -84,11 +61,14 @@ export const navigationLogout = [
   { name: "Scoreboard", href: "/scoreboard", current: false },
 ];
 
-export const defaultCoverRoom = "https://img.freepik.com/free-vector/students-watching-recorded-lecture-with-professor-talking-from-tablet_335657-319.jpg?w=2000&t=st=1709673381~exp=1709673981~hmac=098d5b7e2b7c71f82c62d71ce642b30cba6545c3afdd1049b43a7c44f4a0b8f7"
-export const PEXELS_API_KEY = "IBg8l6MOjHfQQO3R0LQ5tNYtWpmJKHHUNqlBADa6nY7KTfUON4rYpDOc"
 export const usersSortingOptions = [
   { label: "Sort by Date {descending)", value: "dateDescending" },
   { label: "Sort by Date {ascending)", value: "dateAscending" },
   { label: "Sort by Username (ascending)", value: "usernameAscending" },
   { label: "Sort by Username (descending)", value: "usernameDescending" },
 ]
+
+
+export const defaultCoverRoom = "https://img.freepik.com/free-vector/students-watching-recorded-lecture-with-professor-talking-from-tablet_335657-319.jpg?w=2000&t=st=1709673381~exp=1709673981~hmac=098d5b7e2b7c71f82c62d71ce642b30cba6545c3afdd1049b43a7c44f4a0b8f7"
+
+export const defaultCoverGroup = "https://images.datacamp.com/image/upload/v1655370004/shutterstock_580917865_b78f6bdc50.jpg"
