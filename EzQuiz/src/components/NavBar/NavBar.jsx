@@ -103,8 +103,16 @@ export default function NavBar() {
       }
     }
 
-    console.log('render')
+    console.log("render");
   }, [userData, rooms, groups]);
+
+  const handleNavigation = (href) => {
+    const updatedNavigation = navigation.map((item) => ({
+      ...item,
+      current: item.href === href,
+    }));
+    setNavigation(updatedNavigation);
+  };
 
   const logout = () => {
     logoutUser();
@@ -151,6 +159,7 @@ export default function NavBar() {
                       <NavLink
                         key={item.name}
                         to={item.href}
+                        onClick={() => handleNavigation(item.href)}
                         className={classNames(
                           item.current
                             ? "bg-gray-900 text-white"

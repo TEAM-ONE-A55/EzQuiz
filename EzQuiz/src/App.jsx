@@ -27,6 +27,8 @@ import MyRooms from "./views/Rooms/MyRooms/MyRooms";
 import SingleRoom from "./views/Rooms/SingleRoom/SingleRoom";
 import AllUsers from "./views/Admin/AllUsers/AllUsers";
 import AllRooms from "./views/Admin/AllRooms/AllRooms";
+import Dashboard from "./views/EducatorDashboard/Dashboard/Dashboard";
+import TeachersLandingPage from "./views/EducatorDashboardView/EducatorDashboardView";
 
 export default function App() {
   const [user] = useAuthState(auth);
@@ -114,7 +116,7 @@ export default function App() {
                 </Authenticated>
               }
             ></Route>
-             <Route
+            <Route
               path="/my-rooms/:id"
               element={
                 <Authenticated>
@@ -126,7 +128,19 @@ export default function App() {
               path="/dashboard"
               element={
                 <Authenticated>
-                  <StudentsDashboard />
+                  <Dashboard>
+                    <StudentsDashboard />
+                  </Dashboard>
+                </Authenticated>
+              }
+            ></Route>
+            <Route
+              path="/dashboard-educators"
+              element={
+                <Authenticated>
+                  <Dashboard>
+                    <TeachersLandingPage />
+                  </Dashboard>
                 </Authenticated>
               }
             ></Route>
@@ -139,23 +153,21 @@ export default function App() {
               }
             ></Route>
             <Route
-            path="all-users"
-            element={
-              <Authenticated> 
-                <AllUsers />
-              </Authenticated>
-            }
-            >
-            </Route>
+              path="all-users"
+              element={
+                <Authenticated>
+                  <AllUsers />
+                </Authenticated>
+              }
+            ></Route>
             <Route
-            path="all-rooms"
-            element={
-              <Authenticated> 
-                <AllRooms />
-              </Authenticated>
-            }
-            >
-            </Route>
+              path="all-rooms"
+              element={
+                <Authenticated>
+                  <AllRooms />
+                </Authenticated>
+              }
+            ></Route>
           </Routes>
           <Footer />
         </AppContext.Provider>

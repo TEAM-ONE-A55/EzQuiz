@@ -30,20 +30,17 @@ export const quizAmountSample = [5, 10, 15, 20]
 export const verificationCode = "1234";
 
 export const navigationEducator = [
-  { name: "Dashboard", href: "/educator-dashboard", current: true },
+  { name: "Dashboard", href: "/dashboard-educators", current: true },
   { name: "Browse Quizzes", href: "/browse-quizzes", current: false },
-  { name: "My Rooms", href: "/my-rooms", current: false },
-  { name: "My Quizzes", href: "/my-quizzes", current: false },
-  { name: "Create Room", href: "/create-room", current: false },
   { name: "Create Quiz", href: "/create-quiz", current: false },
+  { name: "Create Room", href: "/create-room", current: false },
+  { name: "Create Group", href: "/create-group", current: false },
 ];
 
 export const navigationParticipant = [
   { name: "Dashboard", href: "/dashboard", current: true },
   { name: "Browse Quizzes", href: "/browse-quizzes", current: false },
   { name: "Sample Quiz", href: "/sample-quiz", current: false },
-  { name: "My Rooms", href: "/my-rooms", current: false },
-  { name: "Scoreboard", href: "/scoreboard", current: false },
 ];
 
 export const navigationAdmin = [
@@ -62,10 +59,10 @@ export const navigationLogout = [
 ];
 
 export const usersSortingOptions = [
-  { label: "Sort by Date {descending)", value: "dateDescending" },
-  { label: "Sort by Date {ascending)", value: "dateAscending" },
-  { label: "Sort by Username (ascending)", value: "usernameAscending" },
-  { label: "Sort by Username (descending)", value: "usernameDescending" },
+  { label: "Sort by Date (Z-A)", value: "dateDescending" },
+  { label: "Sort by Date (A-Z)", value: "dateAscending" },
+  { label: "Sort by Username (A-Z)", value: "usernameAscending" },
+  { label: "Sort by Username (Z-A)", value: "usernameDescending" },
 ]
 
 

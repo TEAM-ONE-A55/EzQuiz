@@ -1,6 +1,6 @@
 import Button from "../../components/Button/Button";
 
-export default function TeachersLandingPage() {
+export default function EducatorDashboardView() {
   
   return (
     <div>

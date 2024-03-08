@@ -1,7 +1,7 @@
 import { useContext } from "react";
 import { AppContext } from "../../context/AppContext";
 import StudentsLandingPage from "../Students Landing Page/Students-Dashboard";
-import TeachersLandingPage from "../Teachers Landing Page/TeachersLandingPage";
+import TeachersLandingPage from "../EducatorDashboardView/EducatorDashboardView";
 import Login from "../Login/Login";
 import AllUsers from "../Admin/AllUsers/AllUsers";
 
@@ -13,12 +13,10 @@ export default function Home() {
       {userData ? (
         userData.role === "admin" ? (
           <AllUsers />
+        ) : userData.role === "educator" ? (
+          <TeachersLandingPage />
         ) : (
-          userData.role === "educator" ? (
-            <TeachersLandingPage />
-          ) : (
-            <StudentsLandingPage />
-          )
+          <StudentsLandingPage />
         )
       ) : (
         <Login />
