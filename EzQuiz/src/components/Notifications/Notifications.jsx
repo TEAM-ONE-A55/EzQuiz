@@ -30,6 +30,17 @@ export default function Notifications({ notifications, setNotifications }) {
     }));
   };
 
+  const declineInvitation = async (e) => {
+    const id = e.target.parentNode.id;
+    await updateHub("rooms", id, "participants", userData.handle, "declined");  
+    setNotifications((prevNotifications) => ({
+      ...prevNotifications,
+      roomInvitations: prevNotifications.roomInvitations.filter(
+        (invitation) => invitation.id !== id
+      ),
+    }));
+  }
+
   return (
     <Menu as="div" className="relative ml-3">
       <div>
@@ -78,6 +89,9 @@ export default function Notifications({ notifications, setNotifications }) {
                         <span
                           className="material-symbols-outlined"
                           style={{ color: "#970C10" }}
+                          onClick={(e) => {
+                            declineInvitation(e);
+                          }}
                         >
                           cancel
                         </span>
