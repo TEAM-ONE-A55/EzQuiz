@@ -21,14 +21,15 @@ import Authenticated from "./hoc/Authenticated/Authenticated";
 import CreateRoom from "./views/EducatorDashboard/CreateRoom/CreateRoom";
 import CreateGroup from "./views/EducatorDashboard/CreateGroup/CreateGroup";
 import NavBar from "./components/NavBar/NavBar";
-import StudentsDashboard from "./views/Students Landing Page/Students-Dashboard";
 import Scoreboards from "./views/Scoreboard/Scoreboards";
 import MyRooms from "./views/Rooms/MyRooms/MyRooms";
 import SingleRoom from "./views/Rooms/SingleRoom/SingleRoom";
 import AllUsers from "./views/Admin/AllUsers/AllUsers";
 import AllRooms from "./views/Admin/AllRooms/AllRooms";
-import Dashboard from "./views/EducatorDashboard/Dashboard/Dashboard";
-import TeachersLandingPage from "./views/EducatorDashboardView/EducatorDashboardView";
+import Dashboard from "./components/Dashboard/Dashboard";
+import StudentsDashboard from "./views/StudentsDashboard/StudentsDashboard";
+import EducatorDashboard from "./views/EducatorDashboard/EducatorDashboard/EducatorDashboard";
+
 
 export default function App() {
   const [user] = useAuthState(auth);
@@ -139,7 +140,7 @@ export default function App() {
               element={
                 <Authenticated>
                   <Dashboard>
-                    <TeachersLandingPage />
+                    <EducatorDashboard />
                   </Dashboard>
                 </Authenticated>
               }

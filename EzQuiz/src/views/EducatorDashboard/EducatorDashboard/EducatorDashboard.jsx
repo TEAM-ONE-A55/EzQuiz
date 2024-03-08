@@ -1,10 +1,8 @@
-import Button from "../../components/Button/Button";
+import Button from "../../../components/Button/Button";
 
-export default function EducatorDashboardView() {
-  
+export default function EducatorDashboard() {
   return (
     <div>
-
       <div>
         <h2>Create a Quiz</h2>
         <Button onClick={() => {}}>Add Quiz</Button>
@@ -17,7 +15,6 @@ export default function EducatorDashboardView() {
         <p>Gosho</p>
         <p>Stamat</p>
       </div>
-
     </div>
   );
 }
