@@ -31,6 +31,7 @@ export default function NavBar() {
     feedback: [],
   });
   const [rooms, setRooms] = useState([]);
+  const [groups, setGroups] = useState([]);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -46,6 +47,7 @@ export default function NavBar() {
       setNavigation(navigationLogout);
     }
     getAllHubs("rooms").then(setRooms);
+    getAllHubs("groups").then(setGroups);
   }, [user, userData]);
 
   useEffect(() => {
@@ -73,8 +75,36 @@ export default function NavBar() {
           ],
         }));
       }
+
+      if (userData && groups.length > 0) {
+        const newGroupInvitations = groups.reduce((acc, group) => {
+          if (
+            group.participants &&
+            Object.keys(group.participants).includes(userData.handle) &&
+            group.participants[userData.handle] === "pending" &&
+            !notifications.groupInvitations.some(
+              (invitation) => invitation.id === group.id
+            )
+          ) {
+            return [...acc, group];
+          }
+          return acc;
+        }, []);
+
+        if (newGroupInvitations.length > 0) {
+          setNotifications((prevNotifications) => ({
+            ...prevNotifications,
+            groupInvitations: [
+              ...prevNotifications.groupInvitations,
+              ...newGroupInvitations,
+            ],
+          }));
+        }
+      }
     }
-  }, [userData, rooms]);
+
+    console.log('render')
+  }, [userData, rooms, groups]);
 
   const logout = () => {
     logoutUser();
