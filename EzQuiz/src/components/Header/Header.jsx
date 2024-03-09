@@ -28,6 +28,7 @@ export default function Header() {
             <NavLink to="/scoreboard">Scoreboard</NavLink> &nbsp;
             <NavLink to="/groups">Groups</NavLink> &nbsp;
             <NavLink to="/profile">Profile</NavLink> &nbsp;
+            <NavLink to="/create-quiz">Create Quiz</NavLink>
           </nav>
         </>
       ) : (

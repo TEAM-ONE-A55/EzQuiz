@@ -1,0 +1,9 @@
+.create-quiz input {
+    color: black;
+}
+
+.create-quiz button {
+    background-color: black;
+    color: white;
+    padding: .2em;
+}

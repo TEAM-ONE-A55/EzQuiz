@@ -5,4 +5,4 @@ export const shuffleArray = (array) => {
       [newArray[i], newArray[j]] = [newArray[j], newArray[i]];
     }
     return newArray;
-  };
+};

@@ -12,10 +12,8 @@ import Login from "./views/Login/Login";
 import Registration from "./views/Registration/Registration";
 import SingleQuiz from "./views/Quizzes/SingleQuiz/SingleQuiz";
 import SampleQuiz from "./views/Quizzes/SampleQuiz/SampleQuiz";
-import {
-  defaultQuizAmountSample,
-  defaultQuizDifficultySamle,
-} from "./constants/constants";
+import CreateQuiz from "./views/Quizzes/CreateQuiz/CreateQuiz";
+import { defaultQuizAmountSample, defaultQuizDifficultySamle } from "./constants/constants";
 import Profile from "./views/Profile/Profile";
 import Authenticated from "./hoc/Authenticated/Authenticated";
 import CreateRoom from "./views/EducatorDashboard/CreateRoom/CreateRoom";
@@ -136,6 +134,10 @@ export default function App() {
                 </Authenticated>
               }
             ></Route>
+            <Route path="/sample-quiz/:id" element={<SingleQuiz difficulty={difficulty} setDifficulty={setDifficulty} quizAmount={quizAmount} setQuizAmount={setQuizAmount}/>}></Route>
+            <Route path="/sample-quiz" element={<SampleQuiz setDifficulty={setDifficulty} setQuizAmount={setQuizAmount}/>}></Route>
+            <Route path = "/profile" element = {<Authenticated><Profile/></Authenticated>}></Route>
+            <Route path = "/create-quiz" element = {<Authenticated><CreateQuiz/></Authenticated>}></Route>
           </Routes>
           <Footer />
         </AppContext.Provider>

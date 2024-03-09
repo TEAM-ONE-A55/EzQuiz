@@ -44,11 +44,13 @@ export const defaultCategorySample = "9";
 
 export const defaultQuizAmountSample = "5";
 
-export const defaultQuizDifficultySamle = "easy"
+export const defaultQuizDifficultySamle = "easy";
 
-export const difficultyOptionsSample = ['Easy', 'Medium', 'Hard']
+export const difficultyOptionsSample = ['Easy', 'Medium', 'Hard'];
 
-export const quizAmountSample = [5, 10, 15, 20]
+export const quizVisibilityOptions = ['Public', 'Private'];
+
+export const quizAmountSample = [5, 10, 15, 20];
 
 export const verificationCode = "1234";
 
