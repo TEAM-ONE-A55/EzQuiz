@@ -1,31 +1,18 @@
-import PropTypes from "prop-types";
-import { useState } from "react";
 import { difficultyOptionsSample } from "../../constants/constants";
+import PropTypes from "prop-types";
+import Select from "react-select";
 
 export function QuizDifficulty({ setDifficulty }) {
 
-  const [selectedDifficulty, setSelectedDifficulty] = useState("");
-
-  const handleDifficultyChange = (e) => {
-    setSelectedDifficulty(e.target.value);
-    setDifficulty(e.target.value);
-  };
-
   return (
-    <div className="select-container">
-      <select
-        value={selectedDifficulty}
-        onChange={(e) => handleDifficultyChange(e)}
-      >
-        {difficultyOptionsSample.map((value, index) => {
-          return (
-            <option value={value} key={index}>
-              {value}
-            </option>
-          );
+      <Select
+        id="difficulty-dropdown-select"
+        options={difficultyOptionsSample.map((option) => {
+            return { value: option, label: option };
         })}
-      </select>
-    </div>
+        onChange={(e) => setDifficulty(e.value.toLowerCase())}
+        className="basic-multi-select w-64 mx-auto"
+      />
   );
 }
 
