@@ -1,31 +1,18 @@
-import PropTypes from "prop-types";
-import { useState } from "react";
 import { quizAmountSample } from "../../constants/constants";
+import PropTypes from "prop-types";
+import Select from "react-select";
 
 export function QuizAmount({ setQuizAmount }) {
 
-  const [selectedQuizAmount, setSelectedQuizAmount] = useState("");
-
-  const handleQuizAmountChange = (e) => {
-    setSelectedQuizAmount(e.target.value);
-    setQuizAmount(e.target.value);
-  };
-
   return (
-    <div className="select-container">
-      <select
-        value={selectedQuizAmount}
-        onChange={(e) => handleQuizAmountChange(e)}
-      >
-        {quizAmountSample.map((value, index) => {
-          return (
-            <option value={value} key={index}>
-              {value}
-            </option>
-          );
+      <Select
+        id="question-amount-dropdown-select"
+        options={quizAmountSample.map((option) => {
+            return { value: option, label: option };
         })}
-      </select>
-    </div>
+        onChange={(e) => setQuizAmount(e.value)}
+        className="basic-multi-select w-64 mx-auto"
+      />
   );
 }
 
