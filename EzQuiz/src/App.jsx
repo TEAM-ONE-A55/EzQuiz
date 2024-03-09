@@ -29,7 +29,8 @@ import AllRooms from "./views/Admin/AllRooms/AllRooms";
 import Dashboard from "./components/Dashboard/Dashboard";
 import StudentsDashboard from "./views/StudentsDashboard/StudentsDashboard";
 import EducatorDashboard from "./views/EducatorDashboard/EducatorDashboard/EducatorDashboard";
-
+import NotFound from "./views/NotFound/NotFound";
+import Forbidden from "./views/Forbidden/Forbidden";
 
 export default function App() {
   const [user] = useAuthState(auth);
@@ -97,7 +98,13 @@ export default function App() {
               path="/create-room"
               element={
                 <Authenticated>
-                  <CreateRoom />
+                   {context &&
+                  context.userData &&
+                  context.userData.role === "educator" ? (
+                    <CreateRoom />
+                  ) : (
+                    <Forbidden />
+                  )}
                 </Authenticated>
               }
             ></Route>
@@ -105,7 +112,13 @@ export default function App() {
               path="/create-group"
               element={
                 <Authenticated>
-                  <CreateGroup />
+                  {context &&
+                  context.userData &&
+                  context.userData.role === "educator" ? (
+                    <CreateGroup />
+                  ) : (
+                    <Forbidden />
+                  )}
                 </Authenticated>
               }
             ></Route>
@@ -129,9 +142,15 @@ export default function App() {
               path="/dashboard"
               element={
                 <Authenticated>
-                  <Dashboard>
-                    <StudentsDashboard />
-                  </Dashboard>
+                  {context &&
+                  context.userData &&
+                  context.userData.role === "student" ? (
+                    <Dashboard>
+                      <StudentsDashboard />
+                    </Dashboard>
+                  ) : (
+                    <Forbidden />
+                  )}
                 </Authenticated>
               }
             ></Route>
@@ -139,25 +158,30 @@ export default function App() {
               path="/dashboard-educators"
               element={
                 <Authenticated>
-                  <Dashboard>
-                    <EducatorDashboard />
-                  </Dashboard>
+                  {context &&
+                  context.userData &&
+                  context.userData.role === "educator" ? (
+                    <Dashboard>
+                      <EducatorDashboard />
+                    </Dashboard>
+                  ) : (
+                    <Forbidden />
+                  )}
                 </Authenticated>
               }
             ></Route>
-            <Route
-              path="scoreboard"
-              element={
-                <Authenticated>
-                  <Scoreboards />
-                </Authenticated>
-              }
-            ></Route>
+            <Route path="scoreboard" element={<Scoreboards />}></Route>
             <Route
               path="all-users"
               element={
                 <Authenticated>
-                  <AllUsers />
+                  {context &&
+                  context.userData &&
+                  context.userData.role === "admin" ? (
+                    <AllUsers />
+                  ) : (
+                    <Forbidden />
+                  )}
                 </Authenticated>
               }
             ></Route>
@@ -165,10 +189,18 @@ export default function App() {
               path="all-rooms"
               element={
                 <Authenticated>
-                  <AllRooms />
+                  {context &&
+                  context.userData &&
+                  context.userData.role === "admin" ? (
+                    <AllRooms />
+                  ) : (
+                    <Forbidden />
+                  )}
                 </Authenticated>
               }
             ></Route>
+            <Route path="*" element={<NotFound />} />
+            <Route path="/unauthorized" element={<Forbidden />} />
           </Routes>
           <Footer />
         </AppContext.Provider>
