@@ -27,7 +27,7 @@ export const difficultyOptionsSample = ['Easy', 'Medium', 'Hard'];
 
 export const quizVisibilityOptions = ['Public', 'Private'];
 
-export const quizAmountSample = [5, 10, 15, 20];
+export const quizAmountSample = ["5", "10", "15", "20"];
 
 export const verificationCode = "1234";
 
