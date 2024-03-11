@@ -1,14 +1,13 @@
-import { useContext, useEffect, useState } from "react";
-import { getAllUsers, getUserByHandle } from "../../../services/user.service";
+import { useEffect, useState } from "react";
+import { getAllUsers } from "../../../services/user.service";
 import { changeRole, deleteUser } from "../../../services/admin-functions";
-import { AppContext } from "../../../context/AppContext";
 import toast from "react-hot-toast";
 import SortingDropdown from "../../../components/Dropdown/Dropdown";
 import { usersSortingOptions } from "../../../constants/constants";
 import { sortUsers } from "../../../services/sorting-functions";
+import { useNavigate } from "react-router";
 
 export default function AllUsers() {
-  const { userData } = useContext(AppContext);
   const [users, setUsers] = useState([]);
   const [user, setUser] = useState({});
   const [usersSortBy, setUsersSortBy] = useState("dateDescending");
@@ -19,19 +18,15 @@ export default function AllUsers() {
       .then((userData) => setUsers(userData));
   }, [user]);
 
-  useEffect(() => {}, [user]);
+  const navigate = useNavigate();
 
-  const getUser = async (handle) => {
-    const user = await getUserByHandle(handle);
-    const userData = user.val();
-    setUser(userData);
-  };
+  useEffect(() => {}, [user]);
 
   const handleUsersSortChange = (sortBy) => {
     setUsersSortBy(sortBy);
   };
 
-  const removeUser = async (handle) => {
+   const removeUser = async (handle) => {
     try {
       await deleteUser(handle);
       setUsers(users.filter((user) => user.handle !== handle));
@@ -102,6 +97,11 @@ export default function AllUsers() {
                     >
                       Delete
                     </button>
+                    <button
+                      onClick={() => {
+                        navigate(`/profile/${user.handle}`);
+                      }}
+                    >See profile</button>
                   </span>
                 )}
               </tr>
