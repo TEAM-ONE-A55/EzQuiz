@@ -29,6 +29,8 @@ import StudentsDashboard from "./views/StudentsDashboard/StudentsDashboard";
 import EducatorDashboard from "./views/EducatorDashboard/EducatorDashboard/EducatorDashboard";
 import NotFound from "./views/NotFound/NotFound";
 import Forbidden from "./views/Forbidden/Forbidden";
+import Search from "./components/Search/Search";
+import PublicProfile from "./views/Public Profile/PublicProfile";
 
 export default function App() {
   const [user] = useAuthState(auth);
@@ -203,6 +205,9 @@ export default function App() {
             <Route path="/sample-quiz" element={<SampleQuiz setDifficulty={setDifficulty} setQuizAmount={setQuizAmount}/>}></Route>
             <Route path = "/profile" element = {<Authenticated><Profile/></Authenticated>}></Route>
             <Route path = "/create-quiz" element = {<Authenticated><CreateQuiz/></Authenticated>}></Route>
+            <Route path="/search" element = {<Authenticated><Search/></Authenticated>}></Route>
+            <Route path="/profile/:handle" element = {<Authenticated><PublicProfile></PublicProfile></Authenticated>}></Route>
+            <Route path="search/profile/:handle" element = {<Authenticated><PublicProfile></PublicProfile></Authenticated>}></Route>
           </Routes>
           <Footer />
         </AppContext.Provider>
