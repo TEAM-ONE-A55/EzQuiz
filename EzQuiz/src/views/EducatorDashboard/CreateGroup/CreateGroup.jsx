@@ -33,9 +33,9 @@ export default function CreateGroup() {
   useEffect(() => {
     getAllUsers()
       .then((users) => users.map((user) => user.val()))
-      .then((userData) => userData.filter((u) => u.role === "educator"))
-      .then((userData) =>
-        setUsers(userData.map((u) => ({ value: u.handle, label: u.handle })))
+      .then((data) => data.filter((u) => u.role === "educator" && userData.handle !== u.handle))
+      .then((data) =>
+        setUsers(data.map((u) => ({ value: u.handle, label: u.handle })))
       )
 
       .catch((error) => console.log(error));
