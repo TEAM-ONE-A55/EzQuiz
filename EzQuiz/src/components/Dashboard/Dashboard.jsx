@@ -100,7 +100,7 @@ export default function Dashboard({ children }) {
                 >
                   <div className="grid place-items-center mr-4">
                     <span className="material-symbols-outlined">
-                      note_stack
+                    manage_accounts
                     </span>
                   </div>
                   Users
@@ -134,7 +134,7 @@ export default function Dashboard({ children }) {
                 >
                   <div className="grid place-items-center mr-4">
                     <span className="material-symbols-outlined">
-                      note_stack
+                      group
                     </span>
                   </div>
                   Groups
@@ -151,7 +151,7 @@ export default function Dashboard({ children }) {
                 >
                   <div className="grid place-items-center mr-4">
                     <span className="material-symbols-outlined">
-                      note_stack
+                      school
                     </span>
                   </div>
                   Rooms
@@ -168,7 +168,7 @@ export default function Dashboard({ children }) {
                 >
                   <div className="grid place-items-center mr-4">
                     <span className="material-symbols-outlined">
-                      note_stack
+                    kid_star
                     </span>
                   </div>
                   Scoreboard
@@ -183,6 +183,6 @@ export default function Dashboard({ children }) {
   );
 }
 
-// Dashboard.propTypes = {
-//   children: PropTypes.node
-// };
+Dashboard.propTypes = {
+  children: PropTypes.node
+};
