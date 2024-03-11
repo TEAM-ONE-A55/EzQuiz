@@ -35,6 +35,7 @@ import Forbidden from "./views/Forbidden/Forbidden";
 import Search from "./components/Search/Search";
 import PublicProfile from "./views/Public Profile/PublicProfile";
 import AllGroups from "./views/Admin/AllGroups/AllGroups";
+import AdminDashboard from "./views/Admin/AdminDashboard/AdminDashboard";
 
 export default function App() {
   const [user] = useAuthState(auth);
@@ -190,6 +191,22 @@ export default function App() {
               }
             ></Route>
             <Route
+              path="dashboard-admin"
+              element={
+                <Authenticated>
+                  {context &&
+                  context.userData &&
+                  context.userData.role === "admin" ? (
+                    <Dashboard>
+                      <AdminDashboard />
+                    </Dashboard>
+                  ) : (
+                    <Forbidden />
+                  )}
+                </Authenticated>
+              }
+            ></Route>
+            <Route
               path="all-rooms"
               element={
                 <Authenticated>
@@ -284,20 +301,19 @@ export default function App() {
               }
             ></Route>
             <Route
-            path="/all-groups"
-            element={
-              <Authenticated>
-                {context &&
-                context.userData &&
-                context.userData.role === "admin" ? (
-                  <AllGroups />
-                ) : (
-                  <Forbidden />
-                )}
-              </Authenticated>
-            }
-            >
-            </Route>
+              path="/all-groups"
+              element={
+                <Authenticated>
+                  {context &&
+                  context.userData &&
+                  context.userData.role === "admin" ? (
+                    <AllGroups />
+                  ) : (
+                    <Forbidden />
+                  )}
+                </Authenticated>
+              }
+            ></Route>
             <Route
               path="all-groups/profile/:handle"
               element={

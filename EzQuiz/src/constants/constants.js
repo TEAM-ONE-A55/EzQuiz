@@ -34,6 +34,7 @@ export const verificationCode = "1234";
 export const navigationEducator = [
   { name: "Dashboard", href: "/dashboard-educators", current: true },
   { name: "Browse Quizzes", href: "/browse-quizzes", current: false },
+  { name: "Sample Quiz", href: "/sample-quiz", current: false },
   { name: "Create Quiz", href: "/create-quiz", current: false },
   { name: "Create Room", href: "/create-room", current: false },
   { name: "Create Group", href: "/create-group", current: false },
@@ -46,11 +47,9 @@ export const navigationParticipant = [
 ];
 
 export const navigationAdmin = [
-  { name: "All Quizzes", href: "/all-quizzes", current: false },
-  { name: "All Users", href: "/all-users", current: true },
-  { name: "All Rooms", href: "/all-rooms", current: false },
-  { name: "All Groups", href: "/all-groups", current: false },
-  { name: "Scoreboard", href: "/scoreboard", current: false },
+  { name: "Dashboard", href: "/dashboard-admin", current: false },
+  { name: "Browse Quizzes", href: "/browse-quizzes", current: false },
+  { name: "Sample Quiz", href: "/sample-quiz", current: false },
   { name: "Search", href: "/search", current: false },
 ]
 
