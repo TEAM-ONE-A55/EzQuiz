@@ -34,6 +34,7 @@ import NotFound from "./views/NotFound/NotFound";
 import Forbidden from "./views/Forbidden/Forbidden";
 import Search from "./components/Search/Search";
 import PublicProfile from "./views/Public Profile/PublicProfile";
+import AllGroups from "./views/Admin/AllGroups/AllGroups";
 
 export default function App() {
   const [user] = useAuthState(auth);
@@ -270,6 +271,35 @@ export default function App() {
             ></Route>
             <Route
               path="search/profile/:handle"
+              element={
+                <Authenticated>
+                  {context &&
+                  context.userData &&
+                  context.userData.role === "admin" ? (
+                    <PublicProfile />
+                  ) : (
+                    <Forbidden />
+                  )}
+                </Authenticated>
+              }
+            ></Route>
+            <Route
+            path="/all-groups"
+            element={
+              <Authenticated>
+                {context &&
+                context.userData &&
+                context.userData.role === "admin" ? (
+                  <AllGroups />
+                ) : (
+                  <Forbidden />
+                )}
+              </Authenticated>
+            }
+            >
+            </Route>
+            <Route
+              path="all-groups/profile/:handle"
               element={
                 <Authenticated>
                   {context &&
