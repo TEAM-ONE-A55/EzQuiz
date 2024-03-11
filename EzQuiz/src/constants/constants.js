@@ -67,6 +67,12 @@ export const usersSortingOptions = [
   { label: "Sort by Username (Z-A)", value: "usernameDescending" },
 ]
 
+export const searchingOptions = [
+  { label: "Users", value: "users"},
+  { label: "Rooms", value: "rooms"},
+  { label: "Groups", value: "groups"}
+]
+
 
 export const defaultCoverRoom = "https://img.freepik.com/free-vector/students-watching-recorded-lecture-with-professor-talking-from-tablet_335657-319.jpg?w=2000&t=st=1709673381~exp=1709673981~hmac=098d5b7e2b7c71f82c62d71ce642b30cba6545c3afdd1049b43a7c44f4a0b8f7"
 
