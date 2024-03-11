@@ -13,7 +13,10 @@ import Registration from "./views/Registration/Registration";
 import SingleQuiz from "./views/Quizzes/SingleQuiz/SingleQuiz";
 import SampleQuiz from "./views/Quizzes/SampleQuiz/SampleQuiz";
 import CreateQuiz from "./views/Quizzes/CreateQuiz/CreateQuiz";
-import { defaultQuizAmountSample, defaultQuizDifficultySamle } from "./constants/constants";
+import {
+  defaultQuizAmountSample,
+  defaultQuizDifficultySamle,
+} from "./constants/constants";
 import Profile from "./views/Profile/Profile";
 import Authenticated from "./hoc/Authenticated/Authenticated";
 import CreateRoom from "./views/EducatorDashboard/CreateRoom/CreateRoom";
@@ -98,7 +101,7 @@ export default function App() {
               path="/create-room"
               element={
                 <Authenticated>
-                   {context &&
+                  {context &&
                   context.userData &&
                   context.userData.role === "educator" ? (
                     <CreateRoom />
@@ -201,13 +204,84 @@ export default function App() {
             ></Route>
             <Route path="*" element={<NotFound />} />
             <Route path="/unauthorized" element={<Forbidden />} />
-            <Route path="/sample-quiz/:id" element={<SingleQuiz difficulty={difficulty} setDifficulty={setDifficulty} quizAmount={quizAmount} setQuizAmount={setQuizAmount}/>}></Route>
-            <Route path="/sample-quiz" element={<SampleQuiz setDifficulty={setDifficulty} setQuizAmount={setQuizAmount}/>}></Route>
-            <Route path = "/profile" element = {<Authenticated><Profile/></Authenticated>}></Route>
-            <Route path = "/create-quiz" element = {<Authenticated><CreateQuiz/></Authenticated>}></Route>
-            <Route path="/search" element = {<Authenticated><Search/></Authenticated>}></Route>
-            <Route path="/profile/:handle" element = {<Authenticated><PublicProfile></PublicProfile></Authenticated>}></Route>
-            <Route path="search/profile/:handle" element = {<Authenticated><PublicProfile></PublicProfile></Authenticated>}></Route>
+            <Route
+              path="/sample-quiz/:id"
+              element={
+                <SingleQuiz
+                  difficulty={difficulty}
+                  setDifficulty={setDifficulty}
+                  quizAmount={quizAmount}
+                  setQuizAmount={setQuizAmount}
+                />
+              }
+            ></Route>
+            <Route
+              path="/sample-quiz"
+              element={
+                <SampleQuiz
+                  setDifficulty={setDifficulty}
+                  setQuizAmount={setQuizAmount}
+                />
+              }
+            ></Route>
+            <Route
+              path="/profile"
+              element={
+                <Authenticated>
+                  <Profile />
+                </Authenticated>
+              }
+            ></Route>
+            <Route
+              path="/create-quiz"
+              element={
+                <Authenticated>
+                  <CreateQuiz />
+                </Authenticated>
+              }
+            ></Route>
+            <Route
+              path="/search"
+              element={
+                <Authenticated>
+                  {context &&
+                  context.userData &&
+                  context.userData.role === "admin" ? (
+                    <Search />
+                  ) : (
+                    <Forbidden />
+                  )}
+                </Authenticated>
+              }
+            ></Route>
+            <Route
+              path="/profile/:handle"
+              element={
+                <Authenticated>
+                  {context &&
+                  context.userData &&
+                  context.userData.role === "admin" ? (
+                    <PublicProfile />
+                  ) : (
+                    <Forbidden />
+                  )}
+                </Authenticated>
+              }
+            ></Route>
+            <Route
+              path="search/profile/:handle"
+              element={
+                <Authenticated>
+                  {context &&
+                  context.userData &&
+                  context.userData.role === "admin" ? (
+                    <PublicProfile />
+                  ) : (
+                    <Forbidden />
+                  )}
+                </Authenticated>
+              }
+            ></Route>
           </Routes>
           <Footer />
         </AppContext.Provider>
