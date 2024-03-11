@@ -31,14 +31,23 @@ export default function CreateRoom() {
   const [uuid, setUuid] = useState(v4());
 
   useEffect(() => {
-    getAllUsers()
-      .then((users) => users.map((user) => user.val()))
-      .then((userData) => userData.filter((u) => u.role !== "educator"))
-      .then((userData) =>
-        setUsers(userData.map((u) => ({ value: u.handle, label: u.handle })))
-      )
+    if (userData && userData.handle) {
+      getAllUsers()
+        .then((users) => users.map((user) => user.val()))
+        .then((userData) =>
+          userData.filter(
+            (u) =>
+              u.role !== "educator" &&
+              u.role !== "admin" &&
+              u.handle !== userData.handle
+          )
+        )
+        .then((userData) =>
+          setUsers(userData.map((u) => ({ value: u.handle, label: u.handle })))
+        )
 
-      .catch((error) => console.log(error));
+        .catch((error) => console.log(error));
+    }
   }, []);
 
   const handleOnChange = (key) => (e) => {
