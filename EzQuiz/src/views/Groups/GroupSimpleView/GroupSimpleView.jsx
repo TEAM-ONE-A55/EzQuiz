@@ -56,23 +56,7 @@ export default function GroupSimpleView() {
   }
 
   if (!hasGroups && !loading) {
-    return (
-      <div className="my-groups-main">
-        <h3>You don&apos;t have any groups yet.</h3>
-        <br />
-        <h4>Possible actions:</h4>
-        <p>
-          Create a Group: If you haven&apos;t created any groups yet, you can
-          start by creating one. Click on the &quot;Create Group&quot; button to
-          initiate the process.
-        </p>
-        <p>
-          Join a Group: If you&apos;ve been invited to join a group, make sure
-          to accept the invitation. Check your notifications or invitations to
-          see if there are any pending group invites.
-        </p>
-      </div>
-    );
+    return null
   }
 
   return (

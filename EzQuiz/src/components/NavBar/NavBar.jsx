@@ -102,8 +102,6 @@ export default function NavBar() {
         }
       }
     }
-
-    console.log("render");
   }, [userData, rooms, groups]);
 
   const handleNavigation = (href) => {
