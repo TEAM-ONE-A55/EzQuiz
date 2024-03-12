@@ -36,6 +36,7 @@ import Search from "./components/Search/Search";
 import PublicProfile from "./views/Public Profile/PublicProfile";
 import AllGroups from "./views/Admin/AllGroups/AllGroups";
 import AdminDashboard from "./views/Admin/AdminDashboard/AdminDashboard";
+import BrowseQuizzes from "./views/Quizzes/BrowseQuizzes/BrowseQuizzes";
 
 export default function App() {
   const [user] = useAuthState(auth);
@@ -328,6 +329,7 @@ export default function App() {
                 </Authenticated>
               }
             ></Route>
+            <Route path="browse-quizzes" element={<BrowseQuizzes />} />
           </Routes>
           <Footer />
         </AppContext.Provider>
