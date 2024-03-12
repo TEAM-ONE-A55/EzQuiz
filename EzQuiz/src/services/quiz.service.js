@@ -1,6 +1,6 @@
 import toast from "react-hot-toast";
 import { db } from "../config/firebase.config";
-import { ref, push } from "firebase/database";
+import { ref, push, get, query, orderByChild } from "firebase/database";
 import { shuffleArray } from "./helper.js";
 
 export const uploadQuizToDatabase = async (quiz) => {
@@ -24,4 +24,16 @@ export const uploadQuizToDatabase = async (quiz) => {
         console.error(e.message);
         return toast.error("Error uploading quiz");
     }
-}
+};
+
+export const getAllQuizzesFromDatabase = async (key = "createdOn") => {
+    const snapshot = await get(query(ref(db, "quizzes"), orderByChild(key)));
+    if (!snapshot.exists()) {
+      return [];
+    }
+    const quizzes = Object.keys(snapshot.val()).map((key) => ({
+      id: key,
+      ...snapshot.val()[key],
+    }));
+    return quizzes;
+};
