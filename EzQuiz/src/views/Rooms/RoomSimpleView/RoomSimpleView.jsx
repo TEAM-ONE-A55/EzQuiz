@@ -1,15 +1,72 @@
-import { getAllHubs } from "../../../services/hub.service";
-import { useEffect, useState } from "react";
+import { getHubsById } from "../../../services/hub.service";
+import { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router";
 import "./RoomSimpleView.css";
+import { AppContext } from "../../../context/AppContext";
+import { getUserByHandle } from "../../../services/user.service";
+import Loader from "../../../components/Loader/Loader";
 
 export default function RoomSimpleView() {
+  // const [rooms, setRooms] = useState([]);
+  // const navigate = useNavigate();
+
+  // useEffect(() => {
+  //   getAllHubs("rooms").then(setRooms);
+  // }, []);
+
+
+  const { userData } = useContext(AppContext);
   const [rooms, setRooms] = useState([]);
+  const [roomsIds, setRoomsIds] = useState([]);
+  const [hasRooms, setHasRooms] = useState(false);
+  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
   useEffect(() => {
-    getAllHubs("rooms").then(setRooms);
+    setLoading(true);
+    getUserByHandle(userData.handle)
+      .then((snapshot) => {
+        const availableRooms = snapshot.val().rooms;
+
+        setRoomsIds(Object.keys(availableRooms));
+        setHasRooms(true);
+      })
+      .catch((e) => {
+        console.log(e.message);
+        setLoading(false);
+      });
   }, []);
+
+  useEffect(() => {
+    if (roomsIds.length !== 0) {
+      roomsIds.map((roomId) => {
+        getHubsById("rooms", roomId)
+          .then((room) =>
+            setRooms((prev) => {
+              if (prev.length === 0) {
+                return [room];
+              } else {
+                return [...prev, room];
+              }
+            })
+          )
+          .catch((e) => console.log(e.message))
+          .finally(() => {
+            setRoomsIds([]);
+            setLoading(false);
+          });
+      });
+    }
+  }, [hasRooms]);
+
+  if (loading && !hasRooms) {
+    return <Loader />;
+  }
+
+  if (!hasRooms && !loading) {
+    return null
+  }
+
 
   return (
     rooms.length !== 0 &&
@@ -31,13 +88,13 @@ export default function RoomSimpleView() {
               Active Participants:{" "}
               {(room.participants &&
                 Object.values(room.participants).filter((p) => p === "accepted")
-                  .length) ||
-                0}
+                  .length + 1) ||
+                1}
             </li>
             <li className="w-full border-b-2 border-neutral-100 border-opacity-100 px-6 py-3  dark:border-white/10">
               Total Participants:{" "}
-              {(room.participants && Object.values(room.participants).length) ||
-                0}
+              {(room.participants && Object.values(room.participants).length + 1) ||
+                1}
             </li>
             <li className="w-full border-neutral-100 border-opacity-100 px-6 py-3  dark:border-white/10">
               Total Quizzes:{" "}
@@ -52,12 +109,21 @@ export default function RoomSimpleView() {
             >
               Enter room
             </a>
+            {userData.handle !== room.creator ? (
             <a
               type="button"
               className="pointer-events-auto inline-block cursor-pointer rounded text-base font-normal leading-normal text-primary transition duration-150 ease-in-out hover:text-primary-600 focus:text-primary-600 focus:outline-none focus:ring-0 active:text-primary-700 dark:text-primary-400"
             >
               Leave room
             </a>
+            ) : (
+              <a
+              type="button"
+              className="pointer-events-auto inline-block cursor-pointer rounded text-base font-normal leading-normal text-primary text-gray-800 transition duration-150 ease-in-out hover:text-primary-600 focus:text-primary-600 focus:outline-none focus:ring-0 active:text-primary-700 dark:text-primary-400"
+            >
+              Delete room
+            </a>
+            )}
           </div>
         </div>
       );
