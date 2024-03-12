@@ -1,5 +1,5 @@
 .rooms-container {
-  margin: 8rem;
+  margin: 4rem;
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
   gap: 30px;
@@ -10,4 +10,8 @@
   border: 1px solid rgb(0, 55, 255);
   border-radius: 6px;
   padding: 7px;
+}
+
+.my-rooms-content {
+  margin-top: 8em;
 }

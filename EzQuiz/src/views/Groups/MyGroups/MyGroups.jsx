@@ -15,8 +15,9 @@ export default function MyGroups() {
           <div className="my-groups-content">
             <h2 className="mb-4 font-extrabold leading-none tracking-tight text-gray-900 md:text-5xl lg:text-4xl dark:text-white">
               My{" "}
-              <span className="text-blue-600 dark:text-blue-500">groups</span>
+              <span className="text-blue-600 dark:text-blue-500">Groups</span>
             </h2>
+            <br />
 
             <p className="text-lg font-normal text-gray-500 lg:text-xl dark:text-gray-400">
               Your personalized hubs for seamless collaborating with fellow
@@ -34,7 +35,7 @@ export default function MyGroups() {
             {" "}
             You don&apos;t have any groups yet.
           </p>
-          
+
           <br />
           <Button onClick={() => navigate("/create-group")}>
             Create Group
