@@ -26,9 +26,10 @@ import { db } from "../config/firebase.config";
 //   });
 // };
 
-export const createHub = async (hubName, educator, cover, hub, uuid) => {
+export const createHub = async (hubName, educator, cover, hub, uuid, hubDescription = null) => {
   const room = push(ref(db, hub), {
     name: hubName,
+    description: hubDescription,
     creator: educator,
     image_cover: cover,
     uuid: uuid,
@@ -53,6 +54,36 @@ export const getAllHubs = async (hub, key = "creator") => {
   }));
   return hubs;
 };
+
+export const getTopicById = async (id) => {
+  const snapshot = await get(ref(db, `topics/${id}`));
+  if (!snapshot.exists()) return null;
+
+  const topic = {
+    id,
+    ...snapshot.val(),
+    createdOn: new Date(snapshot.val().createdOn),
+    likedBy: snapshot.val().likedBy ? Object.keys(snapshot.val().likedBy) : [],
+    dislikedBy: snapshot.val().dislikedBy
+      ? Object.keys(snapshot.val().dislikedBy)
+      : [],
+  };
+
+  return topic;
+};
+
+export const getHubsById = async (hub, id) => {
+  const snapshot = await get(ref(db, `${hub}/${id}`));
+
+  if (!snapshot.exists()) return null;
+
+  const hubData = {
+    id,
+    ...snapshot.val()
+  }
+
+  return hubData
+}
 
 export const updateHub = async (hub, id, key, dataName, value) => {
   const path = `${hub}/${id}/${key}/${dataName}`;

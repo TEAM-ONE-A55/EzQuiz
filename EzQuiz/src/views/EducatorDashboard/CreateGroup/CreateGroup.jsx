@@ -20,6 +20,7 @@ export default function CreateGroup() {
   const [quizzes, setQuizzes] = useState([]);
   const [group, setGroup] = useState({
     name: "",
+    description: "",
     creator: userData.handle,
   });
 
@@ -59,7 +60,8 @@ export default function CreateGroup() {
         userData.handle,
         imageUrl,
         "groups",
-        uuid
+        uuid, 
+        group.description,
       );
       for (const user in selectedEducators) {
         await updateHub(
@@ -94,6 +96,7 @@ export default function CreateGroup() {
   const reset = () => {
     setGroup({
       name: "",
+      description: "",
       creator: userData.handle,
     });
     setSelectedQuizzes([]);
@@ -198,6 +201,47 @@ export default function CreateGroup() {
           />
         </Box>
         <br />
+        <p className="text-lg font-normal text-gray-500 lg:text-xl dark:text-gray-400">
+          Write a short description:
+        </p>
+        <Box
+          component="form"
+          sx={{
+            "& > :not(style)": { m: 1, width: "100%" },
+            "& .MuiInputLabel-root": { color: "white" },
+            "& .MuiInputLabel-root.Mui-focused": { color: "white" },
+            "& .MuiInputBase-root": { color: "white" },
+            "& .MuiOutlinedInput-root": {
+              "& .MuiOutlinedInput-notchedOutline": {
+                borderColor: "white",
+              },
+              "&:hover .MuiOutlinedInput-notchedOutline": {
+                borderColor: "white",
+              },
+              "&.Mui-focused .MuiOutlinedInput-notchedOutline": {
+                borderColor: "white",
+              },
+            },
+          }}
+          noValidate
+          autoComplete="off"
+        >
+          <TextField
+            id="outlined-basic"
+            // label="Room name"
+            placeholder="Write a short description of the group"
+            variant="outlined"
+            sx={{
+              "& .MuiInputBase-root": {
+                color: "black",
+                backgroundColor: "white",
+                fontFamily: "Montserrat, sans-serif",
+              },
+            }}
+            value={group.description}
+            onChange={handleOnChange("description")}
+          />
+        </Box>
         <p className="text-lg font-normal text-gray-500 lg:text-xl dark:text-gray-400">
           Select educators to join your group:
         </p>

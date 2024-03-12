@@ -36,6 +36,8 @@ import Search from "./components/Search/Search";
 import PublicProfile from "./views/Public Profile/PublicProfile";
 import AllGroups from "./views/Admin/AllGroups/AllGroups";
 import AdminDashboard from "./views/Admin/AdminDashboard/AdminDashboard";
+import MyGroups from "./views/Groups/MyGroups/MyGroups";
+import SingleGroup from "./views/Groups/SingleGroup/SingleGroup";
 
 export default function App() {
   const [user] = useAuthState(auth);
@@ -140,6 +142,22 @@ export default function App() {
               element={
                 <Authenticated>
                   <SingleRoom />
+                </Authenticated>
+              }
+            ></Route>
+             <Route
+              path="/my-groups"
+              element={
+                <Authenticated>
+                  <MyGroups />
+                </Authenticated>
+              }
+            ></Route>
+             <Route
+              path="/my-groups/:id"
+              element={
+                <Authenticated>
+                  <SingleGroup />
                 </Authenticated>
               }
             ></Route>

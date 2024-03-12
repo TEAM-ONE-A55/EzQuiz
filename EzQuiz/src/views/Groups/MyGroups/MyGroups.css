@@ -1,0 +1,18 @@
+.groups-container {
+  margin: 8rem;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 30px;
+  padding: 15px;
+}
+
+.groups-container a {
+  border: 1px solid rgb(0, 55, 255);
+  border-radius: 6px;
+  padding: 7px;
+}
+
+.my-groups-content {
+  margin-top: 8em;
+  margin-bottom: -6em;
+}
