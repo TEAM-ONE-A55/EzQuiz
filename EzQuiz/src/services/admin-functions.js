@@ -18,3 +18,15 @@ export const changeRole = async (user, setUser) => {
 export const deleteUser = async (handle) => {
     return remove(ref(db, `users/${handle}`))
 }
+
+export const blockUser = async (user, setUser) => {
+    if (user.blocked) {
+        await updateUserData(user.handle, "blocked", false);
+        setUser({ ...user, blocked: false });
+        toast.success(`User has been unblocked`);
+    } else {
+        await updateUserData(user.handle, "blocked", true);
+        setUser({ ...user, blocked: true });
+        toast.success(`User has been blocked`);
+    }
+};
