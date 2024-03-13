@@ -54,11 +54,12 @@ export default function CreateRoom() {
   };
 
   const handleCreateRoom = async () => {
+    let id;
     try {
       if (!room.name) {
         throw new Error("Please provide a Room name!");
       }
-      const id = await createHub(
+      id = await createHub(
         room.name,
         userData.handle,
         imageUrl,
@@ -92,7 +93,7 @@ export default function CreateRoom() {
     } catch (e) {
       toast.error(e.message);
     } finally {
-      userData.rooms = {id: room}
+      userData.rooms = {...userData.rooms, [id]: room}
       setContext(prev => prev, userData)
       reset();
     }

@@ -18,7 +18,17 @@ export default function MyRooms({ notifications }) {
   const navigate = useNavigate();
 
   const addRoom = (roomId) => {
-    setRoomsIds((prevRoomsIds) => [...prevRoomsIds, roomId]);
+    setRoomsIds((prevRoomsIds) => {
+      console.log("string")
+      console.log(prevRoomsIds)
+      if (prevRoomsIds.length !== 0 && !prevRoomsIds.includes(roomId)) {
+        return [...prevRoomsIds, roomId]
+      } else if (prevRoomsIds.length === 0) {
+        return [roomId]
+      }
+     
+    })
+    ;
     setNumRooms((prevNumRooms) => prevNumRooms + 1);
   };
 
@@ -28,13 +38,16 @@ export default function MyRooms({ notifications }) {
       .then((snapshot) => snapshot.val().rooms)
       .then((rooms) => Object.keys(rooms))
       .then((rooms) => rooms.map((room) => addRoom(room)))
-      .then(() => setHasRooms(true))
+      .then(() => {
+        !hasRooms &&
+        setHasRooms(true)
+      })
       .catch((e) => {
         console.log(e.message);
         setLoading(false);
       });
     console.log("notifications render");
-  }, [userData]);
+  }, [userData, notifications]);
 
   console.log(roomsIds);
   console.log(rooms);
@@ -51,7 +64,7 @@ export default function MyRooms({ notifications }) {
         .then((roomsData) => {
           console.log(roomsData);
           setRooms(roomsData);
-          setRoomsIds([]);
+          // setRoomsIds([]);
           setLoading(false);
         })
         .catch((e) => console.log(e.message));

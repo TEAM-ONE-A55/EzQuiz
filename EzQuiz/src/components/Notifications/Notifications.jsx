@@ -37,7 +37,7 @@ export default function Notifications({ notifications, setNotifications }) {
 
     if (hubType === "rooms") {
       toast.success(`You've joined the room ${name} successfully!`);
-      userData.rooms = {id: id}
+      userData.rooms = {...userData.room, [id]: id}
       setContext(prev => prev, userData)
 
     } else {
