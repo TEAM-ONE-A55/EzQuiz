@@ -7,8 +7,7 @@ import "./MyRooms.css";
 import { getUserByHandle } from "../../../services/user.service";
 import { getHubsById } from "../../../services/hub.service";
 
-export default function MyRooms() {
-  
+export default function MyRooms({ notifications }) {
   const { userData } = useContext(AppContext);
   const [roomsIds, setRoomsIds] = useState([]);
   const [hasRooms, setHasRooms] = useState(false);
@@ -30,7 +29,27 @@ export default function MyRooms() {
         console.log(e.message);
         setLoading(false);
       });
+    console.log("render");
   }, []);
+
+  useEffect(() => {
+    setLoading(true);
+    getUserByHandle(userData.handle)
+      .then((snapshot) => {
+        const availableRooms = snapshot.val().rooms;
+
+        setRoomsIds(Object.keys(availableRooms));
+        setHasRooms(true);
+      })
+      .catch((e) => {
+        console.log(e.message);
+        setLoading(false);
+      });
+    console.log("notifications render");
+  }, [userData, notifications]);
+
+  console.log(roomsIds);
+  console.log(rooms);
 
   useEffect(() => {
     if (roomsIds.length !== 0) {
@@ -52,6 +71,7 @@ export default function MyRooms() {
           });
       });
     }
+    console.log('hasRooms')
   }, [hasRooms]);
 
   return (

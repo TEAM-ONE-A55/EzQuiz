@@ -49,6 +49,12 @@ export default function App() {
 
   const [difficulty, setDifficulty] = useState(defaultQuizDifficultySamle);
   const [quizAmount, setQuizAmount] = useState(defaultQuizAmountSample);
+  const [notifications, setNotifications] = useState({
+    quizInvitations: [],
+    roomInvitations: [],
+    groupInvitations: [],
+    feedback: [],
+  });
 
   useEffect(() => {
     if (user) {
@@ -69,7 +75,7 @@ export default function App() {
         <AppContext.Provider value={{ ...context, setContext: setContext }}>
           <Toaster position="bottom-right" reverseOrder={true} />
           {/* <Header /> */}
-          <NavBar />
+          <NavBar notifications={notifications} setNotifications={setNotifications}/>
           <Routes>
             <Route path="/" element={<Home />}></Route>
             <Route path="/signup" element={<Registration />}></Route>
@@ -134,7 +140,7 @@ export default function App() {
               path="/my-rooms"
               element={
                 <Authenticated>
-                  <MyRooms />
+                  <MyRooms notifications={notifications}/>
                 </Authenticated>
               }
             ></Route>
