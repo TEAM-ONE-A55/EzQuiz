@@ -25,7 +25,8 @@ import {
       createdQuizes: {},
       avatar: defaultAvatar,
       role,
-      isAdmin: false
+      isAdmin: false,
+      blocked: false,
     });
   };
   
