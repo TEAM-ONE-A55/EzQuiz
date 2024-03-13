@@ -13,66 +13,50 @@ export default function MyRooms({ notifications }) {
   const [hasRooms, setHasRooms] = useState(false);
   const [loading, setLoading] = useState(false);
   const [rooms, setRooms] = useState([]);
+  const [numRooms, setNumRooms] = useState(0);
 
   const navigate = useNavigate();
 
-  useEffect(() => {
-    setLoading(true);
-    getUserByHandle(userData.handle)
-      .then((snapshot) => {
-        const availableRooms = snapshot.val().rooms;
-
-        setRoomsIds(Object.keys(availableRooms));
-        setHasRooms(true);
-      })
-      .catch((e) => {
-        console.log(e.message);
-        setLoading(false);
-      });
-    console.log("render");
-  }, []);
+  const addRoom = (roomId) => {
+    setRoomsIds((prevRoomsIds) => [...prevRoomsIds, roomId]);
+    setNumRooms((prevNumRooms) => prevNumRooms + 1);
+  };
 
   useEffect(() => {
     setLoading(true);
     getUserByHandle(userData.handle)
-      .then((snapshot) => {
-        const availableRooms = snapshot.val().rooms;
-
-        setRoomsIds(Object.keys(availableRooms));
-        setHasRooms(true);
-      })
+      .then((snapshot) => snapshot.val().rooms)
+      .then((rooms) => Object.keys(rooms))
+      .then((rooms) => rooms.map((room) => addRoom(room)))
+      .then(() => setHasRooms(true))
       .catch((e) => {
         console.log(e.message);
         setLoading(false);
       });
     console.log("notifications render");
-  }, [userData, notifications]);
+  }, [userData]);
 
   console.log(roomsIds);
   console.log(rooms);
 
   useEffect(() => {
     if (roomsIds.length !== 0) {
-      roomsIds.map((roomId) => {
-        getHubsById("rooms", roomId)
-          .then((room) =>
-            setRooms((prev) => {
-              if (prev.length === 0) {
-                return [room];
-              } else {
-                return [...prev, room];
-              }
-            })
-          )
-          .catch((e) => console.log(e.message))
-          .finally(() => {
-            setRoomsIds([]);
-            setLoading(false);
-          });
+      const roomsPromises = roomsIds.map((roomId) => {
+        return getHubsById("rooms", roomId)
+          .then((room) => room)
+          .catch((e) => console.log(e.message));
       });
+
+      Promise.all(roomsPromises)
+        .then((roomsData) => {
+          console.log(roomsData);
+          setRooms(roomsData);
+          setRoomsIds([]);
+          setLoading(false);
+        })
+        .catch((e) => console.log(e.message));
     }
-    console.log('hasRooms')
-  }, [hasRooms]);
+  }, [numRooms]);
 
   return (
     <div>
