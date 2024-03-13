@@ -14,7 +14,7 @@ import ChangeCover from "../../../components/ChangeCoverImage/ChangeCoverImage";
 import { deleteCoverImage } from "../../../services/storage.service";
 
 export default function CreateRoom() {
-  const { userData } = useContext(AppContext);
+  const { userData, setContext } = useContext(AppContext);
   const [users, setUsers] = useState([]);
   // eslint-disable-next-line no-unused-vars
   const [quizzes, setQuizzes] = useState([]);
@@ -65,6 +65,7 @@ export default function CreateRoom() {
         "rooms",
         uuid
       );
+
       for (const user in selectedParticipants) {
         await updateHub(
           "rooms",
@@ -91,6 +92,8 @@ export default function CreateRoom() {
     } catch (e) {
       toast.error(e.message);
     } finally {
+      userData.rooms = {id: room}
+      setContext(prev => prev, userData)
       reset();
     }
   };

@@ -13,7 +13,7 @@ function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
 }
 export default function Notifications({ notifications, setNotifications }) {
-  const { userData } = useContext(AppContext);
+  const { userData, setContext } = useContext(AppContext);
 
   const icon = Object.values(notifications).find((n) => n.length !== 0)
     ? "h-7 w-7 fill-white"
@@ -37,6 +37,9 @@ export default function Notifications({ notifications, setNotifications }) {
 
     if (hubType === "rooms") {
       toast.success(`You've joined the room ${name} successfully!`);
+      userData.rooms = {id: id}
+      setContext(prev => prev, userData)
+
     } else {
       toast.success(`You're now collaborating in group ${name}!`);
     }

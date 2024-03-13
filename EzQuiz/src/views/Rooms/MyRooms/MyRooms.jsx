@@ -1,13 +1,59 @@
-import { useContext } from "react";
+import { useContext, useEffect, useState } from "react";
 import Button from "../../../components/Button/Button";
 import RoomSimpleView from "../RoomSimpleView/RoomSimpleView";
 import { AppContext } from "../../../context/AppContext";
 import { useNavigate } from "react-router";
 import "./MyRooms.css";
+import { getUserByHandle } from "../../../services/user.service";
+import { getHubsById } from "../../../services/hub.service";
 
 export default function MyRooms() {
+  
   const { userData } = useContext(AppContext);
+  const [roomsIds, setRoomsIds] = useState([]);
+  const [hasRooms, setHasRooms] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [rooms, setRooms] = useState([]);
+
   const navigate = useNavigate();
+
+  useEffect(() => {
+    setLoading(true);
+    getUserByHandle(userData.handle)
+      .then((snapshot) => {
+        const availableRooms = snapshot.val().rooms;
+
+        setRoomsIds(Object.keys(availableRooms));
+        setHasRooms(true);
+      })
+      .catch((e) => {
+        console.log(e.message);
+        setLoading(false);
+      });
+  }, []);
+
+  useEffect(() => {
+    if (roomsIds.length !== 0) {
+      roomsIds.map((roomId) => {
+        getHubsById("rooms", roomId)
+          .then((room) =>
+            setRooms((prev) => {
+              if (prev.length === 0) {
+                return [room];
+              } else {
+                return [...prev, room];
+              }
+            })
+          )
+          .catch((e) => console.log(e.message))
+          .finally(() => {
+            setRoomsIds([]);
+            setLoading(false);
+          });
+      });
+    }
+  }, [hasRooms]);
+
   return (
     <div>
       {userData && userData.rooms ? (
@@ -36,7 +82,19 @@ export default function MyRooms() {
             )}
           </div>
           <div className="rooms-container">
-            <RoomSimpleView />
+            {/* {roomsIds, setRoomsIds, setLoading, hasRooms, loading} */}
+            {rooms.length !== 0 &&
+              rooms.map((room) => {
+                return (
+                  <div key={room.id}>
+                    <RoomSimpleView
+                      room={room}
+                      hasRooms={hasRooms}
+                      loading={loading}
+                    />
+                  </div>
+                );
+              })}
           </div>
         </>
       ) : (
