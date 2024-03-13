@@ -4,6 +4,8 @@ import { AppContext } from "../../context/AppContext";
 import Button from "../../components/Button/Button";
 import "./Login.css";
 import { login } from "../../services/login-validations";
+import { getUserByEmail } from "../../services/user.service";
+import toast from "react-hot-toast";
 
 export default function Login() {
   const [email, setEmail] = useState("");
@@ -51,7 +53,19 @@ export default function Login() {
         />
         <br />
       </div>
-      <Button onClick={() => login(email, password, setContext, navigate)}>
+      <Button
+        onClick={() => {
+          getUserByEmail(email).then((snapshot) => {
+            if (Object.values(snapshot.val())[0].blocked === true) {
+              toast.error(
+                "You are blocked from the system. Please contact the administrator."
+              );
+              return;
+            }
+            login(email, password, setContext, navigate);
+          });
+        }}
+      >
         Sign in
       </Button>
       <p>

@@ -1,6 +1,10 @@
 import { useEffect, useState } from "react";
 import { getAllUsers } from "../../../services/user.service";
-import { blockUser, changeRole, deleteUser } from "../../../services/admin-functions";
+import {
+  blockUser,
+  changeRole,
+  deleteUser,
+} from "../../../services/admin-functions";
 import toast from "react-hot-toast";
 import SortingDropdown from "../../../components/Dropdown/Dropdown";
 import { usersSortingOptions } from "../../../constants/constants";
@@ -26,7 +30,7 @@ export default function AllUsers() {
     setUsersSortBy(sortBy);
   };
 
-   const removeUser = async (handle) => {
+  const removeUser = async (handle) => {
     try {
       await deleteUser(handle);
       setUsers(users.filter((user) => user.handle !== handle));
@@ -109,13 +113,15 @@ export default function AllUsers() {
                       onClick={() => {
                         navigate(`/profile/${user.handle}`);
                       }}
-                    >See profile</button>
+                    >
+                      See profile
+                    </button>
                     <button
                       onClick={() => {
                         blockUser(user, setUser);
                       }}
                     >
-                      Block user
+                      {user.blocked ? "Unblock" : "Block"}
                     </button>
                   </span>
                 )}
