@@ -5,7 +5,7 @@ import { getAllUsers, getUserByHandle } from "../../services/user.service";
 import Avatar from "../../components/Avatar/Avatar";
 import { deleteUser } from "firebase/auth";
 import toast from "react-hot-toast";
-import { changeRole } from "../../services/admin-functions";
+import { blockUser, changeRole } from "../../services/admin-functions";
 
 export default function PublicProfile() {
   const { userData } = useContext(AppContext);
@@ -95,6 +95,16 @@ export default function PublicProfile() {
           <strong>Score:</strong> {user.score}
         </p>
         <p>
+          <strong>Status:</strong>{" "}
+          <span>
+            {user.blocked ? (
+              <span style={{ color: "rgb(255, 45, 45)" }}>Blocked</span>
+            ) : (
+              <span style={{ color: "rgb(45, 255, 45)" }}>Active</span>
+            )}
+          </span>
+        </p>
+        <p>
           <button
             onClick={() => {
               user.handle && removeUser(user.handle);
@@ -121,6 +131,15 @@ export default function PublicProfile() {
               Change role to Educator
             </button>
           )}
+        </p>
+        <p>
+          <button
+            onClick={() => {
+              user.handle && blockUser(user, setUser);
+            }}
+          >
+            {user.blocked ? "Unblock user" : "Block user"}
+          </button>
         </p>
       </div>
     </div>
