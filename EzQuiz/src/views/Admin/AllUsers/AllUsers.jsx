@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { getAllUsers } from "../../../services/user.service";
-import { changeRole, deleteUser } from "../../../services/admin-functions";
+import { blockUser, changeRole, deleteUser } from "../../../services/admin-functions";
 import toast from "react-hot-toast";
 import SortingDropdown from "../../../components/Dropdown/Dropdown";
 import { usersSortingOptions } from "../../../constants/constants";
@@ -56,6 +56,7 @@ export default function AllUsers() {
             <th>User</th>
             <th>Name</th>
             <th>Role</th>
+            <th>Status</th>
             <th>Date of registration</th>
           </tr>
         </thead>
@@ -80,6 +81,13 @@ export default function AllUsers() {
                     </span>
                   )}
                 </td>
+                <td>
+                  {user.blocked ? (
+                    <span style={{ color: "rgb(255, 45, 45)" }}>Blocked</span>
+                  ) : (
+                    <span style={{ color: "rgb(45, 255, 45)" }}>Active</span>
+                  )}
+                </td>
                 <td>{new Date(user.createdOn).toLocaleDateString()}</td>
                 {user.role !== "admin" && (
                   <span>
@@ -102,6 +110,13 @@ export default function AllUsers() {
                         navigate(`/profile/${user.handle}`);
                       }}
                     >See profile</button>
+                    <button
+                      onClick={() => {
+                        blockUser(user, setUser);
+                      }}
+                    >
+                      Block user
+                    </button>
                   </span>
                 )}
               </tr>
