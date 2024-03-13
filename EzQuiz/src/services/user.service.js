@@ -52,6 +52,10 @@ import {
   
     return Promise.all(users);
   }; 
+
+  export const getUserByEmail = (email) => {
+    return get(query(ref(db, "users"), orderByChild("email"), equalTo(email)));
+  };
 //   export const deleteOrganizer = async (handle) => {
 //     const topics = await getTopicsByAuthor(handle)
 //     topics.map(async topic => {
