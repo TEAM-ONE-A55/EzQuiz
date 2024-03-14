@@ -17,6 +17,7 @@ import Button from "../Button/Button";
 import { getAllHubs } from "../../services/hub.service";
 import Notifications from "../Notifications/Notifications";
 import PropTypes from "prop-types"
+import Logo from '../../images/Logo.png';
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
@@ -147,8 +148,8 @@ export default function NavBar({notifications, setNotifications}) {
               <div className="flex flex-1 items-center justify-center sm:items-stretch sm:justify-start">
                 <div className="flex flex-shrink-0 items-center">
                   <img
-                    className="h-8 w-auto"
-                    src="EzQuiz"
+                    className="h-8 w-auto border-none"
+                    src={Logo}
                     alt="ezquiz-logo"
                     onClick={() => navigate("/dashboard")}
                   />
