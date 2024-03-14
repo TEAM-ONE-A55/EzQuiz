@@ -11,7 +11,7 @@ export default function BrowseQuizzes() {
     }, [change]);
 
     return (
-        <div className="flex gap-10">
+        <div className="grid grid-cols-4 mt-16 max-w-screen-xl m-auto justify-items-center gap-y-16">
             {quizzes && quizzes.map((quiz) => (
                 <SimpleQuiz key={quiz.id} quiz={quiz} setChange={setChange} />
             ))}

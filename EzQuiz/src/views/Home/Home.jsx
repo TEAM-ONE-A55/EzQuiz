@@ -9,7 +9,7 @@ export default function Home() {
   const { userData } = useContext(AppContext);
 
   return (
-    <div>
+    <div className="max-w-screen-xl m-auto">
       {userData ? (
         userData.role === "admin" ? (
           <AllUsers />

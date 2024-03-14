@@ -151,7 +151,7 @@ export default function NavBar({notifications, setNotifications}) {
                     className="h-8 w-auto border-none"
                     src={Logo}
                     alt="ezquiz-logo"
-                    onClick={() => navigate("/dashboard")}
+                    onClick={() => navigate("/")}
                   />
                 </div>
                 <div className="hidden sm:ml-6 sm:block">
