@@ -1,8 +1,9 @@
 import { useNavigate } from 'react-router';
 import simpleQuizImage from '../../../images/simple-quiz.jpg';
 import PropTypes from 'prop-types';
+import DeleteQuiz from '../DeleteQuiz/DeleteQuiz';
 
-export default function SimpleQuiz({ quiz }) {
+export default function SimpleQuiz({ quiz, setChange }) {
     const navigate = useNavigate();
 
     return (
@@ -13,14 +14,16 @@ export default function SimpleQuiz({ quiz }) {
                     <p className=" text-gray-800 text-xs">By {quiz.creator}</p>
                     <p className="text-sm text-neutral-500">A simple quiz with multiple choice questions</p>
                     <button
-                        className=" bg-amber-500 text-white justify-self-end rounded-md max-w-32 px-4 py-2 duration-75 ease-in-out hover:bg-amber-600"
+                        className=" bg-amber-500 text-white text-sm rounded-md max-w-32 px-4 py-2 duration-75 ease-in-out hover:bg-amber-600"
                         onClick={() => navigate(`/sample-quiz/${quiz.id}`)}
-                        >Take quiz</button>
+                        >Take Quiz</button>
+                    <DeleteQuiz id={quiz.id} handle={quiz.creator} setChange={setChange}/>
                 </div>
         </div>
     )
 }
 
 SimpleQuiz.propTypes = {
-    quiz: PropTypes.object.isRequired
+    quiz: PropTypes.object.isRequired,
+    setChange: PropTypes.func.isRequired
 }
