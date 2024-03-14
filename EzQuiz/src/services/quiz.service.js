@@ -54,6 +54,8 @@ export const getQuizById = async (quizId) => {
     if (!snapshot.exists()) {
         return [];
       }
-    const quiz = snapshot.val();
+    const quiz = {
+        id: quizId, 
+        ...snapshot.val()};
     return quiz;
 }

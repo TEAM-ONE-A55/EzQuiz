@@ -5,6 +5,7 @@ import { AppContext } from "../../../context/AppContext";
 import { getUserByHandle } from "../../../services/user.service";
 import Button from "../../../components/Button/Button";
 import { useNavigate } from "react-router";
+import { v4 } from "uuid";
 
 export default function MyQuizzes() {
   const { userData } = useContext(AppContext);
@@ -59,11 +60,12 @@ export default function MyQuizzes() {
             )}
           </div>
           <br />
-          <div className="flex gap-10">
-            {quizzes.map((quiz) => (
+
+          {quizzes.map((quiz) => (
+            <div key={quiz.id} className="flex gap-10">
               <SimpleQuiz key={quiz.id} quiz={quiz} setChange={() => {}} />
-            ))}
-          </div>
+            </div>
+          ))}
         </>
       ) : (
         <div className="my-groups-content">
