@@ -5,7 +5,7 @@ import Loader from "../../../components/Loader/Loader";
 import PropTypes from "prop-types";
 import "./RoomSimpleView.css";
 
-export default function RoomSimpleView({ room, hasRooms, loading }) {
+export default function RoomSimpleView({ room, hasRooms, loading, leaveRoom, deleteRoom }) {
   
   const { userData } = useContext(AppContext);
   const navigate = useNavigate();
@@ -63,6 +63,7 @@ export default function RoomSimpleView({ room, hasRooms, loading }) {
           <a
             type="button"
             className="pointer-events-auto inline-block cursor-pointer rounded text-base font-normal leading-normal text-primary transition duration-150 ease-in-out hover:text-primary-600 focus:text-primary-600 focus:outline-none focus:ring-0 active:text-primary-700 dark:text-primary-400"
+            onClick={() => leaveRoom(room.id)}
           >
             Leave room
           </a>
@@ -70,6 +71,7 @@ export default function RoomSimpleView({ room, hasRooms, loading }) {
           <a
             type="button"
             className="pointer-events-auto inline-block cursor-pointer rounded text-base font-normal leading-normal text-primary text-gray-800 transition duration-150 ease-in-out hover:text-primary-600 focus:text-primary-600 focus:outline-none focus:ring-0 active:text-primary-700 dark:text-primary-400"
+            onClick={() => deleteRoom(room.id)}
           >
             Delete room
           </a>
@@ -83,4 +85,6 @@ RoomSimpleView.propTypes = {
   room: PropTypes.object,
   hasRooms: PropTypes.bool,
   loading: PropTypes.bool,
+  leaveRoom: PropTypes.func,
+  deleteRoom: PropTypes.func
 };

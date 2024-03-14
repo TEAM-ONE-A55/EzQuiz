@@ -4,8 +4,15 @@ import RoomSimpleView from "../RoomSimpleView/RoomSimpleView";
 import { AppContext } from "../../../context/AppContext";
 import { useNavigate } from "react-router";
 import "./MyRooms.css";
-import { getUserByHandle } from "../../../services/user.service";
-import { getHubsById } from "../../../services/hub.service";
+import {
+  getUserByHandle,
+  updateUserData,
+} from "../../../services/user.service";
+import {
+  deleteHub,
+  getHubsById,
+  updateHub,
+} from "../../../services/hub.service";
 import PropTypes from "prop-types";
 
 export default function MyRooms({ notifications }) {
@@ -21,26 +28,58 @@ export default function MyRooms({ notifications }) {
   const addRoom = (roomId) => {
     setRoomsIds((prevRoomsIds) => {
       if (prevRoomsIds.length !== 0 && !prevRoomsIds.includes(roomId)) {
-        return [...prevRoomsIds, roomId]
+        return [...prevRoomsIds, roomId];
       } else if (prevRoomsIds.length === 0) {
-        return [roomId]
+        return [roomId];
       }
       return prevRoomsIds;
-    })
-    ;
+    });
     setNumRooms((prevNumRooms) => prevNumRooms + 1);
   };
 
+  const leaveRoom = async (roomId) => {
+    try {
+      await updateUserData(userData.handle, `rooms/${roomId}`, null);
+      await updateHub("rooms", roomId, "participants", userData.handle, "left");
+      setRoomsIds((prevRoomsIds) => {
+        const newPrevRoomsIds = prevRoomsIds.filter((id) => id !== roomId);
+        return newPrevRoomsIds;
+      });
+      setNumRooms((prevNumRooms) => prevNumRooms - 1);
+    } catch (e) {
+      console.log(e.message);
+    }
+  };
+
+  const deleteRoom = async (roomId) => {
+    try {
+      const room = await getHubsById("rooms", roomId);
+      const participants = room.participants;
+      Object.entries(participants).map((p) => {
+        if (p[1] === "accepted") {
+          updateUserData(p[0], `rooms/${roomId}`, null);
+        }
+      });
+      await updateUserData(userData.handle, `rooms/${roomId}`, null);
+      await deleteHub("rooms", roomId);
+      setRoomsIds((prevRoomsIds) => {
+        const newPrevRoomsIds = prevRoomsIds.filter((id) => id !== roomId);
+        return newPrevRoomsIds;
+      });
+      setNumRooms((prevNumRooms) => prevNumRooms - 1);
+    } catch (e) {
+      console.log(e.message);
+    }
+  };
+
   useEffect(() => {
-    // console.log('UseEffect 1 triggered');
     setLoading(true);
     getUserByHandle(userData.handle)
       .then((snapshot) => snapshot.val().rooms)
       .then((rooms) => Object.keys(rooms))
       .then((rooms) => rooms.map((room) => addRoom(room)))
       .then(() => {
-        !hasRooms &&
-        setHasRooms(true)
+        !hasRooms && setHasRooms(true);
       })
       .catch((e) => {
         console.log(e.message);
@@ -49,9 +88,7 @@ export default function MyRooms({ notifications }) {
   }, [userData, notifications]);
 
   useEffect(() => {
-    // console.log('UseEffect 2 triggered');
     if (roomsIds.length !== 0) {
-      // console.log('UseEffect 2 proceeded');
       const roomsPromises = roomsIds.map((roomId) => {
         return getHubsById("rooms", roomId)
           .then((room) => room)
@@ -61,16 +98,17 @@ export default function MyRooms({ notifications }) {
       Promise.all(roomsPromises)
         .then((roomsData) => {
           setRooms(roomsData);
-          // setRoomsIds([]);
           setLoading(false);
         })
         .catch((e) => console.log(e.message));
+    } else {
+      setHasRooms(false);
     }
   }, [numRooms]);
 
   return (
     <div>
-      {userData && userData.rooms ? (
+      {userData && userData.rooms && hasRooms ? (
         <>
           <div className="my-rooms-content">
             <h2 className="mb-4 font-extrabold leading-none tracking-tight text-gray-900 md:text-5xl lg:text-4xl dark:text-white">
@@ -96,7 +134,6 @@ export default function MyRooms({ notifications }) {
             )}
           </div>
           <div className="rooms-container">
-            {/* {roomsIds, setRoomsIds, setLoading, hasRooms, loading} */}
             {rooms.length !== 0 &&
               rooms.map((room) => {
                 return (
@@ -105,6 +142,8 @@ export default function MyRooms({ notifications }) {
                       room={room}
                       hasRooms={hasRooms}
                       loading={loading}
+                      leaveRoom={leaveRoom}
+                      deleteRoom={deleteRoom}
                     />
                   </div>
                 );
