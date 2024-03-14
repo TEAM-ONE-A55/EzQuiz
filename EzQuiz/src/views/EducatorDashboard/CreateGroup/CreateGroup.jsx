@@ -14,7 +14,7 @@ import { v4 } from "uuid";
 import ChangeCover from "../../../components/ChangeCoverImage/ChangeCoverImage";
 
 export default function CreateGroup() {
-  const { userData } = useContext(AppContext);
+  const { userData, setContext } = useContext(AppContext);
   const [users, setUsers] = useState([]);
   // eslint-disable-next-line no-unused-vars
   const [quizzes, setQuizzes] = useState([]);
@@ -32,14 +32,20 @@ export default function CreateGroup() {
   const [uuid, setUuid] = useState(v4());
 
   useEffect(() => {
-    getAllUsers()
-      .then((users) => users.map((user) => user.val()))
-      .then((data) => data.filter((u) => u.role === "educator" && userData.handle !== u.handle))
-      .then((data) =>
-        setUsers(data.map((u) => ({ value: u.handle, label: u.handle })))
-      )
+    if (userData && userData.handle) {
+      getAllUsers()
+        .then((users) => users.map((user) => user.val()))
+        .then((data) =>
+          data.filter(
+            (u) => u.role === "educator" && userData.handle !== u.handle
+          )
+        )
+        .then((data) =>
+          setUsers(data.map((u) => ({ value: u.handle, label: u.handle })))
+        )
 
-      .catch((error) => console.log(error));
+        .catch((error) => console.log(error));
+    }
   }, []);
 
   const handleOnChange = (key) => (e) => {
@@ -51,17 +57,18 @@ export default function CreateGroup() {
   };
 
   const handleCreateGroup = async () => {
+    let id;
     try {
       if (!group.name) {
         throw new Error("Please provide a Group name!");
       }
-      const id = await createHub(
+      id = await createHub(
         group.name,
         userData.handle,
         imageUrl,
         "groups",
-        uuid, 
-        group.description,
+        uuid,
+        group.description
       );
       for (const user in selectedEducators) {
         await updateHub(
@@ -89,6 +96,8 @@ export default function CreateGroup() {
     } catch (e) {
       toast.error(e.message);
     } finally {
+      userData.groups = {...userData.rooms, [id]: group}
+      setContext(prev => prev, userData)
       reset();
     }
   };
@@ -98,6 +107,7 @@ export default function CreateGroup() {
       name: "",
       description: "",
       creator: userData.handle,
+      uuid: ""
     });
     setSelectedQuizzes([]);
     setSelectedEducators([]);

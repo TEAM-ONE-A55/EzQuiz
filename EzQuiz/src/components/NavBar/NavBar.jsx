@@ -16,6 +16,7 @@ import "./NavBar.css";
 import Button from "../Button/Button";
 import { getAllHubs } from "../../services/hub.service";
 import Notifications from "../Notifications/Notifications";
+import PropTypes from "prop-types"
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
@@ -33,6 +34,7 @@ export default function NavBar({notifications, setNotifications}) {
   const [rooms, setRooms] = useState([]);
   const [groups, setGroups] = useState([]);
   const navigate = useNavigate();
+  console.log(notifications)
 
   useEffect(() => {
     if (userData) {
@@ -78,6 +80,7 @@ export default function NavBar({notifications, setNotifications}) {
 
       if (userData && groups.length > 0) {
         const newGroupInvitations = groups.reduce((acc, group) => {
+          console.log(group)
           if (
             group.participants &&
             Object.keys(group.participants).includes(userData.handle) &&
@@ -90,6 +93,7 @@ export default function NavBar({notifications, setNotifications}) {
           }
           return acc;
         }, []);
+        console.log(newGroupInvitations)
 
         if (newGroupInvitations.length > 0) {
           setNotifications((prevNotifications) => ({
@@ -262,4 +266,9 @@ export default function NavBar({notifications, setNotifications}) {
       )}
     </Disclosure>
   );
+}
+
+NavBar.propTypes = {
+  notifications: PropTypes.object,
+  setNotifications: PropTypes.func
 }

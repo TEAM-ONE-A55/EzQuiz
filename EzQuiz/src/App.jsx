@@ -156,7 +156,7 @@ export default function App() {
               path="/my-groups"
               element={
                 <Authenticated>
-                  <MyGroups />
+                  <MyGroups notifications={notifications} />
                 </Authenticated>
               }
             ></Route>

@@ -37,11 +37,13 @@ export default function Notifications({ notifications, setNotifications }) {
 
     if (hubType === "rooms") {
       toast.success(`You've joined the room ${name} successfully!`);
-      userData.rooms = {...userData.room, [id]: id}
+      userData.rooms = {...userData.rooms, [id]: id}
       setContext(prev => prev, userData)
 
     } else {
       toast.success(`You're now collaborating in group ${name}!`);
+      userData.groups = {...userData.groups, [id]: id}
+      setContext(prev => prev, userData)
     }
   };
 
