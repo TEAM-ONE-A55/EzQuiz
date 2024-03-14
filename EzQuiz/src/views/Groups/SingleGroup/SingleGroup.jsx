@@ -7,6 +7,7 @@ import {
   updateUserData,
 } from "../../../services/user.service";
 import Button from "../../../components/Button/Button";
+import "./SingleGroup.css";
 
 export default function SingleGroup() {
   const { userData } = useContext(AppContext);
@@ -85,14 +86,44 @@ export default function SingleGroup() {
 
   return (
     group && (
-      <>
-        <div className="mx-auto text-center md:max-w-xl lg:max-w-3xl">
-          <h3 className="mb-6 text-3xl font-bold">Group: {group.name}</h3>
-          <p className="mb-6 pb-2 text-neutral-600 dark:text-neutral-300 md:mb-12 md:pb-0">
-            {group.description}
-          </p>
-        </div>
-        {hasCreator && (
+      <div className="single-group-container">
+        {/* <div
+          style={{
+            backgroundImage: `url(${group.image_cover})`,
+            backgroundSize: "cover",
+            backgroundPosition: "center",
+            width: "100%",
+            height: "300px",
+          }}
+        >
+          <div className="mx-auto text-center md:max-w-xl lg:max-w-3xl ">
+            <h3 className="mb-6 text-3xl font-bold">{group.name}</h3>
+            <p className="mb-6 pb-2 text-neutral-600 dark:text-neutral-300 md:mb-12 md:pb-0">
+              {group.description}
+            </p>
+          </div>
+        </div> */}
+        {/* <div
+          style={{
+            position: "relative",
+            backgroundImage: `linear-gradient(rgba(0,0,0,0.8), rgba(0,0,0,0.8)), url(${group.image_cover})`,
+            backgroundSize: "cover",
+            backgroundPosition: "center",
+            width: "100%",
+            height: "300px",
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+        >
+          <div className="text-center">
+            <h3 className="mb-6 text-3xl font-bold">{group.name}</h3>
+            <p className="mb-6 pb-2 text-neutral-600 dark:text-neutral-300 md:mb-12 md:pb-0">
+              {group.description}
+            </p>
+          </div>
+          <br/>
+          {hasCreator && (
           <>
             <div className="mb-6">
               <img
@@ -109,10 +140,76 @@ export default function SingleGroup() {
             </h6>
           </>
         )}
+        </div> */}
+        <div
+  style={{
+    position: "relative",
+    backgroundImage: `linear-gradient(rgba(0,0,0,0.8), rgba(0,0,0,0.8)), url(${group.image_cover})`,
+    backgroundSize: "cover",
+    backgroundPosition: "center",
+    width: "100%",
+    height: "400px",
+    display: "flex",
+    flexDirection: "column",
+    justifyContent: "center",
+    alignItems: "center",
+    borderRadius: "15px"
+  }}
+>
+  <div className="text-center">
+    <h2 className="mb-6 text-4xl font-bold">{group.name}</h2>
+    <h3 className="mb-6 text-2xl pb-2 text-neutral-600 dark:text-neutral-300 md:mb-12 md:pb-0">
+      {group.description}
+    </h3>
+  </div>
+  {hasCreator && (
+    <div className="text-center">
+      <div className="mb-6">
+        <img
+          src={creator.avatar}
+          alt={creator.firstName + " " + creator.lastName}
+          className="w-14 h-14 rounded-full shadow-lg dark:shadow-black/30 mx-auto"
+        />
+      </div>
+      <h5 className="mb-2 text-xl font-semibold">
+        {creator.firstName} {creator.lastName}
+      </h5>
+      <h6 className="mb-2 font-semibold text-primary text-m dark:text-primary-400">
+        Creator: @{creator.handle}
+      </h6>
+    </div>
+  )}
+</div>
+
+        {/* <img src={group.image_cover} className="h-auto max-w-full" alt="..." /> */}
+        {/* <div className="mx-auto text-center md:max-w-xl lg:max-w-3xl ">
+          <h3 className="mb-6 text-3xl font-bold">{group.name}</h3>
+          <p className="mb-6 pb-2 text-neutral-600 dark:text-neutral-300 md:mb-12 md:pb-0">
+            {group.description}
+          </p>
+        </div> */}
+        {/* {hasCreator && (
+          <>
+            <div className="mb-6">
+              <img
+                src={creator.avatar}
+                alt={creator.firstName + " " + creator.lastName}
+                className="w-32 h-32 rounded-full shadow-lg dark:shadow-black/30 mx-auto"
+              />
+            </div>
+            <h5 className="mb-2 text-xl font-semibold">
+              {creator.firstName} {creator.lastName}
+            </h5>
+            <h6 className="mb-2 font-semibold text-primary dark:text-primary-400">
+              Creator: @{creator.handle}
+            </h6>
+          </>
+        )} */}
         <br />
         <hr />
         <br />
         <h5 className="mb-4 text-xl font-semibold">Members: </h5>
+        <br />
         <div className="flex flex-wrap justify-center">
           {hasParticipants &&
             participants.map((p) => (
@@ -145,20 +242,24 @@ export default function SingleGroup() {
                     {p.email || "Not provided"}
                   </div>
                   <div className="flex justify-center items-center mb-2 text-neutral-600 dark:text-neutral-300">
-                    <span>Status: </span>{"  "}
-                    <span> {" "}
-                    {
-                      Object.entries(group.participants)
-                        .filter((user) => {
-                          if (user[0] === p.handle) {
-                            return user[1];
-                          }
-                        })
-                        .join(" ")
-                        .split(",")[1]
-                    }
-                    </span>
+                    <p>
+                      <span className="font-bold">Status: </span>
+                      <span>
+                        {" "}
+                        {
+                          Object.entries(group.participants)
+                            .filter((user) => {
+                              if (user[0] === p.handle) {
+                                return user[1];
+                              }
+                            })
+                            .join(" ")
+                            .split(",")[1]
+                        }
+                      </span>
+                    </p>
                   </div>
+                  <br />
                   {userData.handle === group.creator && (
                     <div className="flex justify-center items-center mb-2 text-neutral-600 dark:text-neutral-300">
                       <Button onClick={() => removeUser(id, p.handle)}>
@@ -170,7 +271,10 @@ export default function SingleGroup() {
               </div>
             ))}
         </div>
-      </>
+        <hr />
+        <br />
+        <h5 className="mb-4 text-xl font-semibold">Quizzes: </h5>
+      </div>
     )
   );
 }
