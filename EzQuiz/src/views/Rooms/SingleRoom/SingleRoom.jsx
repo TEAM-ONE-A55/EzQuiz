@@ -1,6 +1,6 @@
 export default function SingleRoom() {
-    return (
-        <>
-        </>
-    )
+  return (
+    <>
+    </>
+  );
 }
