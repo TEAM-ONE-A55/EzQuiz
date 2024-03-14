@@ -63,9 +63,9 @@ export default function MyGroups({ notifications }) {
 
   const deleteGroup = async (groupId, uuid, coverUrl) => {
     try {
-      const room = await getHubsById("groups", groupId);
-      if (room.participants) {
-        const participants = room.participants;
+      const group = await getHubsById("groups", groupId);
+      if (group.participants) {
+        const participants = group.participants;
         Object.entries(participants).map((p) => {
           if (p[1] === "accepted") {
             updateUserData(p[0], `groups/${groupId}`, null);

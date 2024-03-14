@@ -71,7 +71,7 @@ export default function RoomSimpleView({ room, hasRooms, loading, leaveRoom, del
           <a
             type="button"
             className="pointer-events-auto inline-block cursor-pointer rounded text-base font-normal leading-normal text-primary text-gray-800 transition duration-150 ease-in-out hover:text-primary-600 focus:text-primary-600 focus:outline-none focus:ring-0 active:text-primary-700 dark:text-primary-400"
-            onClick={() => deleteRoom(room.id)}
+            onClick={() => deleteRoom(room.id, room.uuid, room.image_cover)}
           >
             Delete room
           </a>

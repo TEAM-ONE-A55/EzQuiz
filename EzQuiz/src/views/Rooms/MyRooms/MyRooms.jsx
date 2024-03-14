@@ -14,6 +14,11 @@ import {
   updateHub,
 } from "../../../services/hub.service";
 import PropTypes from "prop-types";
+import { defaultCoverRoom } from "../../../constants/constants";
+import {
+  deleteCoverImage,
+  getCoverImage,
+} from "../../../services/storage.service";
 
 export default function MyRooms({ notifications }) {
   const { userData } = useContext(AppContext);
@@ -51,17 +56,28 @@ export default function MyRooms({ notifications }) {
     }
   };
 
-  const deleteRoom = async (roomId) => {
+  const deleteRoom = async (roomId, uuid, coverUrl) => {
     try {
       const room = await getHubsById("rooms", roomId);
-      const participants = room.participants;
-      Object.entries(participants).map((p) => {
-        if (p[1] === "accepted") {
-          updateUserData(p[0], `rooms/${roomId}`, null);
-        }
-      });
+      if (room.participants) {
+        const participants = room.participants;
+        Object.entries(participants).map((p) => {
+          if (p[1] === "accepted") {
+            updateUserData(p[0], `rooms/${roomId}`, null);
+          }
+        });
+      }
+
       await updateUserData(userData.handle, `rooms/${roomId}`, null);
       await deleteHub("rooms", roomId);
+
+      if (coverUrl !== defaultCoverRoom) {
+        const coverImage = await getCoverImage("rooms", uuid);
+        const coverImagePath = coverImage._location.path.split("/");
+        const coverImageId = coverImagePath[1];
+        await deleteCoverImage("rooms", coverImageId);
+      }
+
       setRoomsIds((prevRoomsIds) => {
         const newPrevRoomsIds = prevRoomsIds.filter((id) => id !== roomId);
         return newPrevRoomsIds;
