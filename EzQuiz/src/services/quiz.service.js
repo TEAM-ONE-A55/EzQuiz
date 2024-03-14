@@ -48,3 +48,12 @@ export const deleteQuizFromDatabase = async (quizId, handle) => {
         toast.error("Error deleting quiz");
     }
 }
+
+export const getQuizById = async (quizId) => {
+    const snapshot = await(get(query(ref(db, `quizzes/${quizId}`))));
+    if (!snapshot.exists()) {
+        return [];
+      }
+    const quiz = snapshot.val();
+    return quiz;
+}

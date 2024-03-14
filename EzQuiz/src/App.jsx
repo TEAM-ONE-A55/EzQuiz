@@ -39,6 +39,7 @@ import AdminDashboard from "./views/Admin/AdminDashboard/AdminDashboard";
 import BrowseQuizzes from "./views/Quizzes/BrowseQuizzes/BrowseQuizzes";
 import MyGroups from "./views/Groups/MyGroups/MyGroups";
 import SingleGroup from "./views/Groups/SingleGroup/SingleGroup";
+import MyQuizzes from "./views/Quizzes/MyQuizzes/MyQuizzes";
 
 export default function App() {
   const [user] = useAuthState(auth);
@@ -165,6 +166,14 @@ export default function App() {
               element={
                 <Authenticated>
                   <SingleGroup />
+                </Authenticated>
+              }
+            ></Route>
+             <Route
+              path="/my-quizzes"
+              element={
+                <Authenticated>
+                  <MyQuizzes/>
                 </Authenticated>
               }
             ></Route>

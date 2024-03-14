@@ -87,126 +87,43 @@ export default function SingleGroup() {
   return (
     group && (
       <div className="single-group-container">
-        {/* <div
-          style={{
-            backgroundImage: `url(${group.image_cover})`,
-            backgroundSize: "cover",
-            backgroundPosition: "center",
-            width: "100%",
-            height: "300px",
-          }}
-        >
-          <div className="mx-auto text-center md:max-w-xl lg:max-w-3xl ">
-            <h3 className="mb-6 text-3xl font-bold">{group.name}</h3>
-            <p className="mb-6 pb-2 text-neutral-600 dark:text-neutral-300 md:mb-12 md:pb-0">
-              {group.description}
-            </p>
-          </div>
-        </div> */}
-        {/* <div
+        <div
           style={{
             position: "relative",
             backgroundImage: `linear-gradient(rgba(0,0,0,0.8), rgba(0,0,0,0.8)), url(${group.image_cover})`,
             backgroundSize: "cover",
             backgroundPosition: "center",
             width: "100%",
-            height: "300px",
+            height: "400px",
             display: "flex",
+            flexDirection: "column",
             justifyContent: "center",
             alignItems: "center",
+            borderRadius: "15px",
           }}
         >
           <div className="text-center">
-            <h3 className="mb-6 text-3xl font-bold">{group.name}</h3>
-            <p className="mb-6 pb-2 text-neutral-600 dark:text-neutral-300 md:mb-12 md:pb-0">
+            <h2 className="mb-6 text-4xl font-bold">{group.name}</h2>
+            <h3 className="mb-6 text-2xl pb-2 text-neutral-600 dark:text-neutral-300 md:mb-12 md:pb-0">
               {group.description}
-            </p>
+            </h3>
           </div>
           <br/>
           {hasCreator && (
-          <>
-            <div className="mb-6">
-              <img
-                src={creator.avatar}
-                alt={creator.firstName + " " + creator.lastName}
-                className="w-32 h-32 rounded-full shadow-lg dark:shadow-black/30 mx-auto"
-              />
+            <div className="text-center">
+              <div className="mb-6">
+                <img
+                  src={creator.avatar}
+                  alt={creator.firstName + " " + creator.lastName}
+                  className="w-16 h-16 rounded-full shadow-lg dark:shadow-black/30 mx-auto"
+                />
+              </div>
+              <h6 className="mb-2 font-semibold text-primary text-m dark:text-primary-400">
+                Creator: @{creator.handle}
+              </h6>
             </div>
-            <h5 className="mb-2 text-xl font-semibold">
-              {creator.firstName} {creator.lastName}
-            </h5>
-            <h6 className="mb-2 font-semibold text-primary dark:text-primary-400">
-              Creator: @{creator.handle}
-            </h6>
-          </>
-        )}
-        </div> */}
-        <div
-  style={{
-    position: "relative",
-    backgroundImage: `linear-gradient(rgba(0,0,0,0.8), rgba(0,0,0,0.8)), url(${group.image_cover})`,
-    backgroundSize: "cover",
-    backgroundPosition: "center",
-    width: "100%",
-    height: "400px",
-    display: "flex",
-    flexDirection: "column",
-    justifyContent: "center",
-    alignItems: "center",
-    borderRadius: "15px"
-  }}
->
-  <div className="text-center">
-    <h2 className="mb-6 text-4xl font-bold">{group.name}</h2>
-    <h3 className="mb-6 text-2xl pb-2 text-neutral-600 dark:text-neutral-300 md:mb-12 md:pb-0">
-      {group.description}
-    </h3>
-  </div>
-  {hasCreator && (
-    <div className="text-center">
-      <div className="mb-6">
-        <img
-          src={creator.avatar}
-          alt={creator.firstName + " " + creator.lastName}
-          className="w-14 h-14 rounded-full shadow-lg dark:shadow-black/30 mx-auto"
-        />
-      </div>
-      <h5 className="mb-2 text-xl font-semibold">
-        {creator.firstName} {creator.lastName}
-      </h5>
-      <h6 className="mb-2 font-semibold text-primary text-m dark:text-primary-400">
-        Creator: @{creator.handle}
-      </h6>
-    </div>
-  )}
-</div>
-
-        {/* <img src={group.image_cover} className="h-auto max-w-full" alt="..." /> */}
-        {/* <div className="mx-auto text-center md:max-w-xl lg:max-w-3xl ">
-          <h3 className="mb-6 text-3xl font-bold">{group.name}</h3>
-          <p className="mb-6 pb-2 text-neutral-600 dark:text-neutral-300 md:mb-12 md:pb-0">
-            {group.description}
-          </p>
-        </div> */}
-        {/* {hasCreator && (
-          <>
-            <div className="mb-6">
-              <img
-                src={creator.avatar}
-                alt={creator.firstName + " " + creator.lastName}
-                className="w-32 h-32 rounded-full shadow-lg dark:shadow-black/30 mx-auto"
-              />
-            </div>
-            <h5 className="mb-2 text-xl font-semibold">
-              {creator.firstName} {creator.lastName}
-            </h5>
-            <h6 className="mb-2 font-semibold text-primary dark:text-primary-400">
-              Creator: @{creator.handle}
-            </h6>
-          </>
-        )} */}
-        <br />
-        <hr />
+          )}
+        </div>
         <br />
         <h5 className="mb-4 text-xl font-semibold">Members: </h5>
         <br />
