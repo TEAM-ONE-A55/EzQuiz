@@ -6,6 +6,7 @@ import { useNavigate } from "react-router";
 import "./MyRooms.css";
 import { getUserByHandle } from "../../../services/user.service";
 import { getHubsById } from "../../../services/hub.service";
+import PropTypes from "prop-types";
 
 export default function MyRooms({ notifications }) {
   const { userData } = useContext(AppContext);
@@ -19,20 +20,19 @@ export default function MyRooms({ notifications }) {
 
   const addRoom = (roomId) => {
     setRoomsIds((prevRoomsIds) => {
-      console.log("string")
-      console.log(prevRoomsIds)
       if (prevRoomsIds.length !== 0 && !prevRoomsIds.includes(roomId)) {
         return [...prevRoomsIds, roomId]
       } else if (prevRoomsIds.length === 0) {
         return [roomId]
       }
-     
+      return prevRoomsIds;
     })
     ;
     setNumRooms((prevNumRooms) => prevNumRooms + 1);
   };
 
   useEffect(() => {
+    // console.log('UseEffect 1 triggered');
     setLoading(true);
     getUserByHandle(userData.handle)
       .then((snapshot) => snapshot.val().rooms)
@@ -46,14 +46,12 @@ export default function MyRooms({ notifications }) {
         console.log(e.message);
         setLoading(false);
       });
-    console.log("notifications render");
   }, [userData, notifications]);
 
-  console.log(roomsIds);
-  console.log(rooms);
-
   useEffect(() => {
+    // console.log('UseEffect 2 triggered');
     if (roomsIds.length !== 0) {
+      // console.log('UseEffect 2 proceeded');
       const roomsPromises = roomsIds.map((roomId) => {
         return getHubsById("rooms", roomId)
           .then((room) => room)
@@ -62,7 +60,6 @@ export default function MyRooms({ notifications }) {
 
       Promise.all(roomsPromises)
         .then((roomsData) => {
-          console.log(roomsData);
           setRooms(roomsData);
           // setRoomsIds([]);
           setLoading(false);
@@ -149,3 +146,7 @@ export default function MyRooms({ notifications }) {
     </div>
   );
 }
+
+MyRooms.propTypes = {
+  notifications: PropTypes.object,
+};
