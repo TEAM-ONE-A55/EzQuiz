@@ -1,6 +1,6 @@
 import toast from "react-hot-toast";
 import { db } from "../config/firebase.config";
-import { ref, push, get, query, orderByChild } from "firebase/database";
+import { ref, push, get, query, orderByChild, remove } from "firebase/database";
 import { shuffleArray } from "./helper.js";
 
 export const uploadQuizToDatabase = async (quiz) => {
@@ -37,3 +37,14 @@ export const getAllQuizzesFromDatabase = async (key = "createdOn") => {
     }));
     return quizzes;
 };
+
+export const deleteQuizFromDatabase = async (quizId, handle) => {
+    try {
+        await remove(ref(db, `quizzes/${quizId}`));
+        await remove(ref(db, `users/${handle}/createdQuizzes/${quizId}`));
+        toast.success("Quiz deleted successfully");
+    } catch (e) {
+        console.error(e.message);
+        toast.error("Error deleting quiz");
+    }
+}
