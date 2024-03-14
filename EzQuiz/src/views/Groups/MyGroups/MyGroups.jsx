@@ -5,10 +5,22 @@ import { AppContext } from "../../../context/AppContext";
 import { useNavigate } from "react-router-dom";
 import Button from "../../../components/Button/Button";
 import PropTypes from "prop-types";
-import { getUserByHandle, updateUserData } from "../../../services/user.service";
-import { deleteHub, getHubsById, updateHub } from "../../../services/hub.service";
+import {
+  getUserByHandle,
+  updateUserData,
+} from "../../../services/user.service";
+import {
+  deleteHub,
+  getHubsById,
+  updateHub,
+} from "../../../services/hub.service";
+import {
+  deleteCoverImage,
+  getCoverImage,
+} from "../../../services/storage.service";
+import { defaultCoverGroup } from "../../../constants/constants";
 
-export default function MyGroups({notifications}) {
+export default function MyGroups({ notifications }) {
   const { userData } = useContext(AppContext);
   const [groupsIds, setGroupsIds] = useState([]);
   const [hasGroups, setHasGroups] = useState(false);
@@ -32,7 +44,13 @@ export default function MyGroups({notifications}) {
   const leaveGroup = async (groupId) => {
     try {
       await updateUserData(userData.handle, `groups/${groupId}`, null);
-      await updateHub("groups", groupId, "participants", userData.handle, "left");
+      await updateHub(
+        "groups",
+        groupId,
+        "participants",
+        userData.handle,
+        "left"
+      );
       setGroupsIds((prevGroupsIds) => {
         const newPrevGroupsIds = prevGroupsIds.filter((id) => id !== groupId);
         return newPrevGroupsIds;
@@ -43,17 +61,28 @@ export default function MyGroups({notifications}) {
     }
   };
 
-  const deleteGroup = async (groupId) => {
+  const deleteGroup = async (groupId, uuid, coverUrl) => {
     try {
       const room = await getHubsById("groups", groupId);
-      const participants = room.participants;
-      Object.entries(participants).map((p) => {
-        if (p[1] === "accepted") {
-          updateUserData(p[0], `groups/${groupId}`, null);
-        }
-      });
+      if (room.participants) {
+        const participants = room.participants;
+        Object.entries(participants).map((p) => {
+          if (p[1] === "accepted") {
+            updateUserData(p[0], `groups/${groupId}`, null);
+          }
+        });
+      }
+
       await updateUserData(userData.handle, `groups/${groupId}`, null);
       await deleteHub("groups", groupId);
+
+      if (coverUrl !== defaultCoverGroup) {
+        const coverImage = await getCoverImage("groups", uuid);
+        const coverImagePath = coverImage._location.path.split("/");
+        const coverImageId = coverImagePath[1];
+        await deleteCoverImage("groups", coverImageId);
+      }
+
       setGroupsIds((prevGroupsIds) => {
         const newPrevGroupsIds = prevGroupsIds.filter((id) => id !== groupId);
         return newPrevGroupsIds;
@@ -100,7 +129,7 @@ export default function MyGroups({notifications}) {
 
   return (
     <div>
-       {userData && userData.groups && hasGroups ? (
+      {userData && userData.groups && hasGroups ? (
         <>
           <div className="my-groups-content">
             <h2 className="mb-4 font-extrabold leading-none tracking-tight text-gray-900 md:text-5xl lg:text-4xl dark:text-white">
@@ -116,7 +145,7 @@ export default function MyGroups({notifications}) {
             </p>
           </div>
           <div className="groups-container">
-          {groups.length !== 0 &&
+            {groups.length !== 0 &&
               groups.map((group) => {
                 return (
                   <div key={group.id}>

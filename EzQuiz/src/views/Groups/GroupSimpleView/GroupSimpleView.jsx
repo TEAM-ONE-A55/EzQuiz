@@ -13,48 +13,7 @@ export default function GroupSimpleView({
   deleteGroup,
 }) {
   const { userData } = useContext(AppContext);
-  // const [groups, setGroups] = useState([]);
-  // const [groupsIds, setGroupsIds] = useState([]);
-  // const [hasGroups, setHasGroups] = useState(false);
-  // const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
-
-  // useEffect(() => {
-  //   setLoading(true);
-  //   getUserByHandle(userData.handle)
-  //     .then((snapshot) => {
-  //       const availableGroups = snapshot.val().groups;
-
-  //       setGroupsIds(Object.keys(availableGroups));
-  //       setHasGroups(true);
-  //     })
-  //     .catch((e) => {
-  //       console.log(e.message);
-  //       setLoading(false);
-  //     });
-  // }, []);
-
-  // useEffect(() => {
-  //   if (groupsIds.length !== 0) {
-  //     groupsIds.map((groupId) => {
-  //       getHubsById("groups", groupId)
-  //         .then((group) =>
-  //           setGroups((prev) => {
-  //             if (prev.length === 0) {
-  //               return [group];
-  //             } else {
-  //               return [...prev, group];
-  //             }
-  //           })
-  //         )
-  //         .catch((e) => console.log(e.message))
-  //         .finally(() => {
-  //           setGroupsIds([]);
-  //           setLoading(false);
-  //         });
-  //     });
-  //   }
-  // }, [hasGroups]);
 
   if (loading && !hasGroups) {
     return <Loader />;
@@ -98,7 +57,7 @@ export default function GroupSimpleView({
             <a
               type="button"
               className="pointer-events-auto inline-block cursor-pointer rounded text-base font-normal leading-normal text-primary text-gray-800 transition duration-150 ease-in-out hover:text-primary-600 focus:text-primary-600 focus:outline-none focus:ring-0 active:text-primary-700 dark:text-primary-400"
-              onClick={() => deleteGroup(group.id)}
+              onClick={() => deleteGroup(group.id, group.uuid, group.image_cover)}
             >
               Delete group
             </a>
