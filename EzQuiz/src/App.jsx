@@ -71,7 +71,7 @@ export default function App() {
   }, [user]);
 
   return (
-    <>
+    <div className="">
       <BrowserRouter>
         <AppContext.Provider value={{ ...context, setContext: setContext }}>
           <Toaster position="bottom-right" reverseOrder={true} />
@@ -367,6 +367,6 @@ export default function App() {
           <Footer />
         </AppContext.Provider>
       </BrowserRouter>
-    </>
+    </div>
   );
 }
