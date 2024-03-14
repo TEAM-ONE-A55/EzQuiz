@@ -1,6 +1,6 @@
 import toast from "react-hot-toast";
 import { db } from "../config/firebase.config";
-import { ref, push, get, query, orderByChild, remove } from "firebase/database";
+import { ref, push, get, query, orderByChild, remove, set } from "firebase/database";
 import { shuffleArray } from "./helper.js";
 
 export const uploadQuizToDatabase = async (quiz) => {
@@ -17,7 +17,7 @@ export const uploadQuizToDatabase = async (quiz) => {
         const thisQuiz = await push(ref(db, "quizzes"), quizWithMixedAnswers);
         const quizId = thisQuiz.key;
         const userRef = ref(db, `users/${quiz.creator}/createdQuizzes/${quizId}`);
-        await push(userRef, quizId);
+        await set(userRef, quizId);
         toast.success("Quiz created successfully");
         return quizId;
     } catch (e) {
