@@ -1,34 +1,21 @@
 import { useContext, useEffect, useState } from "react";
-import { getQuizById } from "../../../services/quiz.service";
 import SimpleQuiz from "../SimpleQuiz/SimpleQuiz";
 import { AppContext } from "../../../context/AppContext";
-import { getUserByHandle } from "../../../services/user.service";
+import { getAllQuizzesFromDatabase } from "../../../services/quiz.service";
 import Button from "../../../components/Button/Button";
 import { useNavigate } from "react-router";
 
 export default function MyQuizzes() {
   const { userData } = useContext(AppContext);
   const [quizzes, setQuizzes] = useState([]);
-  const [quizzesId, setQuizzesId] = useState([]);
+  const [change, setChange] = useState(0);
   const navigate = useNavigate();
 
   useEffect(() => {
-    getUserByHandle(userData.handle).then((snapshot) => {
-      if (snapshot.val().createdQuizzes)
-        return setQuizzesId(
-          ...quizzesId,
-          Object.keys(snapshot.val().createdQuizzes)
-        );
-    });
-  }, [userData]);
-
-  useEffect(() => {
-    if (quizzesId.length !== 0) {
-      const promises = quizzesId.map((q) => getQuizById(q));
-
-      Promise.all(promises).then((q) => setQuizzes(q));
-    }
-  }, [quizzesId]);
+    getAllQuizzesFromDatabase('creator')
+    .then(quizzes => quizzes.filter(quiz => quiz.creator === userData.handle))
+    .then(setQuizzes);
+  }, [change])
 
   return (
     <div>
@@ -40,7 +27,7 @@ export default function MyQuizzes() {
               <span className="text-blue-600 dark:text-blue-500">Quizzes</span>
             </h2>
             <br />
-            {quizzes[0].creator === userData.handle ? (
+            {userData.role === 'educator' ? (
               <p className="text-lg font-normal text-gray-500 lg:text-xl dark:text-gray-400">
                 Welcome to your personalized quiz hub! Here, you can access and
                 manage all the quizzes you&apos;ve created. Tailor each quiz to
@@ -59,12 +46,14 @@ export default function MyQuizzes() {
             )}
           </div>
           <br />
-
-          {quizzes.map((quiz) => (
-            <div key={quiz.id} className="flex gap-10">
-              <SimpleQuiz key={quiz.id} quiz={quiz} setChange={() => {}} />
-            </div>
-          ))}
+          
+          <div className="grid grid-cols-4 mt-16 max-w-screen-xl m-auto justify-items-center gap-y-16">
+            {quizzes.map((quiz) => (
+              <div key={quiz.id} className="flex gap-10">
+                <SimpleQuiz key={quiz.id} quiz={quiz} setChange={setChange} />
+              </div>
+            ))}
+          </div>
         </>
       ) : (
         <div className="my-groups-content">
