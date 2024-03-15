@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 import DeleteQuiz from '../DeleteQuiz/DeleteQuiz';
 import { AppContext } from "../../../context/AppContext";
 
-export default function SimpleQuiz({ quiz, setChange }) {
+export default function SimpleQuiz({ quiz, setChange, hubType, hubId }) {
     const navigate = useNavigate();
     const { user, userData } = useContext(AppContext);
 
@@ -21,7 +21,7 @@ export default function SimpleQuiz({ quiz, setChange }) {
                         onClick={() => navigate(`/sample-quiz/${quiz.id}`)}
                         >Take</button>
                     {user && userData.handle === quiz.creator &&
-                        <DeleteQuiz id={quiz.id} handle={quiz.creator} setChange={setChange}/>}
+                        <DeleteQuiz id={quiz.id} handle={quiz.creator} setChange={setChange} hubType={hubType} hubId={hubId}/>}
                 </div>
         </div>
     )
@@ -29,5 +29,7 @@ export default function SimpleQuiz({ quiz, setChange }) {
 
 SimpleQuiz.propTypes = {
     quiz: PropTypes.object.isRequired,
-    setChange: PropTypes.func.isRequired
+    setChange: PropTypes.func.isRequired,
+    hubType: PropTypes.string,
+    hubId: PropTypes.string
 }
