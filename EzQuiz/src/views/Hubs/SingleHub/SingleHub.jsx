@@ -219,7 +219,10 @@ export default function SingleHub({
           )}
         </div>
         <br />
-        <h5 className="mb-4 text-xl font-semibold"> {userData.role === "student" ? "Participants:" : "Members:"} </h5>
+        <h5 className="mb-4 text-xl font-semibold">
+          {" "}
+          {userData.role === "student" ? "Participants:" : "Members:"}{" "}
+        </h5>
         {(userData.role === "educator" || userData.handle === hub.creator) && (
           <>
             <Button onClick={() => setOnClickAddMember(!onClickAddMember)}>
@@ -297,6 +300,13 @@ export default function SingleHub({
                     <div className="flex justify-center items-center mb-2 text-neutral-600 dark:text-neutral-300">
                       <Button onClick={() => removeUser(id, p.handle)}>
                         Remove
+                      </Button>
+                    </div>
+                  )}
+                  {userData.handle === p.handle && (
+                    <div className="flex justify-center items-center mb-2 text-neutral-600 dark:text-neutral-300">
+                      <Button onClick={() => removeUser(id, p.handle)}>
+                        Leave {hubType.toUpperCase()[0] + hubType.slice(1, hubType.length - 1)}
                       </Button>
                     </div>
                   )}
