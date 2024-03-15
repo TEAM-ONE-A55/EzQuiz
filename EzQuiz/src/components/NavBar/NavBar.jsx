@@ -189,7 +189,7 @@ export default function NavBar({notifications, setNotifications}) {
                         <span className="absolute -inset-1.5" />
                         <span className="sr-only">Open user menu</span>
                         <img
-                          className="h-12 w-12 rounded-full"
+                          className="h-12 w-12 border-none rounded-full"
                           src={userData.avatar}
                           alt={`${userData.handle}-avatar`}
                         />
