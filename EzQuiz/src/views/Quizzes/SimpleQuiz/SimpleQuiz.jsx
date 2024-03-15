@@ -20,7 +20,7 @@ export default function SimpleQuiz({ quiz, setChange }) {
                         className=" bg-gray-50 border-amber-500 border-2 text-gray-700 hover:text-white font-semibold text-sm rounded-md max-w-32 px-4 py-2 duration-75 ease-in-out hover:bg-amber-500"
                         onClick={() => navigate(`/sample-quiz/${quiz.id}`)}
                         >Take</button>
-                    {user && userData.handle === quiz.creator &&
+                    {user && (userData.handle === quiz.creator || userData.role === 'admin') &&
                         <DeleteQuiz id={quiz.id} handle={quiz.creator} setChange={setChange}/>}
                 </div>
         </div>

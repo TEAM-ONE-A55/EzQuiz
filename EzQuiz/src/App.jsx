@@ -40,6 +40,7 @@ import BrowseQuizzes from "./views/Quizzes/BrowseQuizzes/BrowseQuizzes";
 import MyGroups from "./views/Groups/MyGroups/MyGroups";
 import SingleGroup from "./views/Groups/SingleGroup/SingleGroup";
 import MyQuizzes from "./views/Quizzes/MyQuizzes/MyQuizzes";
+import AllQuizzes from "./views/Admin/AllQuizzes/AllQuizzes";
 
 export default function App() {
   const [user] = useAuthState(auth);
@@ -363,6 +364,7 @@ export default function App() {
               }
             ></Route>
             <Route path="browse-quizzes" element={<BrowseQuizzes />} />
+            <Route path="all-quizzes" element={<AllQuizzes />} />
           </Routes>
           <Footer />
         </AppContext.Provider>
