@@ -47,7 +47,6 @@ export default function SingleHub({
   }, [usersChange, quizzesChange]);
 
   useEffect(() => {
-    console.log("useEffect get users for dropdown");
     if (hub.participants) {
       const promises = Object.keys(hub.participants).map(async (p) => {
         return getUserByHandle(p).then((snapshot) => ({
@@ -87,7 +86,6 @@ export default function SingleHub({
   }, [hub]);
 
   useEffect(() => {
-    console.log("useEffect get users for dropdown");
     if (userData && userData.handle) {
       getAllUsers()
         .then((users) => users.map((user) => user.val()))
@@ -179,7 +177,7 @@ export default function SingleHub({
 
   return (
     hub && (
-      <div className="single-group-container">
+      <div className="single-hub-container">
         <div
           style={{
             position: "relative",
