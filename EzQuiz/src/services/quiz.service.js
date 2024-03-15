@@ -94,4 +94,17 @@ export const getQuizById = async (quizId) => {
   return quiz;
 };
 
-
+export const determineQuizStatus = (quiz) => {
+  const now = new Date();
+  const start = new Date(quiz.startDate);
+  const end = new Date(quiz.endDate);
+  if (start > now) {
+    return "Scheduled";
+  }
+  if (start < now && end > now) {
+    return "Ongoing";
+  }
+  if (end < now) {
+    return "Finished";
+  }
+}
