@@ -66,6 +66,12 @@ export const usersSortingOptions = [
   { label: "Sort by Username (Z-A)", value: "usernameDescending" },
 ]
 
+export const userSearchOptions = [
+  { label: "Username", value: "username" },
+  { label: "First Name", value: "firstName" },
+  { label: "Last Name", value: "lastName" },
+]
+
 export const searchingOptions = [
   { label: "Users", value: "users" },
   { label: "Rooms", value: "rooms" },
