@@ -249,7 +249,7 @@ export default function SingleHub({
         <div className="flex flex-wrap justify-center">
           {hasParticipants &&
             participants.map((p) => (
-              <div key={p.handle} className="mx-4 mb-6">
+              <div key={p.handle} className={userData.handle !== p.handle ? "mx-4 mb-6" : "mx-4 mb-6 userData-handle"}>
                 <div className="text-center">
                   <div className="mb-6">
                     <img
