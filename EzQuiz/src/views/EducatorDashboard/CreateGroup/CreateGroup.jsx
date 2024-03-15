@@ -92,7 +92,7 @@ export default function CreateGroup() {
           "pending"
         );
 
-        await updateUserData(userData.handle, `groups/${id}`, group);
+        // await updateUserData(userData.handle, `groups/${id}`, group);
       }
       for (const quiz in selectedQuizzes) {
         await updateHub(
@@ -104,7 +104,8 @@ export default function CreateGroup() {
         );
       }
 
-      updateUserData(userData.handle, `groups/${id}`, group);
+      await updateUserData(userData.handle, `groups/${id}`, group);
+      
       toast.success("Your group has been successfully created!");
     } catch (e) {
       toast.error(e.message);

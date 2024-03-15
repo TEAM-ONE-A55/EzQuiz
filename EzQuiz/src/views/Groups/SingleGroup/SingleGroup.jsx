@@ -3,11 +3,16 @@ import { AppContext } from "../../../context/AppContext";
 import { useParams } from "react-router";
 import { getHubsById, updateHub } from "../../../services/hub.service";
 import {
+  getAllUsers,
   getUserByHandle,
   updateUserData,
 } from "../../../services/user.service";
 import Button from "../../../components/Button/Button";
 import "./SingleGroup.css";
+import DropdownSelectQuizzes from "../../../components/Dropdown/DropdownSelectQuizzes/DropdownSelectQuizzes";
+import DropdownSelectUsers from "../../../components/Dropdown/DropdownSelectUsers/DropdownSelectUsers";
+import { getAllQuizzesFromDatabase } from "../../../services/quiz.service";
+import SimpleQuiz from "../../Quizzes/SimpleQuiz/SimpleQuiz";
 
 export default function SingleGroup() {
   const { userData } = useContext(AppContext);
@@ -21,34 +26,32 @@ export default function SingleGroup() {
     uuid: "",
   });
 
-  const [participants, setParticipants] = useState([
-    {
-      handle: "",
-      avatar: "",
-      email: "",
-      phoneNumber: "",
-      firstName: "",
-      lastName: "",
-    },
-  ]);
+  const [participants, setParticipants] = useState([]);
   const [hasParticipants, setHasParticipants] = useState(false);
 
-  const [creator, setCreator] = useState({
-    handle: "",
-    avatar: "",
-    email: "",
-    phoneNumber: "",
-    firstName: "",
-    lastName: "",
-  });
-
+  const [creator, setCreator] = useState({});
   const [hasCreator, setHasCreator] = useState(false);
+
+  const [quizzes, setQuizzes] = useState([]);
+  const [hasQuizzes, setHasQuizzes] = useState(false);
+  const [quizzesChange, setQuizzesChange] = useState(0);
+
+  const [availableQuizzes, setAvailableQuizzes] = useState([]);
+  const [users, setUsers] = useState([]);
+  const [usersChange, setUsersChange] = useState(0);
+
+  const [selectedParticipants, setSelectedParticipants] = useState([]);
+  const [selectedQuizzes, setSelectedQuizzes] = useState([]);
+
+  const [onClickAddQuiz, setOnClickAddQuiz] = useState(false);
+  const [onClickAddMember, setOnClickAddMember] = useState(false);
 
   useEffect(() => {
     getHubsById("groups", id).then(setGroup);
-  }, []);
+  }, [usersChange, quizzesChange]);
 
   useEffect(() => {
+    console.log("useEffect get users for dropdown");
     if (group.participants) {
       const promises = Object.keys(group.participants).map(async (p) => {
         return getUserByHandle(p).then((snapshot) => ({
@@ -71,9 +74,61 @@ export default function SingleGroup() {
     getUserByHandle(group.creator)
       .then((snapshot) => setCreator(snapshot.val()))
       .then(setHasCreator(true));
+
+    if (group.quizzes) {
+      const promises = Object.keys(group.quizzes).map((id) => {
+        return getAllQuizzesFromDatabase("id").then((quizzes) =>
+          quizzes.filter((quiz) => quiz.id === id)
+        );
+      });
+
+      Promise.all(promises)
+        .then((quizzes) => {
+          setQuizzes([...quizzes].flat());
+        })
+        .then(setHasQuizzes(true));
+    }
   }, [group]);
 
-  console.log(creator);
+  useEffect(() => {
+    console.log("useEffect get users for dropdown");
+    if (userData && userData.handle) {
+      getAllUsers()
+        .then((users) => users.map((user) => user.val()))
+        .then((data) =>
+          data.filter(
+            (u) => u.role === "educator" && userData.handle !== u.handle
+          )
+        )
+        .then((data) =>
+          data.filter((u) => !participants.some((p) => p.handle === u.handle))
+        )
+        .then((data) =>
+          setUsers(data.map((u) => ({ value: u.handle, label: u.handle })))
+        )
+
+        .catch((error) => console.log(error));
+    }
+  }, [participants]);
+
+  useEffect(() => {
+    if (userData && userData.handle) {
+      getAllQuizzesFromDatabase()
+        .then((data) => data.filter((quiz) => quiz.creator === userData.handle))
+        .then((data) =>
+          data.filter(
+            (quiz1) => !quizzes.some((quiz2) => quiz2.id === quiz1.id)
+          )
+        )
+        .then((data) =>
+          setAvailableQuizzes(
+            data.map((q) => ({ value: q.id, label: q.title }))
+          )
+        )
+
+        .catch((error) => console.log(error));
+    }
+  }, [quizzes]);
 
   const removeUser = async (groupId, user) => {
     await updateHub("groups", groupId, "participants", user, null);
@@ -82,7 +137,27 @@ export default function SingleGroup() {
     setParticipants(updatedParticipants);
   };
 
-  console.log(group);
+  const addUsers = async () => {
+    try {
+      if (selectedParticipants.length !== 0) {
+        for (const user in selectedParticipants) {
+          await updateHub(
+            "groups",
+            id,
+            "participants",
+            selectedParticipants[user].value,
+            "pending"
+          );
+        }
+      }
+    } catch (e) {
+      console.log(e.message);
+    } finally {
+      setSelectedParticipants([]);
+      setUsersChange(usersChange + 1);
+      setOnClickAddMember(false);
+    }
+  };
 
   return (
     group && (
@@ -108,7 +183,7 @@ export default function SingleGroup() {
               {group.description}
             </h3>
           </div>
-          <br/>
+          <br />
           {hasCreator && (
             <div className="text-center">
               <div className="mb-6">
@@ -126,6 +201,24 @@ export default function SingleGroup() {
         </div>
         <br />
         <h5 className="mb-4 text-xl font-semibold">Members: </h5>
+        <Button onClick={() => setOnClickAddMember(!onClickAddMember)}>
+          {!onClickAddMember ? "Invite Members" : "Cancel Invitations"}
+        </Button>
+        {onClickAddMember && (
+          <>
+            <Button onClick={addUsers}>Send Invitations</Button>
+            <br />
+            <br />
+            <DropdownSelectUsers
+              users={users}
+              selectedUsers={selectedParticipants}
+              setSelectedUsers={setSelectedParticipants}
+            />
+          </>
+        )}
+
+        <br />
+        <br />
         <br />
         <div className="flex flex-wrap justify-center">
           {hasParticipants &&
@@ -191,6 +284,31 @@ export default function SingleGroup() {
         <hr />
         <br />
         <h5 className="mb-4 text-xl font-semibold">Quizzes: </h5>
+        <Button onClick={() => setOnClickAddQuiz(!onClickAddQuiz)}>
+          {!onClickAddQuiz ? "Add Quizzes" : "Cancel"}
+        </Button>
+        <br />
+        <br />
+        {onClickAddQuiz && (
+          <DropdownSelectQuizzes
+            quizzes={availableQuizzes}
+            selectedQuizzes={selectedQuizzes}
+            setSelectedQuizzes={setSelectedQuizzes}
+          />
+        )}
+        {hasQuizzes && quizzes.length !== 0 && (
+          <div className="grid grid-cols-4 mt-16 max-w-screen-xl m-auto justify-items-center gap-y-16">
+            {quizzes.map((quiz) => (
+              <div key={quiz.id} className="flex gap-10">
+                <SimpleQuiz
+                  key={quiz.id}
+                  quiz={quiz}
+                  setChange={setQuizzesChange}
+                />
+              </div>
+            ))}
+          </div>
+        )}
       </div>
     )
   );
