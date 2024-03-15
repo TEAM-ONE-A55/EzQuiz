@@ -28,6 +28,7 @@ export default function CreateQuiz() {
     startDate: "",
     endDate: "",
     creator: userData.handle,
+    creatorAvatar: userData.avatar,
     questions: [],
     participants: [],
     groups: [],
