@@ -19,6 +19,7 @@ export const uploadQuizToDatabase = async (quiz) => {
         return {
           ...q,
           mixedAnswers: shuffleArray([...q.mixedAnswers]),
+          createdOn: Date.now(),
         };
       }),
     };
@@ -45,6 +46,15 @@ export const getAllQuizzesFromDatabase = async (key = "createdOn") => {
   }));
   return quizzes;
 };
+
+export const getAllQuizTitles = async () => {
+  const snapshot = await get(query(ref(db, "quizzes")));
+  if (!snapshot.exists()) {
+    return [];
+  }
+  const titles = Object.keys(snapshot.val()).map((key) => snapshot.val()[key].title);
+  return titles;
+}
 
 export const deleteQuizFromDatabase = async (
   quizId,
