@@ -29,6 +29,10 @@ export const quizVisibilityOptions = ['Public', 'Private'];
 
 export const quizAmountSample = ["5", "10", "15", "20"];
 
+export const minimumQuizTitleLength = 3;
+
+export const maximumQuizTitleLength = 30;
+
 export const verificationCode = "1234";
 
 export const navigationEducator = [
@@ -64,6 +68,12 @@ export const usersSortingOptions = [
   { label: "Sort by Date (A-Z)", value: "dateAscending" },
   { label: "Sort by Username (A-Z)", value: "usernameAscending" },
   { label: "Sort by Username (Z-A)", value: "usernameDescending" },
+]
+
+export const userSearchOptions = [
+  { label: "Username", value: "username" },
+  { label: "First Name", value: "firstName" },
+  { label: "Last Name", value: "lastName" },
 ]
 
 export const searchingOptions = [
