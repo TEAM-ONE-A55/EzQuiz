@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import {
   getAllQuizzesFromDatabase,
-  deleteQuizFromDatabase,
 } from "../../../services/quiz.service";
 import SimpleQuiz from "../../Quizzes/SimpleQuiz/SimpleQuiz";
 
@@ -9,6 +8,7 @@ export default function AllQuizzes() {
   const [quizzes, setQuizzes] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [searchTerm, setSearchTerm] = useState("");
 
   useEffect(() => {
     const fetchQuizzes = async () => {
@@ -23,16 +23,33 @@ export default function AllQuizzes() {
     fetchQuizzes();
   }, [quizzes]);
 
+  const handleSearchTermChange = (term) => {
+    setSearchTerm(term);
+  };
+
   return (
     <div>
       <h1>All Quizzes</h1>
       {loading && <p>Loading...</p>}
       {error && <p>{error}</p>}
-      <div className="grid grid-cols-3 gap-4">
-        {quizzes.map((quiz) => (
-          <SimpleQuiz key={quiz.id} quiz={quiz} setChange={() => {}} />
-        ))}
-      </div>
+        <input
+            type="text"
+            placeholder="Search quizzes..."
+            value={searchTerm}
+            onChange={(e) => handleSearchTermChange(e.target.value)}
+        />
+        <br />
+        {quizzes
+            .filter((quiz) =>
+                quiz.title.toLowerCase().includes(searchTerm.toLowerCase())
+            )
+            .map((quiz) => (
+                <SimpleQuiz
+                    key={quiz.id}
+                    quiz={quiz}
+                    setChange={setQuizzes}
+                />
+            ))}
     </div>
   );
 }
