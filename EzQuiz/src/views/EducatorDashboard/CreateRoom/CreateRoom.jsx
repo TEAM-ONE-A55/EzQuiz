@@ -1,7 +1,6 @@
 import { useContext, useEffect, useState } from "react";
 import { AppContext } from "../../../context/AppContext";
 import { getAllUsers, updateUserData } from "../../../services/user.service";
-import Select from "react-select";
 import "./CreateRoom.css";
 import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
@@ -13,6 +12,8 @@ import { v4 } from "uuid";
 import ChangeCover from "../../../components/ChangeCoverImage/ChangeCoverImage";
 import { deleteCoverImage } from "../../../services/storage.service";
 import { getAllQuizzesFromDatabase } from "../../../services/quiz.service";
+import DropdownSelectUsers from "../../../components/Dropdown/DropdownSelectUsers/DropdownSelectUsers";
+import DropdownSelectQuizzes from "../../../components/Dropdown/DropdownSelectQuizzes/DropdownSelectQuizzes";
 
 export default function CreateRoom() {
   const { userData, setContext } = useContext(AppContext);
@@ -59,14 +60,6 @@ export default function CreateRoom() {
 
   const handleOnChange = (key) => (e) => {
     setRoom({ ...room, [key]: e.target.value });
-  };
-
-  const handleSelectedOptionsParticipants = (selected) => {
-    setSelectedParticipants(selected);
-  };
-
-  const handleSelectedOptionsQuizzes = (selected) => {
-    setSelectedQuizzes(selected);
   };
 
   const handleCreateRoom = async () => {
@@ -209,7 +202,6 @@ export default function CreateRoom() {
         >
           <TextField
             id="outlined-basic"
-            // label="Room name"
             placeholder="Room name"
             variant="outlined"
             sx={{
@@ -228,29 +220,13 @@ export default function CreateRoom() {
           Select participants to invite:
         </p>
         <br />
-        <Select
-          isMulti
-          name="users"
-          options={users.map((user) => user)}
-          className="basic-multi-select"
-          classNamePrefix="select"
-          value={selectedParticipants}
-          onChange={handleSelectedOptionsParticipants}
-        />
+        <DropdownSelectUsers users={users} selectedUsers={selectedParticipants} setSelectedUsers={setSelectedParticipants}/>
         <br />
         <p className="text-lg font-normal text-gray-500 lg:text-xl dark:text-gray-400">
           Select quizzes:
         </p>
         <br />
-        <Select
-          isMulti
-          name="quizzes"
-          options={quizzes.map((quiz) => quiz)}
-          className="basic-multi-select"
-          classNamePrefix="select"
-          value={selectedQuizzes}
-          onChange={handleSelectedOptionsQuizzes}
-        />
+        <DropdownSelectQuizzes quizzes={quizzes} selectedQuizzes={selectedQuizzes} setSelectedQuizzes={setSelectedQuizzes}/>
         <br />
         <Button onClick={handleCreateRoom}>Create Room</Button>
         <Button

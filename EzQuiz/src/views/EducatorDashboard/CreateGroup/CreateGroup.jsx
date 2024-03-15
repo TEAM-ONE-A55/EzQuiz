@@ -4,7 +4,6 @@ import {
   getAllUsers,
   updateUserData,
 } from "../../../services/user.service";
-import Select from "react-select";
 import "./CreateGroup.css";
 import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
@@ -16,6 +15,8 @@ import { deleteCoverImage } from "../../../services/storage.service";
 import { v4 } from "uuid";
 import ChangeCover from "../../../components/ChangeCoverImage/ChangeCoverImage";
 import { getAllQuizzesFromDatabase } from "../../../services/quiz.service";
+import DropdownSelectQuizzes from "../../../components/Dropdown/DropdownSelectQuizzes/DropdownSelectQuizzes";
+import DropdownSelectUsers from "../../../components/Dropdown/DropdownSelectUsers/DropdownSelectUsers";
 
 export default function CreateGroup() {
 
@@ -66,14 +67,6 @@ export default function CreateGroup() {
 
   const handleOnChange = (key) => (e) => {
     setGroup({ ...group, [key]: e.target.value });
-  };
-
-  const handleSelectedOptionsEducators = (selected) => {
-    setSelectedEducators(selected);
-  };
-
-  const handleSelectedOptionsQuizzes = (selected) => {
-    setSelectedQuizzes(selected);
   };
 
   const handleCreateGroup = async () => {
@@ -257,7 +250,6 @@ export default function CreateGroup() {
         >
           <TextField
             id="outlined-basic"
-            // label="Room name"
             placeholder="Write a short description of the group"
             variant="outlined"
             sx={{
@@ -275,29 +267,13 @@ export default function CreateGroup() {
           Select educators to join your group:
         </p>
         <br />
-        <Select
-          isMulti
-          name="users"
-          options={users.map((user) => user)}
-          className="basic-multi-select"
-          classNamePrefix="select"
-          value={selectedEducators}
-          onChange={handleSelectedOptionsEducators}
-        />
+        <DropdownSelectUsers users={users} selectedUsers={selectedEducators} setSelectedUsers={setSelectedEducators}/>
         <br />
         <p className="text-lg font-normal text-gray-500 lg:text-xl dark:text-gray-400">
           Select quizzes:
         </p>
         <br />
-          <Select
-            isMulti
-            name="quizzes"
-            options={quizzes.map((quiz) => quiz)}
-            className="basic-multi-select"
-            classNamePrefix="select"
-            value={selectedQuizzes}
-            onChange={handleSelectedOptionsQuizzes}
-          />
+        <DropdownSelectQuizzes quizzes={quizzes} selectedQuizzes={selectedQuizzes} setSelectedQuizzes={setSelectedQuizzes}/>
         <br />
         <Button onClick={handleCreateGroup}>Create Group</Button>
         <Button
