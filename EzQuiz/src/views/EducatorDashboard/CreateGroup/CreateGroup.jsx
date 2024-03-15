@@ -1,6 +1,9 @@
 import { useContext, useEffect, useState } from "react";
 import { AppContext } from "../../../context/AppContext";
-import { getAllUsers, updateUserData } from "../../../services/user.service";
+import {
+  getAllUsers,
+  updateUserData,
+} from "../../../services/user.service";
 import Select from "react-select";
 import "./CreateGroup.css";
 import Box from "@mui/material/Box";
@@ -12,11 +15,12 @@ import { defaultCoverGroup } from "../../../constants/constants";
 import { deleteCoverImage } from "../../../services/storage.service";
 import { v4 } from "uuid";
 import ChangeCover from "../../../components/ChangeCoverImage/ChangeCoverImage";
+import { getAllQuizzesFromDatabase } from "../../../services/quiz.service";
 
 export default function CreateGroup() {
+
   const { userData, setContext } = useContext(AppContext);
   const [users, setUsers] = useState([]);
-  // eslint-disable-next-line no-unused-vars
   const [quizzes, setQuizzes] = useState([]);
   const [group, setGroup] = useState({
     name: "",
@@ -48,12 +52,28 @@ export default function CreateGroup() {
     }
   }, []);
 
+  useEffect(() => {
+    if (userData && userData.handle) {
+      getAllQuizzesFromDatabase("creator")
+        .then((quizzes) =>
+          quizzes.filter((quiz) => quiz.creator === userData.handle)
+        )
+        .then((data)=> 
+          setQuizzes(data.map((q) => ({value: q.id, label: q.title}))))
+        .catch((error) => console.log(error))
+    }
+  }, [userData]);
+
   const handleOnChange = (key) => (e) => {
     setGroup({ ...group, [key]: e.target.value });
   };
 
-  const handleSelectedOptions = (selected) => {
+  const handleSelectedOptionsEducators = (selected) => {
     setSelectedEducators(selected);
+  };
+
+  const handleSelectedOptionsQuizzes = (selected) => {
+    setSelectedQuizzes(selected);
   };
 
   const handleCreateGroup = async () => {
@@ -86,8 +106,8 @@ export default function CreateGroup() {
           "groups",
           id,
           "quizzes",
-          selectedEducators[quiz].value,
-          "pending"
+          selectedQuizzes[quiz].value,
+          selectedQuizzes[quiz].value
         );
       }
 
@@ -96,8 +116,8 @@ export default function CreateGroup() {
     } catch (e) {
       toast.error(e.message);
     } finally {
-      userData.groups = {...userData.rooms, [id]: group}
-      setContext(prev => prev, userData)
+      userData.groups = { ...userData.groups, [id]: group };
+      setContext((prev) => prev, userData);
       reset();
     }
   };
@@ -107,7 +127,7 @@ export default function CreateGroup() {
       name: "",
       description: "",
       creator: userData.handle,
-      uuid: ""
+      uuid: "",
     });
     setSelectedQuizzes([]);
     setSelectedEducators([]);
@@ -196,7 +216,6 @@ export default function CreateGroup() {
         >
           <TextField
             id="outlined-basic"
-            // label="Room name"
             placeholder="Group name"
             variant="outlined"
             sx={{
@@ -263,22 +282,22 @@ export default function CreateGroup() {
           className="basic-multi-select"
           classNamePrefix="select"
           value={selectedEducators}
-          onChange={handleSelectedOptions}
+          onChange={handleSelectedOptionsEducators}
         />
         <br />
         <p className="text-lg font-normal text-gray-500 lg:text-xl dark:text-gray-400">
           Select quizzes:
         </p>
         <br />
-        <Select
-          isMulti
-          name="quizzes"
-          options={quizzes.map((quiz) => quiz)}
-          className="basic-multi-select"
-          classNamePrefix="select"
-          value={group.quizzes}
-          onChange={handleOnChange("quizzes")}
-        />
+          <Select
+            isMulti
+            name="quizzes"
+            options={quizzes.map((quiz) => quiz)}
+            className="basic-multi-select"
+            classNamePrefix="select"
+            value={selectedQuizzes}
+            onChange={handleSelectedOptionsQuizzes}
+          />
         <br />
         <Button onClick={handleCreateGroup}>Create Group</Button>
         <Button

@@ -12,11 +12,11 @@ import { defaultCoverRoom } from "../../../constants/constants";
 import { v4 } from "uuid";
 import ChangeCover from "../../../components/ChangeCoverImage/ChangeCoverImage";
 import { deleteCoverImage } from "../../../services/storage.service";
+import { getAllQuizzesFromDatabase } from "../../../services/quiz.service";
 
 export default function CreateRoom() {
   const { userData, setContext } = useContext(AppContext);
   const [users, setUsers] = useState([]);
-  // eslint-disable-next-line no-unused-vars
   const [quizzes, setQuizzes] = useState([]);
   const [room, setRoom] = useState({
     name: "",
@@ -45,12 +45,28 @@ export default function CreateRoom() {
     }
   }, []);
 
+  useEffect(() => {
+    if (userData && userData.handle) {
+      getAllQuizzesFromDatabase("creator")
+        .then((quizzes) =>
+          quizzes.filter((quiz) => quiz.creator === userData.handle)
+        )
+        .then((data)=> 
+          setQuizzes(data.map((q) => ({value: q.id, label: q.title}))))
+        .catch((error) => console.log(error))
+    }
+  }, [userData]);
+
   const handleOnChange = (key) => (e) => {
     setRoom({ ...room, [key]: e.target.value });
   };
 
-  const handleSelectedOptions = (selected) => {
+  const handleSelectedOptionsParticipants = (selected) => {
     setSelectedParticipants(selected);
+  };
+
+  const handleSelectedOptionsQuizzes = (selected) => {
+    setSelectedQuizzes(selected);
   };
 
   const handleCreateRoom = async () => {
@@ -83,8 +99,8 @@ export default function CreateRoom() {
           "rooms",
           id,
           "quizzes",
-          selectedParticipants[quiz].value,
-          "pending"
+          selectedQuizzes[quiz].value,
+          selectedQuizzes[quiz].value
         );
       }
 
@@ -219,7 +235,7 @@ export default function CreateRoom() {
           className="basic-multi-select"
           classNamePrefix="select"
           value={selectedParticipants}
-          onChange={handleSelectedOptions}
+          onChange={handleSelectedOptionsParticipants}
         />
         <br />
         <p className="text-lg font-normal text-gray-500 lg:text-xl dark:text-gray-400">
@@ -232,8 +248,8 @@ export default function CreateRoom() {
           options={quizzes.map((quiz) => quiz)}
           className="basic-multi-select"
           classNamePrefix="select"
-          value={room.quizzes}
-          onChange={handleOnChange("quizzes")}
+          value={selectedQuizzes}
+          onChange={handleSelectedOptionsQuizzes}
         />
         <br />
         <Button onClick={handleCreateRoom}>Create Room</Button>

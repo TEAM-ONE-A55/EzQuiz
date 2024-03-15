@@ -1,18 +1,16 @@
 .create-group-container {
-    margin: 8em;
-    /* width: 100%; */
-  }
-  
-  .create-group-box {
-    margin: 50px;
-    padding: 50px;
-    border: 0.1px groove seashell;
-    border-radius: 15px;
-    /* width: 70%; */
-    align-items: center;
-  }
-  
-  .basic-multi-select {
-    color: black;
-    /* background-color: rgb(29, 62, 128); */
-  }
+  margin: 8em;
+}
+
+.create-group-box {
+  margin: 50px;
+  padding: 50px;
+  border: 0.1px groove seashell;
+  border-radius: 15px;
+  align-items: center;
+}
+
+.basic-multi-select {
+  color: black;
+  /* background-color: rgb(29, 62, 128); */
+}
