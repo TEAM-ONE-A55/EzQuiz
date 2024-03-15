@@ -13,6 +13,7 @@ import DropdownSelectQuizzes from "../../../components/Dropdown/DropdownSelectQu
 import DropdownSelectUsers from "../../../components/Dropdown/DropdownSelectUsers/DropdownSelectUsers";
 import { getAllQuizzesFromDatabase } from "../../../services/quiz.service";
 import SimpleQuiz from "../../Quizzes/SimpleQuiz/SimpleQuiz";
+import { NavLink } from "react-router-dom";
 
 export default function SingleGroup() {
   const { userData } = useContext(AppContext);
@@ -159,6 +160,28 @@ export default function SingleGroup() {
     }
   };
 
+  const addQuizzes = async () => {
+    try {
+      if (selectedQuizzes.length !== 0) {
+        for (const quiz in selectedQuizzes) {
+          await updateHub(
+            "groups",
+            id,
+            "quizzes",
+            selectedQuizzes[quiz].value,
+            selectedQuizzes[quiz].value
+          );
+        }
+      }
+    } catch (e) {
+      console.log(e.message);
+    } finally {
+      setSelectedQuizzes([]);
+      setQuizzesChange(quizzesChange + 1);
+      setOnClickAddQuiz(false);
+    }
+  };
+
   return (
     group && (
       <div className="single-group-container">
@@ -285,16 +308,21 @@ export default function SingleGroup() {
         <br />
         <h5 className="mb-4 text-xl font-semibold">Quizzes: </h5>
         <Button onClick={() => setOnClickAddQuiz(!onClickAddQuiz)}>
-          {!onClickAddQuiz ? "Add Quizzes" : "Cancel"}
+          {!onClickAddQuiz ? "Select Quizzes" : "Cancel"}
         </Button>
-        <br />
-        <br />
         {onClickAddQuiz && (
-          <DropdownSelectQuizzes
-            quizzes={availableQuizzes}
-            selectedQuizzes={selectedQuizzes}
-            setSelectedQuizzes={setSelectedQuizzes}
-          />
+          <>
+          <Button onClick={addQuizzes}>Add Quizzes</Button>
+            <br />
+            <br />
+            <DropdownSelectQuizzes
+              quizzes={availableQuizzes}
+              selectedQuizzes={selectedQuizzes}
+              setSelectedQuizzes={setSelectedQuizzes}
+            />
+            {availableQuizzes.length === 0 && 
+            <p>No quizzes are currently available. <NavLink className=" text-purple-700" to="/create-quiz">Why not create one now?</NavLink></p>}
+          </>
         )}
         {hasQuizzes && quizzes.length !== 0 && (
           <div className="grid grid-cols-4 mt-16 max-w-screen-xl m-auto justify-items-center gap-y-16">
@@ -304,6 +332,8 @@ export default function SingleGroup() {
                   key={quiz.id}
                   quiz={quiz}
                   setChange={setQuizzesChange}
+                  hubType="groups"
+                  hubId={group.id}
                 />
               </div>
             ))}

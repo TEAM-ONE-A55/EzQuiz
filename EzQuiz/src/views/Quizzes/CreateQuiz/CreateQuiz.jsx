@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Question } from "./questionClass";
 import toast from "react-hot-toast";
 import Select from "react-select";
@@ -164,7 +164,7 @@ export default function CreateQuiz() {
     });
     if(qerror) return toast.error(qerror);
     await uploadQuizToDatabase(JSON.parse(JSON.stringify(quiz)));
-    navigate('/');
+    navigate(-1);
   }
 
   if (user && userData.role !== 'student') { return (
