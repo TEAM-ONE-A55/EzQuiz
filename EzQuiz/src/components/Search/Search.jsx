@@ -9,8 +9,14 @@ export default function Search() {
   const [users, setUsers] = useState([]);
   const [rooms, setRooms] = useState([]);
   const [groups, setGroups] = useState([]);
+  const [quizzes, setQuizzes] = useState([]);
   const [search, setSearch] = useState("users");
   const [searchTerm, setSearchTerm] = useState("");
+
+  const getQuizzes = async () => {
+    const allQuizzes = await getAllHubs("quizzes");
+    setQuizzes(allQuizzes);
+  };
 
   const getRooms = async () => {
     const allRooms = await getAllHubs("rooms");
@@ -22,6 +28,7 @@ export default function Search() {
     setGroups(allGroups);
   };
   useEffect(() => {
+    getQuizzes();
     getRooms();
     getGroups();
     getAllUsers()
@@ -128,6 +135,21 @@ export default function Search() {
               .map((group) => (
                 <div key={group.name}>
                   <div>{group.name}</div>
+                </div>
+              ))}
+        </div>
+      )}
+      {search === "quizzes" && (
+        <div>
+          {searchTerm !== "" && <strong>Results for: {searchTerm}</strong>}
+          {searchTerm !== "" &&
+            quizzes
+              .filter((quiz) =>
+                quiz.title.toLowerCase().includes(searchTerm.toLowerCase())
+              )
+              .map((quiz) => (
+                <div key={quiz.title}>
+                  <div>{quiz.title}</div>
                 </div>
               ))}
         </div>

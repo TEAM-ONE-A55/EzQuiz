@@ -67,9 +67,10 @@ export const usersSortingOptions = [
 ]
 
 export const searchingOptions = [
-  { label: "Users", value: "users"},
-  { label: "Rooms", value: "rooms"},
-  { label: "Groups", value: "groups"}
+  { label: "Users", value: "users" },
+  { label: "Rooms", value: "rooms" },
+  { label: "Groups", value: "groups" },
+  { label: "Quizzes", value: "quizzes" }
 ]
 
 
