@@ -157,7 +157,7 @@ export default function CreateQuiz() {
     if(!quiz.passingScore) return toast.error("Please enter a passing score for the quiz");
     if(!quiz.startDate) return toast.error("Please enter a start date for the quiz");
     if(!quiz.endDate) return toast.error("Please enter an end date for the quiz");
-    if(new Date(quiz.startDate) > new Date(quiz.endDate)) return toast.error("Start date must be before end date");
+    if(new Date(quiz.startDate) >= new Date(quiz.endDate)) return toast.error("Start date must be before end date");
     if(quiz.questions.length < 1) return toast.error("Please add at least one question to the quiz");
     let qerror = '';
     quiz.questions.forEach((q, i) => {
