@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Question } from "./questionClass";
 import toast from "react-hot-toast";
 import Select from "react-select";
@@ -10,7 +10,8 @@ import Button from "../../../components/Button/Button";
 import { useContext } from "react";
 import { AppContext } from "../../../context/AppContext";
 import { useNavigate } from "react-router";
-import { uploadQuizToDatabase } from "../../../services/quiz.service";
+import { uploadQuizToDatabase, getAllQuizTitles } from "../../../services/quiz.service";
+import { minimumQuizTitleLength, maximumQuizTitleLength } from "../../../constants/constants";
 
 export default function CreateQuiz() {
   const { user, userData } = useContext(AppContext);
@@ -28,11 +29,16 @@ export default function CreateQuiz() {
     endDate: "",
     creator: userData.handle,
     questions: [],
+    participants: [],
+    groups: [],
+    rooms: []
   });
 
-  // useEffect(() => {
-  //   console.log(quiz);
-  // }, [quiz]);
+  const [allQuizTitles, setAllQuizTitles] = useState([]);
+
+  useEffect(() => {
+    getAllQuizTitles().then(setAllQuizTitles);
+  }, []);
 
   const handleChange = (key, value, indexQ = 0, indexO = 0) => {
     if (key === "question") {
@@ -139,13 +145,19 @@ export default function CreateQuiz() {
 
   const submitQuiz = async () => {
     if(!quiz.title) return toast.error("Please enter a title for the quiz");
+    if(quiz.title.length < minimumQuizTitleLength) return toast.error("Title must be at least 3 characters long");
+    if(quiz.title.length > maximumQuizTitleLength) return toast.error("Title must be at most 30 characters long");
+    if(allQuizTitles.includes(quiz.title)) return toast.error("A quiz with this title already exists");
     if(!quiz.visibility) return toast.error("Please choose a visibility for the quiz");
     if(!quiz.category) return toast.error("Please choose a category for the quiz");
     if(!quiz.difficulty) return toast.error("Please choose a difficulty for the quiz");
     if(!quiz.timeLimit) return toast.error("Please enter a time limit for the quiz");
+    if(quiz.timeLimit < 1) return toast.error("Time limit must be at least 1 minute");
+    if(quiz.timeLimit > 60) return toast.error("Time limit must be at most 60 minutes");
     if(!quiz.passingScore) return toast.error("Please enter a passing score for the quiz");
     if(!quiz.startDate) return toast.error("Please enter a start date for the quiz");
     if(!quiz.endDate) return toast.error("Please enter an end date for the quiz");
+    if(new Date(quiz.startDate) > new Date(quiz.endDate)) return toast.error("Start date must be before end date");
     if(quiz.questions.length < 1) return toast.error("Please add at least one question to the quiz");
     let qerror = '';
     quiz.questions.forEach((q, i) => {
