@@ -1,24 +1,24 @@
 import { useContext, useEffect, useState } from "react";
-import GroupSimpleView from "../GroupSimpleView/GroupSimpleView";
-import "./MyGroups.css";
-import { AppContext } from "../../../context/AppContext";
+import GroupSimpleView from "../GroupSimpleView/GroupSimpleView"
+import { AppContext } from "../../../../context/AppContext";
 import { useNavigate } from "react-router-dom";
-import Button from "../../../components/Button/Button";
+import Button from "../../../../components/Button/Button"
 import PropTypes from "prop-types";
 import {
   getUserByHandle,
   updateUserData,
-} from "../../../services/user.service";
+} from "../../../../services/user.service";
 import {
   deleteHub,
   getHubsById,
   updateHub,
-} from "../../../services/hub.service";
+} from "../../../../services/hub.service";
 import {
   deleteCoverImage,
   getCoverImage,
-} from "../../../services/storage.service";
-import { defaultCoverGroup } from "../../../constants/constants";
+} from "../../../../services/storage.service";
+import { defaultCoverGroup } from "../../../../constants/constants";
+import "./MyGroups.css";
 
 export default function MyGroups({ notifications }) {
   const { userData } = useContext(AppContext);

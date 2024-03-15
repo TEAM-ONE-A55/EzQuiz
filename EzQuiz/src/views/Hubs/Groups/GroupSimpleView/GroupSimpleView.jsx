@@ -1,7 +1,7 @@
 import { useContext } from "react";
 import { useNavigate } from "react-router";
-import { AppContext } from "../../../context/AppContext";
-import Loader from "../../../components/Loader/Loader";
+import { AppContext } from "../../../../context/AppContext";
+import Loader from "../../../../components/Loader/Loader";
 import PropTypes from "prop-types"
 import "./GroupSimpleView.css";
 

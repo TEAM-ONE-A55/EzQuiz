@@ -1,32 +1,27 @@
-import { useContext, useEffect, useState } from "react";
-import { AppContext } from "../../../context/AppContext";
-import { useParams } from "react-router";
+import { useEffect, useState } from "react";
 import { getHubsById, updateHub } from "../../../services/hub.service";
 import {
   getAllUsers,
   getUserByHandle,
   updateUserData,
 } from "../../../services/user.service";
-import Button from "../../../components/Button/Button";
-import "./SingleGroup.css";
+import { NavLink } from "react-router-dom";
+import { getAllQuizzesFromDatabase } from "../../../services/quiz.service";
 import DropdownSelectQuizzes from "../../../components/Dropdown/DropdownSelectQuizzes/DropdownSelectQuizzes";
 import DropdownSelectUsers from "../../../components/Dropdown/DropdownSelectUsers/DropdownSelectUsers";
-import { getAllQuizzesFromDatabase } from "../../../services/quiz.service";
+import Button from "../../../components/Button/Button";
 import SimpleQuiz from "../../Quizzes/SimpleQuiz/SimpleQuiz";
-import { NavLink } from "react-router-dom";
+import PropTypes from "prop-types";
+import "./SingleHub.css";
 
-export default function SingleGroup() {
-  const { userData } = useContext(AppContext);
-  const { id } = useParams();
-  const [group, setGroup] = useState({
-    name: "",
-    description: "",
-    image_cover: "",
-    creator: "",
-    participants: {},
-    uuid: "",
-  });
-
+export default function SingleHub({
+  hubType,
+  participantRole,
+  hub,
+  setHub,
+  userData,
+  id,
+}) {
   const [participants, setParticipants] = useState([]);
   const [hasParticipants, setHasParticipants] = useState(false);
 
@@ -48,13 +43,13 @@ export default function SingleGroup() {
   const [onClickAddMember, setOnClickAddMember] = useState(false);
 
   useEffect(() => {
-    getHubsById("groups", id).then(setGroup);
+    getHubsById(hubType, id).then(setHub);
   }, [usersChange, quizzesChange]);
 
   useEffect(() => {
     console.log("useEffect get users for dropdown");
-    if (group.participants) {
-      const promises = Object.keys(group.participants).map(async (p) => {
+    if (hub.participants) {
+      const promises = Object.keys(hub.participants).map(async (p) => {
         return getUserByHandle(p).then((snapshot) => ({
           handle: snapshot.val().handle,
           avatar: snapshot.val().avatar,
@@ -72,12 +67,12 @@ export default function SingleGroup() {
         .then(setHasParticipants(true));
     }
 
-    getUserByHandle(group.creator)
+    getUserByHandle(hub.creator)
       .then((snapshot) => setCreator(snapshot.val()))
       .then(setHasCreator(true));
 
-    if (group.quizzes) {
-      const promises = Object.keys(group.quizzes).map((id) => {
+    if (hub.quizzes) {
+      const promises = Object.keys(hub.quizzes).map((id) => {
         return getAllQuizzesFromDatabase("id").then((quizzes) =>
           quizzes.filter((quiz) => quiz.id === id)
         );
@@ -89,7 +84,7 @@ export default function SingleGroup() {
         })
         .then(setHasQuizzes(true));
     }
-  }, [group]);
+  }, [hub]);
 
   useEffect(() => {
     console.log("useEffect get users for dropdown");
@@ -98,7 +93,7 @@ export default function SingleGroup() {
         .then((users) => users.map((user) => user.val()))
         .then((data) =>
           data.filter(
-            (u) => u.role === "educator" && userData.handle !== u.handle
+            (u) => u.role === participantRole && userData.handle !== u.handle
           )
         )
         .then((data) =>
@@ -131,9 +126,9 @@ export default function SingleGroup() {
     }
   }, [quizzes]);
 
-  const removeUser = async (groupId, user) => {
-    await updateHub("groups", groupId, "participants", user, null);
-    await updateUserData(user, `groups/${groupId}`, null);
+  const removeUser = async (hubId, user) => {
+    await updateHub(hubType, hubId, "participants", user, null);
+    await updateUserData(user, `${hubType}/${hubId}`, null);
     const updatedParticipants = participants.filter((p) => p.handle !== user);
     setParticipants(updatedParticipants);
   };
@@ -143,7 +138,7 @@ export default function SingleGroup() {
       if (selectedParticipants.length !== 0) {
         for (const user in selectedParticipants) {
           await updateHub(
-            "groups",
+            hubType,
             id,
             "participants",
             selectedParticipants[user].value,
@@ -165,7 +160,7 @@ export default function SingleGroup() {
       if (selectedQuizzes.length !== 0) {
         for (const quiz in selectedQuizzes) {
           await updateHub(
-            "groups",
+            hubType,
             id,
             "quizzes",
             selectedQuizzes[quiz].value,
@@ -183,12 +178,12 @@ export default function SingleGroup() {
   };
 
   return (
-    group && (
+    hub && (
       <div className="single-group-container">
         <div
           style={{
             position: "relative",
-            backgroundImage: `linear-gradient(rgba(0,0,0,0.8), rgba(0,0,0,0.8)), url(${group.image_cover})`,
+            backgroundImage: `linear-gradient(rgba(0,0,0,0.8), rgba(0,0,0,0.8)), url(${hub.image_cover})`,
             backgroundSize: "cover",
             backgroundPosition: "center",
             width: "100%",
@@ -201,11 +196,14 @@ export default function SingleGroup() {
           }}
         >
           <div className="text-center">
-            <h2 className="mb-6 text-4xl font-bold">{group.name}</h2>
-            <h3 className="mb-6 text-2xl pb-2 text-neutral-600 dark:text-neutral-300 md:mb-12 md:pb-0">
-              {group.description}
-            </h3>
+            <h2 className="mb-6 text-4xl font-bold">{hub.name}</h2>
+            {hubType === "groups" && (
+              <h3 className="mb-6 text-2xl pb-2 text-neutral-600 dark:text-neutral-300 md:mb-12 md:pb-0">
+                {hub.description}
+              </h3>
+            )}
           </div>
+
           <br />
           {hasCreator && (
             <div className="text-center">
@@ -223,20 +221,24 @@ export default function SingleGroup() {
           )}
         </div>
         <br />
-        <h5 className="mb-4 text-xl font-semibold">Members: </h5>
-        <Button onClick={() => setOnClickAddMember(!onClickAddMember)}>
-          {!onClickAddMember ? "Invite Members" : "Cancel Invitations"}
-        </Button>
-        {onClickAddMember && (
+        <h5 className="mb-4 text-xl font-semibold"> {userData.role === "student" ? "Participants:" : "Members:"} </h5>
+        {(userData.role === "educator" || userData.handle === hub.creator) && (
           <>
-            <Button onClick={addUsers}>Send Invitations</Button>
-            <br />
-            <br />
-            <DropdownSelectUsers
-              users={users}
-              selectedUsers={selectedParticipants}
-              setSelectedUsers={setSelectedParticipants}
-            />
+            <Button onClick={() => setOnClickAddMember(!onClickAddMember)}>
+              {!onClickAddMember ? "Invite Members" : "Cancel Invitations"}
+            </Button>
+            {onClickAddMember && (
+              <>
+                <Button onClick={addUsers}>Send Invitations</Button>
+                <br />
+                <br />
+                <DropdownSelectUsers
+                  users={users}
+                  selectedUsers={selectedParticipants}
+                  setSelectedUsers={setSelectedParticipants}
+                />
+              </>
+            )}
           </>
         )}
 
@@ -280,7 +282,7 @@ export default function SingleGroup() {
                       <span>
                         {" "}
                         {
-                          Object.entries(group.participants)
+                          Object.entries(hub.participants)
                             .filter((user) => {
                               if (user[0] === p.handle) {
                                 return user[1];
@@ -293,7 +295,7 @@ export default function SingleGroup() {
                     </p>
                   </div>
                   <br />
-                  {userData.handle === group.creator && (
+                  {userData.handle === hub.creator && (
                     <div className="flex justify-center items-center mb-2 text-neutral-600 dark:text-neutral-300">
                       <Button onClick={() => removeUser(id, p.handle)}>
                         Remove
@@ -307,21 +309,31 @@ export default function SingleGroup() {
         <hr />
         <br />
         <h5 className="mb-4 text-xl font-semibold">Quizzes: </h5>
-        <Button onClick={() => setOnClickAddQuiz(!onClickAddQuiz)}>
-          {!onClickAddQuiz ? "Select Quizzes" : "Cancel"}
-        </Button>
-        {onClickAddQuiz && (
+        {userData.role !== "student" && (
           <>
-          <Button onClick={addQuizzes}>Add Quizzes</Button>
-            <br />
-            <br />
-            <DropdownSelectQuizzes
-              quizzes={availableQuizzes}
-              selectedQuizzes={selectedQuizzes}
-              setSelectedQuizzes={setSelectedQuizzes}
-            />
-            {availableQuizzes.length === 0 && 
-            <p>No quizzes are currently available. <NavLink className=" text-purple-700" to="/create-quiz">Why not create one now?</NavLink></p>}
+            <Button onClick={() => setOnClickAddQuiz(!onClickAddQuiz)}>
+              {!onClickAddQuiz ? "Select Quizzes" : "Cancel"}
+            </Button>
+            {onClickAddQuiz && (
+              <>
+                <Button onClick={addQuizzes}>Add Quizzes</Button>
+                <br />
+                <br />
+                <DropdownSelectQuizzes
+                  quizzes={availableQuizzes}
+                  selectedQuizzes={selectedQuizzes}
+                  setSelectedQuizzes={setSelectedQuizzes}
+                />
+                {availableQuizzes.length === 0 && (
+                  <p>
+                    No quizzes are currently available.{" "}
+                    <NavLink className=" text-purple-700" to="/create-quiz">
+                      Why not create one now?
+                    </NavLink>
+                  </p>
+                )}
+              </>
+            )}
           </>
         )}
         {hasQuizzes && quizzes.length !== 0 && (
@@ -332,8 +344,8 @@ export default function SingleGroup() {
                   key={quiz.id}
                   quiz={quiz}
                   setChange={setQuizzesChange}
-                  hubType="groups"
-                  hubId={group.id}
+                  hubType={hubType}
+                  hubId={hub.id}
                 />
               </div>
             ))}
@@ -343,3 +355,12 @@ export default function SingleGroup() {
     )
   );
 }
+
+SingleHub.propTypes = {
+  hubType: PropTypes.string.isRequired,
+  participantRole: PropTypes.string.isRequired,
+  hub: PropTypes.object.isRequired,
+  setHub: PropTypes.func.isRequired,
+  userData: PropTypes.object.isRequired,
+  id: PropTypes.string.isRequired,
+};

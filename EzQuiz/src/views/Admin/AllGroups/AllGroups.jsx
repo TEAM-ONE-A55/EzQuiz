@@ -4,7 +4,7 @@ import { deleteHub } from "../../../services/hub.service";
 import toast from "react-hot-toast";
 import "./AllGroups.css";
 import { useNavigate } from "react-router";
-import GroupSimpleView from "../../Groups/GroupSimpleView/GroupSimpleView";
+import GroupSimpleView from "../../../views/Hubs/Groups/GroupSimpleView/GroupSimpleView";
 
 
 

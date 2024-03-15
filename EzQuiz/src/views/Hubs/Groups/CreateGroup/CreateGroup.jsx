@@ -1,33 +1,38 @@
 import { useContext, useEffect, useState } from "react";
-import { AppContext } from "../../../context/AppContext";
-import { getAllUsers, updateUserData } from "../../../services/user.service";
-import "./CreateRoom.css";
+import { AppContext } from "../../../../context/AppContext";
+import {
+  getAllUsers,
+  updateUserData,
+} from "../../../../services/user.service";
+import "./CreateGroup.css";
 import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
-import Button from "../../../components/Button/Button";
+import Button from "../../../../components/Button/Button";
 import toast from "react-hot-toast";
-import { createHub, updateHub } from "../../../services/hub.service";
-import { defaultCoverRoom } from "../../../constants/constants";
+import { createHub, updateHub } from "../../../../services/hub.service";
+import { defaultCoverGroup } from "../../../../constants/constants";
+import { deleteCoverImage } from "../../../../services/storage.service";
 import { v4 } from "uuid";
-import ChangeCover from "../../../components/ChangeCoverImage/ChangeCoverImage";
-import { deleteCoverImage } from "../../../services/storage.service";
-import { getAllQuizzesFromDatabase } from "../../../services/quiz.service";
-import DropdownSelectUsers from "../../../components/Dropdown/DropdownSelectUsers/DropdownSelectUsers";
-import DropdownSelectQuizzes from "../../../components/Dropdown/DropdownSelectQuizzes/DropdownSelectQuizzes";
+import ChangeCover from "../../../../components/ChangeCoverImage/ChangeCoverImage";
+import { getAllQuizzesFromDatabase } from "../../../../services/quiz.service";
+import DropdownSelectQuizzes from "../../../../components/Dropdown/DropdownSelectQuizzes/DropdownSelectQuizzes";
+import DropdownSelectUsers from "../../../../components/Dropdown/DropdownSelectUsers/DropdownSelectUsers";
 
-export default function CreateRoom() {
+export default function CreateGroup() {
+
   const { userData, setContext } = useContext(AppContext);
   const [users, setUsers] = useState([]);
   const [quizzes, setQuizzes] = useState([]);
-  const [room, setRoom] = useState({
+  const [group, setGroup] = useState({
     name: "",
+    description: "",
     creator: userData.handle,
   });
 
-  const [selectedParticipants, setSelectedParticipants] = useState([]);
+  const [selectedEducators, setSelectedEducators] = useState([]);
   const [selectedQuizzes, setSelectedQuizzes] = useState([]);
   const [attachedImg, setAttachedImg] = useState(null);
-  const [imageUrl, setImageUrl] = useState(defaultCoverRoom);
+  const [imageUrl, setImageUrl] = useState(defaultCoverGroup);
   const [changeCover, setChangeCover] = useState(false);
   const [uuid, setUuid] = useState(v4());
 
@@ -35,11 +40,13 @@ export default function CreateRoom() {
     if (userData && userData.handle) {
       getAllUsers()
         .then((users) => users.map((user) => user.val()))
-        .then((userData) =>
-          userData.filter((u) => u.role !== "educator" && u.role !== "admin")
+        .then((data) =>
+          data.filter(
+            (u) => u.role === "educator" && userData.handle !== u.handle
+          )
         )
-        .then((userData) =>
-          setUsers(userData.map((u) => ({ value: u.handle, label: u.handle })))
+        .then((data) =>
+          setUsers(data.map((u) => ({ value: u.handle, label: u.handle })))
         )
 
         .catch((error) => console.log(error));
@@ -59,37 +66,37 @@ export default function CreateRoom() {
   }, [userData]);
 
   const handleOnChange = (key) => (e) => {
-    setRoom({ ...room, [key]: e.target.value });
+    setGroup({ ...group, [key]: e.target.value });
   };
 
-  const handleCreateRoom = async () => {
+  const handleCreateGroup = async () => {
     let id;
     try {
-      if (!room.name) {
-        throw new Error("Please provide a Room name!");
+      if (!group.name) {
+        throw new Error("Please provide a Group name!");
       }
       id = await createHub(
-        room.name,
+        group.name,
         userData.handle,
         imageUrl,
-        "rooms",
-        uuid
+        "groups",
+        uuid,
+        group.description
       );
-
-      for (const user in selectedParticipants) {
+      for (const user in selectedEducators) {
         await updateHub(
-          "rooms",
+          "groups",
           id,
           "participants",
-          selectedParticipants[user].value,
+          selectedEducators[user].value,
           "pending"
         );
 
-        await updateUserData(userData.handle, `rooms/${id}`, room);
+        // await updateUserData(userData.handle, `groups/${id}`, group);
       }
       for (const quiz in selectedQuizzes) {
         await updateHub(
-          "rooms",
+          "groups",
           id,
           "quizzes",
           selectedQuizzes[quiz].value,
@@ -97,57 +104,58 @@ export default function CreateRoom() {
         );
       }
 
-      updateUserData(userData.handle, `rooms/${id}`, room);
-      toast.success("Your room has been successfully created!");
+      await updateUserData(userData.handle, `groups/${id}`, group);
+      
+      toast.success("Your group has been successfully created!");
     } catch (e) {
       toast.error(e.message);
     } finally {
-      userData.rooms = {...userData.rooms, [id]: room}
-      setContext(prev => prev, userData)
+      userData.groups = { ...userData.groups, [id]: group };
+      setContext((prev) => prev, userData);
       reset();
     }
   };
 
   const reset = () => {
-    setRoom({
+    setGroup({
       name: "",
+      description: "",
       creator: userData.handle,
       uuid: "",
     });
     setSelectedQuizzes([]);
-    setSelectedParticipants([]);
+    setSelectedEducators([]);
     setUuid(v4());
-    setImageUrl(defaultCoverRoom);
+    setImageUrl(defaultCoverGroup);
     setAttachedImg(null);
     setChangeCover(false);
   };
 
   return (
-    <div className="create-room-container">
+    <div className="create-group-container">
       <h2 className="mb-4 font-extrabold leading-none tracking-tight text-gray-900 md:text-5xl lg:text-4xl dark:text-white">
-        Create a{" "}
+        Create exclusive{" "}
         <span className="text-blue-600 dark:text-blue-500">
-          personalized room
+          educator groups
         </span>{" "}
-        where you can{" "}
+        for collaborative{" "}
         <span className="text-blue-600 dark:text-blue-500">
-          invite participants
-        </span>{" "}
-        for exclusive quizzes and assessments.
+          quiz creation and assessment
+        </span>
       </h2>
       <br />
 
       <p className="text-lg font-normal text-gray-500 lg:text-xl dark:text-gray-400">
-        Assess participants&apos; scores and customize quizzes tailored to your
-        preferences. Whether you&apos;re planning an educational assessment, a
-        recruitment evaluation, or simply a fun quiz night with friends, this
-        feature allows you to host engaging activities while managing and
-        analyzing participants&apos; performance effectively.
+        Collaborate with fellow educators to tailor quizzes to your teaching
+        needs and analyze participant performance. Whether refining teaching
+        materials, conducting assessments, or hosting engaging quiz nights, this
+        feature ensures effective management and analysis of participant
+        performance.
       </p>
 
       <br />
 
-      <div className="create-room-box">
+      <div className="create-group-box">
         {!changeCover ? (
           <div className="attached-hub-image-container">
             <img
@@ -170,13 +178,13 @@ export default function CreateRoom() {
             setImageUrl={setImageUrl}
             uuid={uuid}
             setChangeCover={setChangeCover}
-            keyComponent="rooms"
+            keyComponent="groups"
           />
         )}
-
         <br />
+
         <p className="text-lg font-normal text-gray-500 lg:text-xl dark:text-gray-400">
-          Set Room name:
+          Set Group name:
         </p>
         <Box
           component="form"
@@ -202,7 +210,7 @@ export default function CreateRoom() {
         >
           <TextField
             id="outlined-basic"
-            placeholder="Room name"
+            placeholder="Group name"
             variant="outlined"
             sx={{
               "& .MuiInputBase-root": {
@@ -211,16 +219,56 @@ export default function CreateRoom() {
                 fontFamily: "Montserrat, sans-serif",
               },
             }}
-            value={room.name}
+            value={group.name}
             onChange={handleOnChange("name")}
           />
         </Box>
         <br />
         <p className="text-lg font-normal text-gray-500 lg:text-xl dark:text-gray-400">
-          Select participants to invite:
+          Write a short description:
+        </p>
+        <Box
+          component="form"
+          sx={{
+            "& > :not(style)": { m: 1, width: "100%" },
+            "& .MuiInputLabel-root": { color: "white" },
+            "& .MuiInputLabel-root.Mui-focused": { color: "white" },
+            "& .MuiInputBase-root": { color: "white" },
+            "& .MuiOutlinedInput-root": {
+              "& .MuiOutlinedInput-notchedOutline": {
+                borderColor: "white",
+              },
+              "&:hover .MuiOutlinedInput-notchedOutline": {
+                borderColor: "white",
+              },
+              "&.Mui-focused .MuiOutlinedInput-notchedOutline": {
+                borderColor: "white",
+              },
+            },
+          }}
+          noValidate
+          autoComplete="off"
+        >
+          <TextField
+            id="outlined-basic"
+            placeholder="Write a short description of the group"
+            variant="outlined"
+            sx={{
+              "& .MuiInputBase-root": {
+                color: "black",
+                backgroundColor: "white",
+                fontFamily: "Montserrat, sans-serif",
+              },
+            }}
+            value={group.description}
+            onChange={handleOnChange("description")}
+          />
+        </Box>
+        <p className="text-lg font-normal text-gray-500 lg:text-xl dark:text-gray-400">
+          Select educators to join your group:
         </p>
         <br />
-        <DropdownSelectUsers users={users} selectedUsers={selectedParticipants} setSelectedUsers={setSelectedParticipants}/>
+        <DropdownSelectUsers users={users} selectedUsers={selectedEducators} setSelectedUsers={setSelectedEducators}/>
         <br />
         <p className="text-lg font-normal text-gray-500 lg:text-xl dark:text-gray-400">
           Select quizzes:
@@ -228,11 +276,11 @@ export default function CreateRoom() {
         <br />
         <DropdownSelectQuizzes quizzes={quizzes} selectedQuizzes={selectedQuizzes} setSelectedQuizzes={setSelectedQuizzes}/>
         <br />
-        <Button onClick={handleCreateRoom}>Create Room</Button>
+        <Button onClick={handleCreateGroup}>Create Group</Button>
         <Button
           onClick={() => {
             reset();
-            attachedImg && deleteCoverImage("rooms", uuid);
+            attachedImg && deleteCoverImage("groups", uuid);
           }}
         >
           Reset Settings

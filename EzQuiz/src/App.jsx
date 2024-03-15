@@ -19,12 +19,8 @@ import {
 } from "./constants/constants";
 import Profile from "./views/Profile/Profile";
 import Authenticated from "./hoc/Authenticated/Authenticated";
-import CreateRoom from "./views/EducatorDashboard/CreateRoom/CreateRoom";
-import CreateGroup from "./views/EducatorDashboard/CreateGroup/CreateGroup";
 import NavBar from "./components/NavBar/NavBar";
 import Scoreboards from "./views/Scoreboard/Scoreboards";
-import MyRooms from "./views/Rooms/MyRooms/MyRooms";
-import SingleRoom from "./views/Rooms/SingleRoom/SingleRoom";
 import AllUsers from "./views/Admin/AllUsers/AllUsers";
 import AllRooms from "./views/Admin/AllRooms/AllRooms";
 import Dashboard from "./components/Dashboard/Dashboard";
@@ -37,10 +33,14 @@ import PublicProfile from "./views/Public Profile/PublicProfile";
 import AllGroups from "./views/Admin/AllGroups/AllGroups";
 import AdminDashboard from "./views/Admin/AdminDashboard/AdminDashboard";
 import BrowseQuizzes from "./views/Quizzes/BrowseQuizzes/BrowseQuizzes";
-import MyGroups from "./views/Groups/MyGroups/MyGroups";
-import SingleGroup from "./views/Groups/SingleGroup/SingleGroup";
 import MyQuizzes from "./views/Quizzes/MyQuizzes/MyQuizzes";
 import AllQuizzes from "./views/Admin/AllQuizzes/AllQuizzes";
+import CreateRoom from "./views/Hubs/Rooms/CreateRoom/CreateRoom";
+import CreateGroup from "./views/Hubs/Groups/CreateGroup/CreateGroup";
+import MyRooms from "./views/Hubs/Rooms/MyRooms/MyRooms"
+import SingleRoom from "./views/Hubs/Rooms/SingleRoom/SingleRoom";
+import MyGroups from "./views/Hubs/Groups/MyGroups/MyGroups";
+import SingleGroup from "./views/Hubs/Groups/SingleGroup/SingleGroup";
 
 export default function App() {
   const [user] = useAuthState(auth);

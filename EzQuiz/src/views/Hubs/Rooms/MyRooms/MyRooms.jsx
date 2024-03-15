@@ -1,24 +1,24 @@
 import { useContext, useEffect, useState } from "react";
-import Button from "../../../components/Button/Button";
+import Button from "../../../../components/Button/Button";
 import RoomSimpleView from "../RoomSimpleView/RoomSimpleView";
-import { AppContext } from "../../../context/AppContext";
+import { AppContext } from "../../../../context/AppContext";
 import { useNavigate } from "react-router";
 import "./MyRooms.css";
 import {
   getUserByHandle,
   updateUserData,
-} from "../../../services/user.service";
+} from "../../../../services/user.service";
 import {
   deleteHub,
   getHubsById,
   updateHub,
-} from "../../../services/hub.service";
+} from "../../../../services/hub.service";
 import PropTypes from "prop-types";
-import { defaultCoverRoom } from "../../../constants/constants";
+import { defaultCoverRoom } from "../../../../constants/constants";
 import {
   deleteCoverImage,
   getCoverImage,
-} from "../../../services/storage.service";
+} from "../../../../services/storage.service";
 
 export default function MyRooms({ notifications }) {
   const { userData } = useContext(AppContext);
