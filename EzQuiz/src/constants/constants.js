@@ -23,9 +23,9 @@ export const defaultQuizAmountSample = "5";
 
 export const defaultQuizDifficultySamle = "easy";
 
-export const difficultyOptionsSample = ['Easy', 'Medium', 'Hard'];
+export const difficultyOptionsSample = ["Easy", "Medium", "Hard"];
 
-export const quizVisibilityOptions = ['Public', 'Private'];
+export const quizVisibilityOptions = ["Public", "Private"];
 
 export const quizAmountSample = ["5", "10", "15", "20"];
 
@@ -55,7 +55,7 @@ export const navigationAdmin = [
   { name: "Browse Quizzes", href: "/browse-quizzes", current: false },
   { name: "Sample Quiz", href: "/sample-quiz", current: false },
   { name: "Search", href: "/search", current: false },
-]
+];
 
 export const navigationLogout = [
   { name: "Browse Quizzes", href: "/browse-quizzes", current: false },
@@ -68,27 +68,55 @@ export const usersSortingOptions = [
   { label: "Sort by Date (A-Z)", value: "dateAscending" },
   { label: "Sort by Username (A-Z)", value: "usernameAscending" },
   { label: "Sort by Username (Z-A)", value: "usernameDescending" },
-]
+];
 
 export const userSearchOptions = [
   { label: "Username", value: "username" },
   { label: "First Name", value: "firstName" },
   { label: "Last Name", value: "lastName" },
-]
+];
 
 export const searchingOptions = [
   { label: "Users", value: "users" },
   { label: "Rooms", value: "rooms" },
   { label: "Groups", value: "groups" },
-  { label: "Quizzes", value: "quizzes" }
-]
+  { label: "Quizzes", value: "quizzes" },
+];
 
+export const defaultCoverRoom =
+  "https://img.freepik.com/free-vector/students-watching-recorded-lecture-with-professor-talking-from-tablet_335657-319.jpg?w=2000&t=st=1709673381~exp=1709673981~hmac=098d5b7e2b7c71f82c62d71ce642b30cba6545c3afdd1049b43a7c44f4a0b8f7";
 
-export const defaultCoverRoom = "https://img.freepik.com/free-vector/students-watching-recorded-lecture-with-professor-talking-from-tablet_335657-319.jpg?w=2000&t=st=1709673381~exp=1709673981~hmac=098d5b7e2b7c71f82c62d71ce642b30cba6545c3afdd1049b43a7c44f4a0b8f7"
-
-export const defaultCoverGroup = "https://images.datacamp.com/image/upload/v1655370004/shutterstock_580917865_b78f6bdc50.jpg"
+export const defaultCoverGroup =
+  "https://images.datacamp.com/image/upload/v1655370004/shutterstock_580917865_b78f6bdc50.jpg";
 
 export const roles = [
   { label: "Educator", value: "educator" },
   { label: "Student", value: "student" },
+];
+
+export const testimonals = [
+  {
+    name: "Ivan Gospodinov",
+    role: "Geography Teacher",
+    description:
+      "As a geography teacher, I've struggled to find engaging resources that truly capture my students' attention. That's until I discovered this platform. It has revolutionized the way I teach, offering a vast library of quizzes and interactive content that makes learning geography fun and memorable for my students.",
+    image:
+      "https://www.budget.nsw.gov.au/sites/default/files/202309-Daniel-Mookhey-portrait-square.jpg",
+  },
+  {
+    name: "Hristo Serafimov",
+    role: "Student",
+    description:
+      "I can't express enough how much this platform has helped me in my studies. As a student, I often find traditional learning methods boring and ineffective. However, with this platform, learning has become a breeze. The quizzes are not only informative but also interactive, allowing me to test my knowledge in a fun and engaging way. Thanks to this platform, I've seen a significant improvement in my grades.",
+    image:
+      "https://images.ctfassets.net/xjankvru4bwy/3TeRQIjGOt1OAPqupefsyL/8a289f76ce1483be0003fccb335103de/Brendan_Salisbury-US_Student-square.jpeg",
+  },
+  {
+    name: "Anna Karaivanova",
+    role: "Recruiter",
+    description:
+      "As a recruiter, I'm always on the lookout for candidates who possess a strong understanding of various subjects. This platform has become my go-to resource for identifying top talent. The quizzes provided here allow me to assess candidates' knowledge and skills accurately, enabling me to make informed hiring decisions. I highly recommend this platform to any recruiter looking to streamline their hiring process.",
+    image:
+      "https://www.telegraph.co.uk/content/dam/news/2022/05/04/TELEMMGLPICT000294873210_trans_NvBQzQNjv4BqqVzuuqpFlyLIwiB6NTmJwWPw2b5__oFarkj5WlWIJuI.jpeg?imwidth=480",
+  },
 ];

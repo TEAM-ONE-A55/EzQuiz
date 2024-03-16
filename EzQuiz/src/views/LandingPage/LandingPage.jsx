@@ -5,6 +5,7 @@ import BenefitSimple from "./BenefitSimple/BenefitSimple";
 import ButtonLanding from "./ButtonLanding/ButtonLanding";
 import { useState } from "react";
 import Button from "../../components/Button/Button";
+import Testimonials from "./Testimonial/Testimonials";
 
 export default function LandingPage() {
   const [seeEducatorBenefits, setSeeEducatorBenefits] = useState(false);
@@ -111,7 +112,9 @@ export default function LandingPage() {
           </Benefits>
           <Benefits heading="Ready to try? Start with a sample quiz now!">
             <br />
-            <Button onClick={() => navigate("/sample-quiz")}>Get Started</Button>
+            <Button onClick={() => navigate("/sample-quiz")}>
+              Get Started
+            </Button>
           </Benefits>
 
           <ButtonLanding
@@ -150,7 +153,10 @@ export default function LandingPage() {
               />
             </Benefits>
           )}
+          <Benefits heading="What People Are Saying About EzQuiz">
+          </Benefits>
         </div>
+        <Testimonials />
       </section>
     </>
   );
