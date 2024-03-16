@@ -102,10 +102,10 @@ export default function Registration() {
           </select>
           {form.role === "educator" && (
             <div>
-              <input 
-              type="text" 
-              placeholder="Please enter verification code"
-              onChange={updateForm("code")}
+              <input
+                type="text"
+                placeholder="Please enter verification code"
+                onChange={updateForm("code")}
               />
             </div>
           )}
