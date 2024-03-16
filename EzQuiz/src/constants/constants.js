@@ -99,7 +99,8 @@ export const testimonals = [
     name: "Ivan Gospodinov",
     role: "Geography Teacher",
     description:
-      "As a geography teacher, I've struggled to find engaging resources that truly capture my students' attention. That's until I discovered this platform. It has revolutionized the way I teach, offering a vast library of quizzes and interactive content that makes learning geography fun and memorable for my students.",
+      `As a geography teacher, I've struggled to find engaging resources that truly capture my students' attention. That's until I discovered this platform. It has revolutionized the way I teach, offering a vast library of quizzes and interactive content that makes learning geography fun and memorable for my students. 
+      With this platform, I've witnessed remarkable improvements in my students' comprehension and enthusiasm for geography.`,
     image:
       "https://www.budget.nsw.gov.au/sites/default/files/202309-Daniel-Mookhey-portrait-square.jpg",
   },
