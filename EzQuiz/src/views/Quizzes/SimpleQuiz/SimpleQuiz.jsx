@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router';
 import { API_CATEGORIES } from "../../../constants/constants";
 import { determineQuizStatus } from "../../../services/quiz.service";
 import SimpleQuizOptionsMenu from "./SimpleQuizOptionsMenu";
-import simpleQuizImage from '../../../images/simple-quiz.jpg';
+import simpleQuizImage from '../../../images/DSC02263-Editeis.jpg';
 import QuizStatus from "./QuizStatus";
 import SQuizDifficulty from "./SQuizDifficulty";
 import PropTypes from 'prop-types';
