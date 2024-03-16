@@ -6,7 +6,7 @@ import { useEffect, useState } from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { getUserData } from "./services/user.service";
 import { AppContext } from "./context/AppContext";
-import Home from "./views/Home/Home";
+// import Home from "./views/Home/Home";
 import Footer from "./components/Footer/Footer";
 import Login from "./views/Login/Login";
 import Registration from "./views/Registration/Registration";
@@ -41,6 +41,7 @@ import MyRooms from "./views/Hubs/Rooms/MyRooms/MyRooms"
 import SingleRoom from "./views/Hubs/Rooms/SingleRoom/SingleRoom";
 import MyGroups from "./views/Hubs/Groups/MyGroups/MyGroups";
 import SingleGroup from "./views/Hubs/Groups/SingleGroup/SingleGroup";
+import LandingPage from "./views/LandingPage/LandingPage";
 
 export default function App() {
   const [user] = useAuthState(auth);
@@ -79,7 +80,7 @@ export default function App() {
           {/* <Header /> */}
           <NavBar notifications={notifications} setNotifications={setNotifications}/>
           <Routes>
-            <Route path="/" element={<Home />}></Route>
+            <Route path="/" element={<LandingPage />}></Route>
             <Route path="/signup" element={<Registration />}></Route>
             <Route path="/signin" element={<Login />}></Route>
             <Route

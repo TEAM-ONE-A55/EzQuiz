@@ -46,6 +46,8 @@ export default function CreateRoom() {
     }
   }, []);
 
+  console.log(selectedParticipants)
+
   useEffect(() => {
     if (userData && userData.handle) {
       getAllQuizzesFromDatabase("creator")
