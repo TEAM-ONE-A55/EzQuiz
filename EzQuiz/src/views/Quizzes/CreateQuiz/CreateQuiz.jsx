@@ -156,6 +156,8 @@ export default function CreateQuiz() {
     if(quiz.timeLimit < 1) return toast.error("Time limit must be at least 1 minute");
     if(quiz.timeLimit > 60) return toast.error("Time limit must be at most 60 minutes");
     if(!quiz.passingScore) return toast.error("Please enter a passing score for the quiz");
+    if(quiz.passingScore < 1) return toast.error("Passing score must be at least 1%");
+    if(quiz.passingScore > 100) return toast.error("Passing score must be at most 100%");
     if(!quiz.startDate) return toast.error("Please enter a start date for the quiz");
     if(!quiz.endDate) return toast.error("Please enter an end date for the quiz");
     if(new Date(quiz.startDate) >= new Date(quiz.endDate)) return toast.error("Start date must be before end date");
