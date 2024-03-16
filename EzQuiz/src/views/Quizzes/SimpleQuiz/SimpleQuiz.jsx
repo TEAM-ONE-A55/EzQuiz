@@ -33,7 +33,7 @@ export default function SimpleQuiz({ quiz, setChange, hubType, hubId }) {
     }
 
     return (
-        <div className=" bg-gray-50 w-64 rounded-xl flex-col simple-quiz-box-height relative shadow-black shadow-xl">
+        <div className=" bg-gray-50 w-64 rounded-xl flex-col simple-quiz-box-height relative shadow-neutral-500 shadow-xl">
                 <img className=" w-64 h-36 object-cover border-none rounded-t-xl" src={simpleQuizImage} alt="quiz" />
                 <div className="p-4 text-black flex flex-col justify-center items-center">
                     <h3 className="text-xl font-semibold">{quiz.title}</h3>

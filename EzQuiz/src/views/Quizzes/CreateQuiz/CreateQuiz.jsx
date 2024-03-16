@@ -1,17 +1,18 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
 import { Question } from "./questionClass";
 import toast from "react-hot-toast";
 import Select from "react-select";
 import Categories from "../../../components/Categories/Categories";
 import QuizVisibility from "../../../components/QuizVisibility/QuizVisibility";
 import { QuizDifficulty } from "../../../components/QuizDifficulty/QuizDifficulty";
-import "./CreateQuiz.css";
 import Button from "../../../components/Button/Button";
-import { useContext } from "react";
 import { AppContext } from "../../../context/AppContext";
 import { useNavigate } from "react-router";
 import { uploadQuizToDatabase, getAllQuizTitles } from "../../../services/quiz.service";
 import { minimumQuizTitleLength, maximumQuizTitleLength } from "../../../constants/constants";
+import { Input, initTWE } from "tw-elements";
+
+initTWE({ Input });
 
 export default function CreateQuiz() {
   const { user, userData } = useContext(AppContext);
@@ -183,20 +184,9 @@ export default function CreateQuiz() {
   }
 
   if (user && userData.role !== 'student') { return (
-    <div className="create-quiz">
-      <h1>Create Quiz</h1>
-
-      <label htmlFor="create-quiz-title">Title*</label>
-      <br />
-      <input
-        className="p-2"
-        id="create-quiz-title"
-        type="text"
-        value={quiz.title}
-        onChange={(e) => handleChange("title", e.target.value)}
-      />
-      <br />
-
+    <div className=" bg-neutral-100 max-w-3xl rounded-xl flex-col py-8 px-4 relative shadow-neutral-500 shadow-xl m-auto mt-4">
+      <h1 className="text-2xl">Create Your Own Quiz</h1>
+      
       <p>Choose visibility*</p>
       <QuizVisibility
         setVisibility={(visibility) => handleChange("visibility", visibility)}

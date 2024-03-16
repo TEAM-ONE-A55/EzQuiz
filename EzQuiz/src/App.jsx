@@ -73,13 +73,12 @@ export default function App() {
   }, [user]);
 
   return (
-    <div className="">
+    <div className="min-h-screen">
       <BrowserRouter>
         <AppContext.Provider value={{ ...context, setContext: setContext }}>
           <Toaster position="bottom-right" reverseOrder={true} />
-          {/* <Header /> */}
           <NavBar notifications={notifications} setNotifications={setNotifications}/>
-          <Routes>
+          <Routes className="min-h-screen">
             <Route path="/" element={<LandingPage />}></Route>
             <Route path="/signup" element={<Registration />}></Route>
             <Route path="/signin" element={<Login />}></Route>
