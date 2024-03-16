@@ -23,6 +23,15 @@ export default function SimpleQuiz({ quiz, setChange, hubType, hubId }) {
         .then((categories) => setCategoryName(categories.find((c) => c.id === quiz.category).name))
     }, []);
 
+    const takeQuiz = () => {
+        if (!user) {
+            navigate('/signin');
+            return;
+        } else {
+            navigate(`/sample-quiz/${quiz.id}`);
+        }
+    }
+
     return (
         <div className=" bg-gray-50 w-64 rounded-xl flex-col simple-quiz-box-height relative shadow-black shadow-xl">
                 <img className=" w-64 h-36 object-cover border-none rounded-t-xl" src={simpleQuizImage} alt="quiz" />
@@ -71,7 +80,7 @@ export default function SimpleQuiz({ quiz, setChange, hubType, hubId }) {
                         {status === 'Ongoing' && 
                         <button
                         className=" text-gray-900 font-semibold text-sm rounded-md max-w-32 px-4 py-2 duration-75 ease-in-out bg-neutral-200 hover:bg-gray-50"
-                        onClick={() => navigate(`/sample-quiz/${quiz.id}`)}
+                        onClick={takeQuiz}
                         >Take Quiz</button>}
                     </div>
                 </div>
