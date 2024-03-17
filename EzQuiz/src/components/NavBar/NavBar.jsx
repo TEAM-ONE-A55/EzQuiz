@@ -1,7 +1,7 @@
 import { useContext, useEffect, useState } from "react";
 import { AppContext } from "../../context/AppContext";
 import { useNavigate } from "react-router";
-import { NavLink } from "react-router-dom";
+import { NavLink, Link } from "react-router-dom";
 import { logoutUser } from "../../services/auth.service";
 import { Fragment } from "react";
 import { Disclosure, Menu, Transition } from "@headlessui/react";
@@ -148,7 +148,7 @@ export default function NavBar({notifications, setNotifications}) {
               <div className="flex flex-1 items-center justify-center sm:items-stretch sm:justify-start">
                 <div className="flex flex-shrink-0 items-center">
                   <img
-                    className="h-8 w-auto border-none cursor-pointer"
+                    className="h-8 w-auto border-none cursor-pointer mt-2"
                     src={Logo}
                     alt="ezquiz-logo"
                     onClick={() => navigate("/")}
@@ -161,12 +161,7 @@ export default function NavBar({notifications, setNotifications}) {
                         key={item.name}
                         to={item.href}
                         onClick={() => handleNavigation(item.href)}
-                        className={classNames(
-                          item.current
-                            ? "bg-gray-900 text-white"
-                            : "text-gray-300 hover:bg-gray-700 hover:text-white",
-                          "rounded-md px-3 py-2 font-custom"
-                        )}
+                        className=" text-white rounded-md px-3 py-2"
                         aria-current={item.current ? "page" : undefined}
                       >
                         {item.name}
@@ -207,7 +202,7 @@ export default function NavBar({notifications, setNotifications}) {
                       <Menu.Items className="absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
                         <Menu.Item>
                           {({ active }) => (
-                            <NavLink
+                            <Link
                               to="/profile"
                               className={classNames(
                                 active ? "bg-gray-100" : "",
@@ -215,12 +210,12 @@ export default function NavBar({notifications, setNotifications}) {
                               )}
                             >
                               Your Profile
-                            </NavLink>
+                            </Link>
                           )}
                         </Menu.Item>
                         <Menu.Item>
                           {({ active }) => (
-                            <NavLink
+                            <Link
                               className={classNames(
                                 active ? "bg-gray-100" : "",
                                 "block px-4 py-2 text-sm text-gray-700"
@@ -228,7 +223,7 @@ export default function NavBar({notifications, setNotifications}) {
                               onClick={logout}
                             >
                               Sign out
-                            </NavLink>
+                            </Link>
                           )}
                         </Menu.Item>
                       </Menu.Items>

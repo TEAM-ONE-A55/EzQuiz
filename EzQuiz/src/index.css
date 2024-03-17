@@ -4,7 +4,10 @@
 
 :root {
   font-family: "Montserrat", sans-serif;
-  background-color: rgb(36, 36, 36);
   text-align: center;
-  color: white;
+  color: rgb(39, 39, 39);
+}
+
+::-webkit-scrollbar {
+  display: none;
 }

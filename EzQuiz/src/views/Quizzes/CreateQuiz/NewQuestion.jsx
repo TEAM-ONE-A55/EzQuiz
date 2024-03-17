@@ -51,12 +51,12 @@ export default function NewQuestion({ quiz, question, indexQ, indexO, handleChan
     return (
         <div key={indexQ}>
             <div id="accordionExample">
-                <div className="rounded-lg border border-neutral-200 bg-white dark:border-neutral-600 dark:bg-neutral-800">
+                <div className="rounded-lg border border-neutral-200 bg-white">
                 <h2 className="mb-0" id="headingOne">
                     <button
                     className={`${
                         activeAccElement === "element1" &&
-                        `text-primary [box-shadow:inset_0_-1px_0_rgba(229,231,235)] dark:!text-primary-400 dark:[box-shadow:inset_0_-1px_0_rgba(75,85,99)]`
+                        `text-primary [box-shadow:inset_0_-1px_0_rgba(229,231,235)]`
                     } group relative flex w-full items-center rounded-t-[15px] border-0 bg-white px-5 py-4 text-left text-base text-neutral-800 transition [overflow-anchor:none] hover:z-[2] focus:z-[3] focus:outline-none dark:bg-neutral-800 dark:text-white`}
                     type="button"
                     onClick={() => handleAccClick("element1")}
@@ -150,7 +150,7 @@ export default function NewQuestion({ quiz, question, indexQ, indexO, handleChan
                         </div>
                         
                         <div className="max-w-[50%] mx-auto">
-                            <span className="ml-4">Choose correct answer<span className=" text-red-600 ml-1">*</span></span><br />
+                            <span className="ml-8">Choose correct answer<span className=" text-red-600 ml-1">*</span></span><br />
                             <Select
                                 options={quiz.questions[indexQ].incorrect_answers.map((option) => {
                                     return { value: option, label: option };
