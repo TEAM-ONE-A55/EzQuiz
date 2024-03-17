@@ -24,9 +24,17 @@ export const quizVisibilityOptions = ["Public", "Private"];
 
 export const quizAmountSample = ["5", "10", "15", "20"];
 
-export const minimumQuizTitleLength = 3;
+export const minQuizTitleLength = 3;
 
-export const maximumQuizTitleLength = 30;
+export const maxQuizTitleLength = 30;
+
+export const minQuizTimeLimit = 1;
+
+export const maxQuizTimeLimit = 60;
+
+export const minQuizPassingScore = 1;
+
+export const maxQuizPassingScore = 100;
 
 export const verificationCode = "1234";
 
