@@ -38,7 +38,7 @@ export default function AllRooms() {
             onChange={(e) => setSearchTerm(e.target.value)}
             className="relative m-0 block w-full min-w-0 flex-auto rounded border border-solid border-neutral-300 bg-transparent bg-clip-padding px-3 py-[0.25rem] text-base font-normal leading-[1.6] text-black outline-none transition duration-200 ease-in-out focus:z-[3] focus:border-primary focus:text-neutral-700 focus:shadow-neutral-600 focus:outline-none"
             id="exampleSearch"
-            placeholder="Search groups..."
+            placeholder="Search rooms..."
           />
         </div>
       </div>
