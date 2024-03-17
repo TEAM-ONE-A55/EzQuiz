@@ -31,6 +31,7 @@ export default function PublicProfile() {
   });
   const [rank, setRank] = useState("Novice Learner");
   const [rooms, setRooms] = useState(0);
+  const [groups, setGroups] = useState(0);
 
   useEffect(() => {
     if (user) {
@@ -80,6 +81,16 @@ export default function PublicProfile() {
         )
       )
       .then((rooms) => setRooms(rooms.length));
+  }, [user.handle]);
+
+  useEffect(() => {
+    getAllHubs("groups")
+      .then((group) =>
+        group.filter((group) =>
+          Object.keys(group.participants).includes(user.handle)
+        )
+      )
+      .then((groups) => setGroups(groups.length));
   }, [user.handle]);
 
   const removeUser = async (handle) => {
@@ -161,6 +172,15 @@ export default function PublicProfile() {
           <p>
           <strong>Rooms:</strong> 0
         </p>
+        )}
+        {groups  ? (
+          <p>
+          <strong>Groups:</strong> {groups}
+        </p>
+        ) : (
+          <p>
+          <strong>Groups:</strong> 0
+        </p>  
         )}
         <p>
           <strong>Status:</strong>{" "}
