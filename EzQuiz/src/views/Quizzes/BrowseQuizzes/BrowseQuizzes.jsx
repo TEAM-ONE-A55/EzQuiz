@@ -2,13 +2,21 @@ import { useState, useEffect, useContext } from "react";
 import { getAllQuizzesFromDatabase } from "../../../services/quiz.service";
 import { AppContext } from "../../../context/AppContext";
 import SimpleQuiz from "../SimpleQuiz/SimpleQuiz";
+import React from "react";
+import Select from "react-select";
+import { quizSortingOptions } from "../../../constants/constants";
 
 export default function BrowseQuizzes() {
   const [quizzes, setQuizzes] = useState([]);
   const [change, setChange] = useState(0);
   const [searchTerm, setSearchTerm] = useState("");
+  const [quizSortBy, setQuizSortBy] = useState("all");
 
   const { user, userData } = useContext(AppContext);
+
+  const handleSort = (e) => {
+    setQuizSortBy(e.value);
+  };
 
   useEffect(() => {
     getAllQuizzesFromDatabase("creator").then(setQuizzes);
@@ -28,10 +36,27 @@ export default function BrowseQuizzes() {
               placeholder="Search quizzes..."
             />
           </div>
+          {
+            <Select
+              name="quizzes"
+              options={quizSortingOptions}
+              className="basic-multi-select"
+              classNamePrefix="select"
+              value={quizSortBy}
+              onChange={handleSort}
+            />
+          }
         </div>
         <div className="grid grid-cols-4 mt-16 max-w-screen-xl m-auto justify-items-center gap-y-16">
           {quizzes &&
             quizzes
+              .filter((quiz) => {
+                if (quizSortBy === "all") {
+                  return true;
+                } else {
+                  return quiz.difficulty === quizSortBy;
+                }
+              })
               .filter((quiz) => {
                 if (user && userData.role === "student") {
                   return quiz.visibility === "public";
