@@ -10,11 +10,6 @@ export const getCategoryURL = (category, difficulty, amount) => {
   return `https://opentdb.com/api.php?amount=${amount}&category=${category}&difficulty=${difficulty}&type=multiple`;
 };
 
-// export const getRandomUrl = (urlList) => {
-//   const randomIndex = Math.floor(Math.random() * urlList.length);
-//   return urlList[randomIndex];
-// };
-
 export const API_CATEGORIES = "https://opentdb.com/api_category.php";
 
 export const defaultCategorySample = "9";
@@ -84,7 +79,7 @@ export const searchingOptions = [
 ];
 
 export const defaultCoverRoom =
-  "https://img.freepik.com/free-vector/students-watching-recorded-lecture-with-professor-talking-from-tablet_335657-319.jpg?w=2000&t=st=1709673381~exp=1709673981~hmac=098d5b7e2b7c71f82c62d71ce642b30cba6545c3afdd1049b43a7c44f4a0b8f7";
+  "https://images.squarespace-cdn.com/content/v1/59ef2d3c9f8dce981401a30d/1592002341643-UCT10ZFLQ5GCJU8L1OVY/colorful+landscapes.jpg";
 
 export const defaultCoverGroup =
   "https://images.datacamp.com/image/upload/v1655370004/shutterstock_580917865_b78f6bdc50.jpg";
