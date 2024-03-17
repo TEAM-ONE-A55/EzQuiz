@@ -1,45 +1,13 @@
 import PropTypes from "prop-types";
-import NewOption from "./NewOption";
 import Select from "react-select";
 import { TECollapse } from "tw-elements-react";
 import { useState } from "react";
 import { reactSelectStyles } from "../../../services/react-select-styles";
 
-export default function NewQuestion({ quiz, question, indexQ, indexO, handleChange, setCorrectAnswer, removeQuestion }) {
-    // return (
-    //     <div key={indexQ}>
-    //         <h4>Question {indexQ + 1}</h4>
-    //         <label htmlFor={`create-quiz-question-${indexQ}`}>
-    //             Question {indexQ + 1} Title*
-    //         </label>
-    //         <br />
-    //         <input
-    //             id={`create-quiz-question-${indexQ}`}
-    //             type="text"
-    //             value={question.question}
-    //             onChange={(e) => handleChange("question", e.target.value, indexQ)}
-    //         />
-    //         <br />
-    //         <button onClick={() => addOption(indexQ)}>New Option</button>
-    //         <br />
-    //         {question.mixedAnswers.map((option, indexO) => <NewOption key={indexO} indexQ={indexQ} indexO={indexO} handleChange={handleChange} removeOption={removeOption} />)}
+export default function NewQuestion({ quiz, indexQ, handleChange, setCorrectAnswer, removeQuestion }) {
 
-    //         <p>Choose correct answer*</p>
-    //         <Select
-    //             id="question-amount-dropdown-select"
-    //             options={quiz.questions[indexQ].incorrect_answers.map((option) => {
-    //                 return { value: option, label: option };
-    //             })}
-    //             onChange={(e) => setCorrectAnswer(indexQ, e.value)}
-    //             className="basic-multi-select w-64 mx-auto"
-    //         />
-    //         <button onClick={() => removeQuestion(indexQ)}>
-    //             Remove Question
-    //         </button>
-    //     </div>
-    // );
     const [activeAccElement, setActiveAccElement] = useState("");
-
+    
     const handleAccClick = (value) => {
       if (value === activeAccElement) {
         setActiveAccElement("");
@@ -47,7 +15,7 @@ export default function NewQuestion({ quiz, question, indexQ, indexO, handleChan
         setActiveAccElement(value);
       }
     };
-
+    
     return (
         <div key={indexQ}>
             <div id="accordionExample">
@@ -93,7 +61,7 @@ export default function NewQuestion({ quiz, question, indexQ, indexO, handleChan
                     className="!mt-0 !rounded-b-none !shadow-none"
                 >
                     <div className="px-5 py-4">
-
+    
                         <div className="mt-1 mb-4">
                             <div className="max-w-[80%] mx-auto mb-5">
                                 <span className="ml-4">Title<span className=" text-red-600 ml-1">*</span></span><br />
@@ -103,7 +71,7 @@ export default function NewQuestion({ quiz, question, indexQ, indexO, handleChan
                                 onChange={(e) => handleChange("question", e.target.value, indexQ)}
                                 />
                             </div>
-
+    
                             <div className="max-w-[80%] mx-auto">
                                 <span className="ml-4">Option 1<span className=" text-red-600 ml-1">*</span></span><br />
                                 <input 
@@ -114,7 +82,7 @@ export default function NewQuestion({ quiz, question, indexQ, indexO, handleChan
                                 }
                                 />
                             </div>
-
+    
                             <div className="max-w-[80%] mx-auto">
                                 <span className="ml-4">Option 2<span className=" text-red-600 ml-1">*</span></span><br />
                                 <input 
@@ -125,7 +93,7 @@ export default function NewQuestion({ quiz, question, indexQ, indexO, handleChan
                                 }
                                 />
                             </div>
-
+    
                             <div className="max-w-[80%] mx-auto">
                                 <span className="ml-4">Option 3<span className=" text-red-600 ml-1">*</span></span><br />
                                 <input 
@@ -136,7 +104,7 @@ export default function NewQuestion({ quiz, question, indexQ, indexO, handleChan
                                 }
                                 />
                             </div>
-
+    
                             <div className="max-w-[80%] mx-auto">
                                 <span className="ml-4">Option 4<span className=" text-red-600 ml-1">*</span></span><br />
                                 <input 
@@ -160,9 +128,9 @@ export default function NewQuestion({ quiz, question, indexQ, indexO, handleChan
                                 styles={reactSelectStyles}
                             />
                         </div>
-
+    
                         <span className="mt-16 mb-16 text-xl text-center block">10 points</span>
-
+    
                         <button 
                         onClick={() => removeQuestion(indexQ)}
                         className="w-[40%] mx-auto mb-4 block rounded-lg bg-neutral-300 px-6 pt-2.5 pb-2 text-sm font-medium uppercase leading-normal text-neutral-800 shadow-[0_4px_9px_-4px_#3b71ca] transition duration-150 ease-in-out hover:bg-neutral-400 hover:shadow-neutral-800 focus:outline-none focus:ring-0"
@@ -175,6 +143,37 @@ export default function NewQuestion({ quiz, question, indexQ, indexO, handleChan
             </div>
         </div>
     )
+    // return (
+    //     <div key={indexQ}>
+    //         <h4>Question {indexQ + 1}</h4>
+    //         <label htmlFor={`create-quiz-question-${indexQ}`}>
+    //             Question {indexQ + 1} Title*
+    //         </label>
+    //         <br />
+    //         <input
+    //             id={`create-quiz-question-${indexQ}`}
+    //             type="text"
+    //             value={question.question}
+    //             onChange={(e) => handleChange("question", e.target.value, indexQ)}
+    //         />
+    //         <br />
+    //         <button onClick={() => addOption(indexQ)}>New Option</button>
+    //         <br />
+    //         {question.mixedAnswers.map((option, indexO) => <NewOption key={indexO} indexQ={indexQ} indexO={indexO} handleChange={handleChange} removeOption={removeOption} />)}
+    //         <p>Choose correct answer*</p>
+    //         <Select
+    //             id="question-amount-dropdown-select"
+    //             options={quiz.questions[indexQ].incorrect_answers.map((option) => {
+    //                 return { value: option, label: option };
+    //             })}
+    //             onChange={(e) => setCorrectAnswer(indexQ, e.value)}
+    //             className="basic-multi-select w-64 mx-auto"
+    //         />
+    //         <button onClick={() => removeQuestion(indexQ)}>
+    //             Remove Question
+    //         </button>
+    //     </div>
+    // );
 }
 
 NewQuestion.propTypes = {

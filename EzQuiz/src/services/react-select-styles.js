@@ -1,5 +1,5 @@
 export const reactSelectStyles = {
-    control: (baseStyles, state) => ({
+    control: (baseStyles) => ({
         ...baseStyles,
         border: "none",
         outline: "none",
@@ -14,7 +14,7 @@ export const reactSelectStyles = {
         overflow: "hidden",
         caretColor: "transparent",
       }),
-      option: (baseStyles, state) => ({
+      option: (baseStyles) => ({
         ...baseStyles,
         color: "#1c1c1c",
         backgroundColor: "white",
@@ -24,7 +24,7 @@ export const reactSelectStyles = {
         transition: "all 0.1s ease-in-out",
         overflow: "hidden",
       }),
-      menu: (baseStyles, state) => ({
+      menu: (baseStyles) => ({
         ...baseStyles,
         transition: "0.1s ease-in-out",
         overflow: "hidden",

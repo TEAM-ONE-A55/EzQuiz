@@ -128,7 +128,7 @@ export default function NavBar({notifications, setNotifications}) {
   };
 
   return (
-    <Disclosure as="nav" className="bg-neutral-900">
+    <Disclosure as="nav" className="bg-neutral-900 border-b border-b-neutral-700">
       {({ open }) => (
         <>
           <div className="mx-auto max-w-15xl px-2 sm:px-6 lg:px-8 navigation-bar">
@@ -161,7 +161,7 @@ export default function NavBar({notifications, setNotifications}) {
                         key={item.name}
                         to={item.href}
                         onClick={() => handleNavigation(item.href)}
-                        className=" text-white rounded-md px-3 py-2"
+                        className=" text-white rounded-md px-3 py-2 font-medium"
                         aria-current={item.current ? "page" : undefined}
                       >
                         {item.name}

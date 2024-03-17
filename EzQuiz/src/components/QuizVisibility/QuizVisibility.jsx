@@ -1,37 +1,28 @@
 import { quizVisibilityOptions } from "../../constants/constants";
+import { reactSelectStyles } from "../../services/react-select-styles";
 import PropTypes from "prop-types";
 import Select from "react-select";
-import { reactSelectStyles } from "../../services/react-select-styles";
-import { useState } from "react";
-import {
-  Dropdown,
-  Ripple,
-  initTWE,
-} from "tw-elements";
-
-initTWE({ Dropdown, Ripple });
 
 export default function QuizVisibility({ setVisibility }) {
-
-  const [state, setState] = useState("Public");
-
   return (
-      <Select
+    <Select
         id="visibility-dropdown-select"
         options={quizVisibilityOptions.map((option) => {
             return { value: option, label: option };
-        })}
-        onChange={(e) => setVisibility(e.value.toLowerCase())}
-        className="basic-multi-select w-64 mx-auto"
-        styles={reactSelectStyles}
-      />
-  );
+          })}
+          onChange={(e) => setVisibility(e.value.toLowerCase())}
+          className="basic-multi-select w-64 mx-auto"
+          styles={reactSelectStyles}
+          />
+          );
 }
 
 QuizVisibility.propTypes = {
   setVisibility: PropTypes.func,
 };
 
+// import { Dropdown, Ripple, initTWE } from "tw-elements";
+// initTWE({ Dropdown, Ripple });
 
 // return (
 //   <div className="relative block w-56" data-twe-dropdown-ref>
