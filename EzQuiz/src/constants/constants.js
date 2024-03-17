@@ -82,7 +82,7 @@ export const defaultCoverRoom =
   "https://images.squarespace-cdn.com/content/v1/59ef2d3c9f8dce981401a30d/1592002341643-UCT10ZFLQ5GCJU8L1OVY/colorful+landscapes.jpg";
 
 export const defaultCoverGroup =
-  "https://images.datacamp.com/image/upload/v1655370004/shutterstock_580917865_b78f6bdc50.jpg";
+  "https://www.photographytalk.com/images/articles/2017/09/18/articles/2017_8/iStock-476111648-min.jpg";
 
 export const roles = [
   { label: "Educator", value: "educator" },

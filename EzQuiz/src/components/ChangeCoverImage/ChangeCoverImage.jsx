@@ -76,7 +76,7 @@ export default function ChangeCover({
             alt="Attached"
           />
         )}
-        {imageUrl !== defaultCoverRoom && (
+        {imageUrl !== defaultCoverRoom && imageUrl !== defaultCoverGroup && (
           <button
             type="button"
             onClick={removeAttachedImg}

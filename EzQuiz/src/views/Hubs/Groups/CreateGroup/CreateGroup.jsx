@@ -1,13 +1,7 @@
 import { useContext, useEffect, useState } from "react";
 import { AppContext } from "../../../../context/AppContext";
-import {
-  getAllUsers,
-  updateUserData,
-} from "../../../../services/user.service";
+import { getAllUsers, updateUserData } from "../../../../services/user.service";
 import "./CreateGroup.css";
-import Box from "@mui/material/Box";
-import TextField from "@mui/material/TextField";
-import Button from "../../../../components/Button/Button";
 import toast from "react-hot-toast";
 import { createHub, updateHub } from "../../../../services/hub.service";
 import { defaultCoverGroup } from "../../../../constants/constants";
@@ -19,7 +13,6 @@ import DropdownSelectQuizzes from "../../../../components/Dropdown/DropdownSelec
 import DropdownSelectUsers from "../../../../components/Dropdown/DropdownSelectUsers/DropdownSelectUsers";
 
 export default function CreateGroup() {
-
   const { userData, setContext } = useContext(AppContext);
   const [users, setUsers] = useState([]);
   const [quizzes, setQuizzes] = useState([]);
@@ -59,9 +52,10 @@ export default function CreateGroup() {
         .then((quizzes) =>
           quizzes.filter((quiz) => quiz.creator === userData.handle)
         )
-        .then((data)=> 
-          setQuizzes(data.map((q) => ({value: q.id, label: q.title}))))
-        .catch((error) => console.log(error))
+        .then((data) =>
+          setQuizzes(data.map((q) => ({ value: q.id, label: q.title })))
+        )
+        .catch((error) => console.log(error));
     }
   }, [userData]);
 
@@ -91,8 +85,6 @@ export default function CreateGroup() {
           selectedEducators[user].value,
           "pending"
         );
-
-        // await updateUserData(userData.handle, `groups/${id}`, group);
       }
       for (const quiz in selectedQuizzes) {
         await updateHub(
@@ -105,7 +97,7 @@ export default function CreateGroup() {
       }
 
       await updateUserData(userData.handle, `groups/${id}`, group);
-      
+
       toast.success("Your group has been successfully created!");
     } catch (e) {
       toast.error(e.message);
@@ -132,20 +124,16 @@ export default function CreateGroup() {
   };
 
   return (
-    <div className="create-group-container">
-      <h2 className="mb-4 font-extrabold leading-none tracking-tight text-gray-900 md:text-5xl lg:text-4xl dark:text-white">
+    <div className="create-group-container w-3/5 mx-auto">
+      <h2 className="mb-4 font-extrabold leading-none tracking-tight text-neutral-800 md:text-4xl lg:text-4xl">
         Create exclusive{" "}
-        <span className="text-blue-600 dark:text-blue-500">
-          educator groups
-        </span>{" "}
-        for collaborative{" "}
-        <span className="text-blue-600 dark:text-blue-500">
-          quiz creation and assessment
-        </span>
+        <span className="text-yellow-400">educator groups</span> for
+        collaborative{" "}
+        <span className="text-yellow-400">quiz creation and assessment</span>
       </h2>
       <br />
 
-      <p className="text-lg font-normal text-gray-500 lg:text-xl dark:text-gray-400">
+      <p className="text-lg font-normal text-neutral-600 lg:text-xl">
         Collaborate with fellow educators to tailor quizzes to your teaching
         needs and analyze participant performance. Whether refining teaching
         materials, conducting assessments, or hosting engaging quiz nights, this
@@ -155,136 +143,109 @@ export default function CreateGroup() {
 
       <br />
 
-      <div className="create-group-box">
-        {!changeCover ? (
-          <div className="attached-hub-image-container">
-            <img
-              className="attached-hub-image"
-              src={imageUrl}
-              style={{ backgroundPosition: "50%" }}
+      <div className="create-group-box -mt-10">
+        <div className="block rounded-xl bg-neutral-50 p-16 text-surface shadow-neutral-500 shadow-lg m-12 mx-auto">
+          {!changeCover ? (
+            <div className="attached-hub-image-container">
+              <img
+                className="attached-hub-image shadow-xl shadow-neutral-800 mx-auto w-11/12"
+                src={imageUrl}
+                style={{ backgroundPosition: "100%" }}
+              />
+              <button
+                type="button"
+                onClick={() => setChangeCover(true)}
+                data-te-ripple-init
+                data-te-ripple-color="light"
+                className="hub-image-button  inline-block w-2/6  rounded-lg bg-yellow-400 px-6 pt-2.5 pb-2 text-sm font-bold uppercase leading-normal text-neutral-900 shadow-lg  shadow-neutral-900 transition duration-150 ease-in-out  focus:outline-none focus:ring-0"
+              >
+                Change Cover
+              </button>
+            </div>
+          ) : (
+            <ChangeCover
+              attachedImg={attachedImg}
+              setAttachedImg={setAttachedImg}
+              imageUrl={imageUrl}
+              setImageUrl={setImageUrl}
+              uuid={uuid}
+              setChangeCover={setChangeCover}
+              keyComponent="groups"
             />
+          )}
+          <br />
+          <div className="w-11/12 mx-auto">
+            <p className="text-lg font-normal text-neutral-600 lg:text-xl">
+              Set Group name:
+            </p>
+            <input
+              className="pl-3 outline-none border-none2 rounded-md p-2 w-full focus:border-blue-500 transition duration-300 ease-in-out shadow-lg shadow-neutral-400 mt-4"
+              type="text"
+              placeholder="Add group name..."
+              value={group.name}
+              onChange={handleOnChange("name")}
+            />
+            <br />
+            <br />
+            <br />
+            <p className="text-lg font-normal text-neutral-600 lg:text-xl">
+              Write a short description:
+            </p>
+            <input
+              className="pl-3 outline-none border-none2 rounded-md p-2 w-full focus:border-blue-500 transition duration-300 ease-in-out shadow-lg shadow-neutral-400 mt-4"
+              type="text"
+              placeholder="Write a short description of the group..."
+              value={group.description}
+              onChange={handleOnChange("description")}
+            />
+            <br />
+            <br />
+            <br />
+            <p className="text-lg font-normal text-neutral-600 lg:text-xl">
+              Select educators to join your group:
+            </p>
+            <br />
+            <DropdownSelectUsers
+              users={users}
+              selectedUsers={selectedEducators}
+              setSelectedUsers={setSelectedEducators}
+            />
+            <br />
+            <br />
+            <p className="text-lg font-normal text-neutral-600 lg:text-xl">
+              Select quizzes:
+            </p>
+            <br />
+            <DropdownSelectQuizzes
+              quizzes={quizzes}
+              selectedQuizzes={selectedQuizzes}
+              setSelectedQuizzes={setSelectedQuizzes}
+            />
+            <br />
+            <br />
             <button
-              className="hub-image-button"
-              onClick={() => setChangeCover(true)}
+              type="button"
+              onClick={handleCreateGroup}
+              data-te-ripple-init
+              data-te-ripple-color="light"
+              className="mb-6 inline-block w-2/6 ml-5 mt-3 rounded-lg bg-yellow-400 px-6 pt-2.5 pb-2 text-sm font-bold uppercase leading-normal text-neutral-900 shadow-lg  shadow-neutral-400 transition duration-150 ease-in-out  focus:outline-none focus:ring-0"
             >
-              Change Cover
+              Create Group
+            </button>
+            <button
+              type="button"
+              onClick={() => {
+                reset();
+                attachedImg && deleteCoverImage("groups", uuid);
+              }}
+              data-te-ripple-init
+              data-te-ripple-color="light"
+              className="mb-6 inline-block w-2/6 ml-5 rounded-lg bg-neutral-900 px-6 pt-2.5 pb-2 text-sm font-medium uppercase leading-normal text-white shadow-lg shadow-neutral-400 transition duration-150 ease-in-out  focus:outline-none focus:ring-0"
+            >
+              Reset Settings
             </button>
           </div>
-        ) : (
-          <ChangeCover
-            attachedImg={attachedImg}
-            setAttachedImg={setAttachedImg}
-            imageUrl={imageUrl}
-            setImageUrl={setImageUrl}
-            uuid={uuid}
-            setChangeCover={setChangeCover}
-            keyComponent="groups"
-          />
-        )}
-        <br />
-
-        <p className="text-lg font-normal text-gray-500 lg:text-xl dark:text-gray-400">
-          Set Group name:
-        </p>
-        <Box
-          component="form"
-          sx={{
-            "& > :not(style)": { m: 1, width: "100%" },
-            "& .MuiInputLabel-root": { color: "white" },
-            "& .MuiInputLabel-root.Mui-focused": { color: "white" },
-            "& .MuiInputBase-root": { color: "white" },
-            "& .MuiOutlinedInput-root": {
-              "& .MuiOutlinedInput-notchedOutline": {
-                borderColor: "white",
-              },
-              "&:hover .MuiOutlinedInput-notchedOutline": {
-                borderColor: "white",
-              },
-              "&.Mui-focused .MuiOutlinedInput-notchedOutline": {
-                borderColor: "white",
-              },
-            },
-          }}
-          noValidate
-          autoComplete="off"
-        >
-          <TextField
-            id="outlined-basic"
-            placeholder="Group name"
-            variant="outlined"
-            sx={{
-              "& .MuiInputBase-root": {
-                color: "black",
-                backgroundColor: "white",
-                fontFamily: "Montserrat, sans-serif",
-              },
-            }}
-            value={group.name}
-            onChange={handleOnChange("name")}
-          />
-        </Box>
-        <br />
-        <p className="text-lg font-normal text-gray-500 lg:text-xl dark:text-gray-400">
-          Write a short description:
-        </p>
-        <Box
-          component="form"
-          sx={{
-            "& > :not(style)": { m: 1, width: "100%" },
-            "& .MuiInputLabel-root": { color: "white" },
-            "& .MuiInputLabel-root.Mui-focused": { color: "white" },
-            "& .MuiInputBase-root": { color: "white" },
-            "& .MuiOutlinedInput-root": {
-              "& .MuiOutlinedInput-notchedOutline": {
-                borderColor: "white",
-              },
-              "&:hover .MuiOutlinedInput-notchedOutline": {
-                borderColor: "white",
-              },
-              "&.Mui-focused .MuiOutlinedInput-notchedOutline": {
-                borderColor: "white",
-              },
-            },
-          }}
-          noValidate
-          autoComplete="off"
-        >
-          <TextField
-            id="outlined-basic"
-            placeholder="Write a short description of the group"
-            variant="outlined"
-            sx={{
-              "& .MuiInputBase-root": {
-                color: "black",
-                backgroundColor: "white",
-                fontFamily: "Montserrat, sans-serif",
-              },
-            }}
-            value={group.description}
-            onChange={handleOnChange("description")}
-          />
-        </Box>
-        <p className="text-lg font-normal text-gray-500 lg:text-xl dark:text-gray-400">
-          Select educators to join your group:
-        </p>
-        <br />
-        <DropdownSelectUsers users={users} selectedUsers={selectedEducators} setSelectedUsers={setSelectedEducators}/>
-        <br />
-        <p className="text-lg font-normal text-gray-500 lg:text-xl dark:text-gray-400">
-          Select quizzes:
-        </p>
-        <br />
-        <DropdownSelectQuizzes quizzes={quizzes} selectedQuizzes={selectedQuizzes} setSelectedQuizzes={setSelectedQuizzes}/>
-        <br />
-        <Button onClick={handleCreateGroup}>Create Group</Button>
-        <Button
-          onClick={() => {
-            reset();
-            attachedImg && deleteCoverImage("groups", uuid);
-          }}
-        >
-          Reset Settings
-        </Button>
+        </div>
       </div>
     </div>
   );
