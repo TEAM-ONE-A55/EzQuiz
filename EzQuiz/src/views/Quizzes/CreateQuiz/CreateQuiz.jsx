@@ -10,9 +10,10 @@ import { AppContext } from "../../../context/AppContext";
 import { useNavigate } from "react-router";
 import { uploadQuizToDatabase, getAllQuizTitles } from "../../../services/quiz.service";
 import { minimumQuizTitleLength, maximumQuizTitleLength } from "../../../constants/constants";
-import { Input, initTWE } from "tw-elements";
+import { Dropdown, Ripple, initTWE } from "tw-elements";
+import Datepicker from "react-tailwindcss-datepicker"; 
 
-initTWE({ Input });
+initTWE({ Dropdown, Ripple });
 
 export default function CreateQuiz() {
   const { user, userData } = useContext(AppContext);
@@ -38,9 +39,26 @@ export default function CreateQuiz() {
 
   const [allQuizTitles, setAllQuizTitles] = useState([]);
 
+  const [datePicker, setDatePicker] = useState({ 
+    startDate: new Date(), 
+    endDate: new Date().setMonth(11) 
+  }); 
+
+  useEffect(() => {
+    setQuiz({
+      ...quiz,
+      startDate: datePicker.startDate,
+      endDate: datePicker.endDate,
+    });
+  }, [datePicker]);
+
   useEffect(() => {
     getAllQuizTitles().then(setAllQuizTitles);
   }, []);
+
+  const handleDatePickerChange = (value) => {
+    setDatePicker(value); 
+  } 
 
   const handleChange = (key, value, indexQ = 0, indexO = 0) => {
     if (key === "question") {
@@ -184,99 +202,138 @@ export default function CreateQuiz() {
   }
 
   if (user && userData.role !== 'student') { return (
-    <div className=" bg-neutral-100 max-w-3xl rounded-xl flex-col py-8 px-4 relative shadow-neutral-500 shadow-xl m-auto mt-4">
-      <h1 className="text-2xl">Create Your Own Quiz</h1>
-      
-      <p>Choose visibility*</p>
-      <QuizVisibility
-        setVisibility={(visibility) => handleChange("visibility", visibility)}
-      />
+    <div className="mt-4">
+      <h2 className="mb-6 mt-6 font-extrabold leading-none tracking-tight text-gray-900 md:text-5xl lg:text-4xl">
+      Create your own quiz</h2>
+      <div className=" bg-neutral-100 max-w-3xl rounded-xl flex-col py-8 px-10 relative shadow-neutral-500 shadow-xl m-auto mt-4 text-left">
 
-      <p>Choose a category*</p>
-      <Categories
-        setCategory={(category) => handleChange("category", category)}
-      />
+        <div className="max-w-[80%] mx-auto">
+          <span className="ml-2">Title<span className=" text-red-600 ml-1">*</span></span><br />
+          <input 
+          className="pl-3 outline-none border-none2 rounded-md p-2 w-full focus:border-blue-500 transition duration-300 ease-in-out" 
+          type="text" placeholder="Add quiz title..." onChange={e => handleChange("title", e.target.value)} />
+        </div>
 
-      <p>Choose difficulty*</p>
-      <QuizDifficulty
-        setDifficulty={(difficulty) => handleChange("difficulty", difficulty)}
-      />
-
-      <span>Time limit (minutes)*</span>
-      <input type="number" min="1" max="60" step="1" onChange={e => handleChange("timeLimit", e.target.value)} />
-      <br />
-
-      <span>Passing score %*</span>
-      <input type="number" min="1" max="100" step="1" onChange={e => handleChange("passingScore", e.target.value)} />
-      <br />
-
-      <span>Start date*</span>
-      <input type="date" onChange={e => handleChange("startDate", e.target.value)} />
-      <br />
-
-      <span>End date*</span>
-      <input type="date" onChange={e => handleChange("endDate", e.target.value)} />
-      <br />
-
-      <p>Quiz questions*</p>
-      <button onClick={addQuestion}>New Question</button>
-      {quiz.questions.map((question, indexQ) => {
-        return (
-          <div key={indexQ}>
-            <h4>Question {indexQ + 1}</h4>
-            <label htmlFor={`create-quiz-question-${indexQ}`}>
-              Question {indexQ + 1} Title*
-            </label>
-            <br />
-            <input
-              id={`create-quiz-question-${indexQ}`}
-              type="text"
-              value={question.question}
-              onChange={(e) => handleChange("question", e.target.value, indexQ)}
-            />
-            <br />
-            <button onClick={() => addOption(indexQ)}>New Option</button>
-            <br />
-            {question.mixedAnswers.map((option, indexO) => {
-              return (
-                <div key={indexO}>
-                  <label htmlFor={`create-quiz-option-${indexO}`}>
-                    Option {indexO + 1}*
-                  </label>
-                  <br />
-                  <input
-                    id={`create-quiz-option-${indexO}`}
-                    type="text"
-                    value={option}
-                    onChange={(e) =>
-                      handleChange("option", e.target.value, indexQ, indexO)
-                    }
-                  />
-                  <br />
-                  <button onClick={() => removeOption(indexQ, indexO)}>
-                    Remove Option
-                  </button>
-                </div>
-              );
-            })}
-
-            <p>Choose correct answer*</p>
-            <Select
-              id="question-amount-dropdown-select"
-              options={quiz.questions[indexQ].incorrect_answers.map((option) => {
-                  return { value: option, label: option };
-              })}
-              onChange={(e) => setCorrectAnswer(indexQ, e.value)}
-              className="basic-multi-select w-64 mx-auto"
-            />
-            <button onClick={() => removeQuestion(indexQ)}>
-              Remove Question
-            </button>
+        <div className="flex justify-center gap-8">
+          <div className="w-[40%] m-4">
+            <div className="mb-3">
+              <span className="ml-2">Choose visibility<span className=" text-red-600 ml-1">*</span></span><br />
+              <QuizVisibility
+                setVisibility={(visibility) => handleChange("visibility", visibility)}
+              />
+            </div>
+            <div className="mb-3">
+              <span className="ml-2">Choose category<span className=" text-red-600 ml-1">*</span></span><br />
+              <Categories
+                setCategory={(category) => handleChange("category", category)}
+              />
+            </div>
+            <div className="mb-3">
+              <span className="ml-2">Choose difficulty<span className=" text-red-600 ml-1">*</span></span><br />
+              <QuizDifficulty
+                setDifficulty={(difficulty) => handleChange("difficulty", difficulty)}
+              />
+            </div>
           </div>
-        );
-      })}
-      <br />
-      <Button onClick={submitQuiz}>Submit Quiz</Button>
+
+          <div className="w-[40%] m-4">
+            <div className="mb-3">
+              <span className="ml-2">Time limit (minutes)<span className=" text-red-600 ml-1">*</span></span><br />
+              <input className="pl-3 mx-3 w-64 rounded-md px-2 py-[7px] outline-none shadow-[5px 5px 10px rgba(0, 0, 0, 0.1)] shadow-lg" type="number" min="1" max="60" step="1" onChange={e => handleChange("timeLimit", e.target.value)} />
+              <br />
+            </div>
+
+            <div className="mb-3">
+              <span className="ml-2">Passing score (%)<span className=" text-red-600 ml-1">*</span></span><br />
+              <input className="pl-3 mx-3 w-64 rounded-md px-2 py-[7px] outline-none shadow-[5px 5px 10px rgba(0, 0, 0, 0.1)] shadow-lg" type="number" min="1" max="100" step="1" onChange={e => handleChange("passingScore", e.target.value)} />
+              <br />
+            </div>
+
+            <div className="mb-3 w-[100%]">
+              <span className="ml-2">Quiz duration<span className=" text-red-600 ml-1">*</span></span><br />
+              <div className=" mx-3">
+                <Datepicker
+                  inputClassName={"pl-2 outline-none rounded-md px-2 py-[9px] caret-transparent cursor-pointer w-[100%] text-sm shadow-[5px 5px 10px rgba(0, 0, 0, 0.1)] shadow-lg"}
+                  containerClassName={""}
+                  primaryColor={"yellow"} 
+                  value={datePicker} 
+                  onChange={handleDatePickerChange} 
+                  showShortcuts={true}
+                  separator="-" 
+                  /> 
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div className="w-[80%] mx-auto">
+          <div className="mx-auto">
+            <span className="ml-2">Questions<span className=" text-red-600 ml-1">*</span></span><br />
+            <button 
+            className="w-full block rounded-lg bg-neutral-300 px-6 pt-2.5 pb-2 text-sm font-medium uppercase leading-normal text-neutral-800 shadow-[0_4px_9px_-4px_#3b71ca] transition duration-150 ease-in-out hover:bg-neutral-400 hover:shadow-neutral-800 focus:outline-none focus:ring-0"
+            onClick={addQuestion}>New Question</button>
+          </div>
+          {quiz.questions.map((question, indexQ) => {
+            return (
+              <div key={indexQ}>
+                <h4>Question {indexQ + 1}</h4>
+                <label htmlFor={`create-quiz-question-${indexQ}`}>
+                  Question {indexQ + 1} Title*
+                </label>
+                <br />
+                <input
+                  id={`create-quiz-question-${indexQ}`}
+                  type="text"
+                  value={question.question}
+                  onChange={(e) => handleChange("question", e.target.value, indexQ)}
+                />
+                <br />
+                <button onClick={() => addOption(indexQ)}>New Option</button>
+                <br />
+                {question.mixedAnswers.map((option, indexO) => {
+                  return (
+                    <div key={indexO}>
+                      <label htmlFor={`create-quiz-option-${indexO}`}>
+                        Option {indexO + 1}*
+                      </label>
+                      <br />
+                      <input
+                        id={`create-quiz-option-${indexO}`}
+                        type="text"
+                        value={option}
+                        onChange={(e) =>
+                          handleChange("option", e.target.value, indexQ, indexO)
+                        }
+                      />
+                      <br />
+                      <button onClick={() => removeOption(indexQ, indexO)}>
+                        Remove Option
+                      </button>
+                    </div>
+                  );
+                })}
+
+                <p>Choose correct answer*</p>
+                <Select
+                  id="question-amount-dropdown-select"
+                  options={quiz.questions[indexQ].incorrect_answers.map((option) => {
+                      return { value: option, label: option };
+                  })}
+                  onChange={(e) => setCorrectAnswer(indexQ, e.value)}
+                  className="basic-multi-select w-64 mx-auto"
+                />
+                <button onClick={() => removeQuestion(indexQ)}>
+                  Remove Question
+                </button>
+              </div>
+            );
+          })}
+        </div>
+
+        <button 
+        className="mt-8 inline-block w-full rounded-lg bg-yellow-400 px-6 pt-2.5 pb-2 text-sm font-medium uppercase leading-normal text-neutral-800 shadow-[0_4px_9px_-4px_#3b71ca] transition duration-150 ease-in-out hover:bg-yellow-500 hover:shadow-neutral-800 focus:outline-none focus:ring-0"
+        onClick={submitQuiz}>Submit Quiz</button>
+      </div>
     </div>
   )} else {
     setTimeout(() => {navigate('/')}, 3000);

@@ -5,7 +5,8 @@ export default {
   content: [
     "./index.html",
     "./src/**/*.{js,ts,jsx,tsx}",
-    "./node_modules/tw-elements/js/**/*.js"
+    "./node_modules/tw-elements/js/**/*.js",
+    "./node_modules/react-tailwindcss-datepicker/dist/index.esm.js",
   ],
   theme: {
     extend: {
@@ -13,5 +14,6 @@ export default {
     },
   },
   plugins: [twElementsPlugin],
+  darkMode: "false",
 }
 

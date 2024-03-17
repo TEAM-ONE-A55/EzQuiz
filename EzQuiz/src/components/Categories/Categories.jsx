@@ -3,6 +3,7 @@ import { API_CATEGORIES } from "../../constants/constants";
 import PropTypes from "prop-types";
 import "./Categories.css";
 import Select from "react-select";
+import { reactSelectStyles } from "../../services/react-select-styles";
 
 export default function Categories({ setCategory }) {
   const [options, setOptions] = useState(null);
@@ -21,8 +22,10 @@ export default function Categories({ setCategory }) {
         })}
         onChange={(e) => setCategory(e.value)}
         className="basic-multi-select w-64 mx-auto"
+        styles={reactSelectStyles}
     />
   );
+
 }
 
 Categories.propTypes = {
