@@ -133,7 +133,7 @@ export default function CreateRoom() {
         analyzing participants&apos; performance effectively.
       </p>
       <div className="create-room-box  -mt-10">
-        <div className="block rounded-xl bg-neutral-100 p-16 text-surface shadow-neutral-500 shadow-lg m-12 mx-auto">
+        <div className="block rounded-xl bg-neutral-50 p-16 text-surface shadow-neutral-500 shadow-lg m-12 mx-auto">
           {!changeCover ? (
             <div className="attached-hub-image-container ">
               <img
