@@ -195,7 +195,7 @@ export default function SingleHub({
           className="block rounded-xl bg-neutral-50 p-16 text-surface shadow-neutral-500 shadow-lg mx-auto w-3/5 mt-32"
           style={{
             position: "absolute",
-            top: "35%",
+            top: "45%",
             left: "50%",
             transform: "translate(-50%, -50%)",
             maxHeight: "600px",
@@ -230,7 +230,7 @@ export default function SingleHub({
             </div>
           )}
         </div>
-        <div className=" mt-56">
+        <div className=" mt-80">
           <br />
           <h5 className="mb-12 mt-6 leading-none font-bold tracking-tight text-neutral-800 md:text-4xl lg:text-4xl">
             {" "}
@@ -274,12 +274,8 @@ export default function SingleHub({
                     >
                       Send Invitations
                     </button> */}
-                    <br/>
-                    <Button
-                      onClick={addUsers}
-                    >
-                      Send Invitations
-                    </Button>
+                    <br />
+                    <Button onClick={addUsers}>Send Invitations</Button>
                   </div>
                 </>
               )}
