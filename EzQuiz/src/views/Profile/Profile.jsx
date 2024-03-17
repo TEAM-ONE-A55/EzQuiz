@@ -6,6 +6,11 @@ import SetFirstName from "./SetFirstName";
 import SetLastName from "./SetLastName";
 import SetAddress from "./SetAddress";
 import { getRank } from "../../components/Score/scores-students";
+import { faStar, faTrophy } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+
+
+
 
 export default function Profile() {
   const { userData } = useContext(AppContext);
@@ -23,15 +28,23 @@ export default function Profile() {
 
   return (
     <div>
-      <h1>Profile</h1>
-      <p>{userData?.handle}</p>
+      Profile
       <SetAvatar />
-      <SetPhoneNumber />
+      <p
+      className="mb-2 font-semibold text-primary dark:text-primary-400"
+      >@{userData?.handle}</p>
       <SetFirstName />
       <SetLastName />
+      <SetPhoneNumber />
       <SetAddress />
-      <p>Score: {userData?.score}</p>
-      <p>Rank: {rank}</p>
+      <p><FontAwesomeIcon
+        icon={faStar}
+      ></FontAwesomeIcon>: {userData?.score} points</p>
+      <p>
+        <FontAwesomeIcon
+        icon={faTrophy}
+        ></FontAwesomeIcon>
+        : {rank}</p>
     </div>
   );
 }

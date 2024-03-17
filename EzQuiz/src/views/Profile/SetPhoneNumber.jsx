@@ -3,7 +3,7 @@ import toast from "react-hot-toast";
 import { AppContext } from "../../context/AppContext";
 import { updateUserData } from "../../services/user.service";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPen, faTrash } from "@fortawesome/free-solid-svg-icons";
+import { faPen, faTrash, faPhone } from "@fortawesome/free-solid-svg-icons";
 import { PHONE_NUMBER } from "../../constants/constants";
 import Button from "../../components/Button/Button";
 
@@ -82,7 +82,9 @@ export default function SetPhoneNumber() {
             </div>
           ) : (
             <p>
-              Phone number: {userData.phoneNumber} &nbsp;
+              <FontAwesomeIcon
+                icon={faPhone}
+              ></FontAwesomeIcon>: {userData.phoneNumber} &nbsp;
               <FontAwesomeIcon
                 icon={faPen}
                 onClick={handleEdit}

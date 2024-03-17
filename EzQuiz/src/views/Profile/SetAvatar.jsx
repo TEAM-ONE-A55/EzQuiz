@@ -55,11 +55,14 @@ export default function SetAvatar() {
 
   return (
     <div>
-      <Avatar
+      {/* <Avatar
         width="200px"
         height="200px"
         url={userData.avatar}
         onClick={() => {}}
+      /> */}
+      <img src={userData.avatar} alt={userData.firstName + "" + userData.lastName}
+      className="w-40 h-40 rounded-full shadow-lg dark:shadow-black/30 mx-auto"
       />
       <div>
         {userData.avatar === defaultAvatar && (

@@ -2,7 +2,7 @@ import { useContext, useState } from "react";
 import { AppContext } from "../../context/AppContext";
 import { updateUserData } from "../../services/user.service";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPen, faTrash } from "@fortawesome/free-solid-svg-icons";
+import { faPen, faTrash, faMapPin } from "@fortawesome/free-solid-svg-icons";
 import toast from "react-hot-toast";
 import Button from "../../components/Button/Button";
 
@@ -74,7 +74,9 @@ export default function SetAddress() {
             </div>
           ) : (
             <p>
-              Address: {userData.address} &nbsp;
+              <FontAwesomeIcon
+                icon={faMapPin}
+              ></FontAwesomeIcon>: {userData.address} &nbsp;
               <FontAwesomeIcon
                 icon={faPen}
                 onClick={handleEdit}
