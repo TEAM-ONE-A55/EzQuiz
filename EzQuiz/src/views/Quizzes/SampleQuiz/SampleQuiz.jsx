@@ -1,4 +1,3 @@
-import Button from "../../../components/Button/Button";
 import Categories from "../../../components/Categories/Categories";
 import PropTypes from "prop-types";
 import { useNavigate } from "react-router";
@@ -15,17 +14,49 @@ export default function SampleQuiz({ setDifficulty, setQuizAmount }) {
     navigate(`/single-quiz/${category}`);
   };
   return (
-    <div>
-      <h1>Customize your own sample quiz and give it a try</h1>
-      <h3>Select Category</h3>
-      <Categories setCategory={setCategory} />
-      <h3>Select Difficulty</h3>
-      <QuizDifficulty setDifficulty={setDifficulty} />
-      <h3>Select Amount of Questions</h3>
-      <QuizAmount setQuizAmount={setQuizAmount} />
-      <br />
-      <br />
-      <Button onClick={handleSetCategory}>Start Quiz</Button>
+    <div className="m-32 min-w-lg">
+      <div className=" w-2/4 mx-auto min-w-lg ">
+        <h2 className="mb-6 mt-6 font-extrabold leading-none tracking-tight text-neutral-800 md:text-5xl lg:text-5xl">
+          Customize your own sample quiz and give it a try
+        </h2>
+      </div>
+      <br/>
+      <div className=" w-2/4 mx-auto">
+        <div className="block rounded-xl bg-neutral-100 p-12 text-surface shadow-neutral-500 shadow-lg mx-auto ">
+          <div className=" bg-yellow-400 mx-auto min-w-lg rounded-xl p-8  shadow-neutral-500 shadow-inner mb-4">
+            <h3 className=" text-neutral-800 text-2xl">Select Category</h3>
+            <br />
+            <Categories setCategory={setCategory} />
+          </div>
+
+          <div className=" bg-neutral-100 mx-auto min-w-lg rounded-xl p-8  shadow-neutral-500 shadow-inner mb-4">
+            <h3 className=" text-neutral-800 text-2xl">Select Difficulty</h3>
+            <br />
+            <QuizDifficulty setDifficulty={setDifficulty} />
+          </div>
+          <div className=" bg-yellow-400 mx-auto min-w-lg rounded-xl p-8  shadow-neutral-500 shadow-inner mb-4">
+            <h3 className=" text-neutral-800 text-2xl">
+              Select Amount of Questions
+            </h3>
+            <br />
+            <QuizAmount setQuizAmount={setQuizAmount} />
+          </div>
+          {/* <h3>Select Amount of Questions</h3>
+          <QuizAmount setQuizAmount={setQuizAmount} /> */}
+          {/* 
+          <Button onClick={handleSetCategory}>Start Quiz</Button> */}
+          <br/>
+          <button
+            type="button"
+            onClick={handleSetCategory}
+            data-te-ripple-init
+            data-te-ripple-color="light"
+            className=" inline-block w-2/4  rounded-lg bg-neutral-800 px-6 pt-2.5 pb-2 text-sm font-medium uppercase leading-normal text-white shadow-lg transition duration-150 ease-in-out hover:bg-neutral-900 hover:shadow-neutral-500 focus:outline-none focus:ring-0 active:bg-neutral-700"
+          >
+            Start Quiz
+          </button>
+        </div>
+      </div>
     </div>
   );
 }
