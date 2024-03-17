@@ -97,6 +97,7 @@ export default function CreateQuiz() {
         [key]: value,
       });
     }
+    console.log(quiz);
   };
 
   const addQuestion = () => {
@@ -121,35 +122,7 @@ export default function CreateQuiz() {
     });
   };
 
-  const addOption = (indexQ) => {
-    if (quiz.questions[indexQ].incorrect_answers.length > 4)
-      return toast.error("You can have a maximum of 5 options for a question");
-    setQuiz({
-      ...quiz,
-      questions: quiz.questions.map((q, i) => {
-        if (i !== indexQ) return q;
-        return {
-          ...q,
-          incorrect_answers: [...q.incorrect_answers, ""],
-          mixedAnswers: [...q.mixedAnswers, ""],
-        };
-      }),
-    });
-  };
-
-  const removeOption = (indexQ, indexO) => {
-    setQuiz({
-      ...quiz,
-      questions: quiz.questions.map((q, i) => {
-        if (i !== indexQ) return q;
-        return {
-          ...q,
-          mixedAnswers: q.mixedAnswers.filter((o, j) => j !== indexO),
-        };
-      }),
-    });
-  };
-
+  
   const setCorrectAnswer = (indexQ, value) => {
     setQuiz({
       ...quiz,
@@ -162,7 +135,37 @@ export default function CreateQuiz() {
         };
       }),
     });
+    console.log(quiz);
   }
+  
+  // const addOption = (indexQ) => {
+  //   if (quiz.questions[indexQ].incorrect_answers.length > 4)
+  //     return toast.error("You can have a maximum of 5 options for a question");
+  //   setQuiz({
+  //     ...quiz,
+  //     questions: quiz.questions.map((q, i) => {
+  //       if (i !== indexQ) return q;
+  //       return {
+  //         ...q,
+  //         incorrect_answers: [...q.incorrect_answers, ""],
+  //         mixedAnswers: [...q.mixedAnswers, ""],
+  //       };
+  //     }),
+  //   });
+  // };
+
+  // const removeOption = (indexQ, indexO) => {
+  //   setQuiz({
+  //     ...quiz,
+  //     questions: quiz.questions.map((q, i) => {
+  //       if (i !== indexQ) return q;
+  //       return {
+  //         ...q,
+  //         mixedAnswers: q.mixedAnswers.filter((o, j) => j !== indexO),
+  //       };
+  //     }),
+  //   });
+  // };
 
   const submitQuiz = async () => {
     if(!quiz.title) return toast.error("Please enter a title for the quiz");
@@ -271,10 +274,10 @@ export default function CreateQuiz() {
         <div className="w-[80%] mx-auto mt-2">
           <div className="mx-auto">
             <button 
-            className="w-full block rounded-lg bg-neutral-300 px-6 pt-2.5 pb-2 text-sm font-medium uppercase leading-normal text-neutral-800 shadow-[0_4px_9px_-4px_#3b71ca] transition duration-150 ease-in-out hover:bg-neutral-400 hover:shadow-neutral-800 focus:outline-none focus:ring-0"
+            className="mb-6 w-full block rounded-lg bg-neutral-300 px-6 pt-2.5 pb-2 text-sm font-medium uppercase leading-normal text-neutral-800 shadow-[0_4px_9px_-4px_#3b71ca] transition duration-150 ease-in-out hover:bg-neutral-400 hover:shadow-neutral-800 focus:outline-none focus:ring-0"
             onClick={addQuestion}>New Question</button>
           </div>
-          {quiz.questions.map((question, indexQ) => <NewQuestion key={indexQ} quiz={quiz} question={question} indexQ={indexQ} handleChange={handleChange} addOption={addOption} removeOption={removeOption} setCorrectAnswer={setCorrectAnswer} removeQuestion={removeQuestion} />)}
+          {quiz.questions.map((question, indexQ) => <NewQuestion key={indexQ} quiz={quiz} question={question} indexQ={indexQ} handleChange={handleChange} setCorrectAnswer={setCorrectAnswer} removeQuestion={removeQuestion} />)}
         </div>
 
         <button 
