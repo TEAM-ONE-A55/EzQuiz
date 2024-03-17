@@ -33,8 +33,6 @@ export default function LPForm() {
     setSelectedRole({ ...selected });
     setForm({ ...form, role: selected.value });
   };
-  console.log(form);
-  console.log(selectedRole);
 
   const resetForm = () => {
     setForm({

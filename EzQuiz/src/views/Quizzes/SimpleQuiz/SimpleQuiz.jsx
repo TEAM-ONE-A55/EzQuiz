@@ -28,7 +28,7 @@ export default function SimpleQuiz({ quiz, setChange, hubType, hubId }) {
             navigate('/signin');
             return;
         } else {
-            navigate(`/sample-quiz/${quiz.id}`);
+            navigate(`/single-quiz/${quiz.id}`);
         }
     }
 

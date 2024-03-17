@@ -12,7 +12,7 @@ export default function SampleQuiz({ setDifficulty, setQuizAmount }) {
   const navigate = useNavigate();
 
   const handleSetCategory = () => {
-    navigate(`/sample-quiz/${category}`);
+    navigate(`/single-quiz/${category}`);
   };
   return (
     <div>

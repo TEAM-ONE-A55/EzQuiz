@@ -83,7 +83,7 @@ export default function App() {
             <Route path="/signup" element={<Registration />}></Route>
             <Route path="/signin" element={<Login />}></Route>
             <Route
-              path="/sample-quiz/:id"
+              path="/single-quiz/:id"
               element={
                 <SingleQuiz
                   difficulty={difficulty}
@@ -258,7 +258,7 @@ export default function App() {
             <Route path="*" element={<NotFound />} />
             <Route path="/unauthorized" element={<Forbidden />} />
             <Route
-              path="/sample-quiz/:id"
+              path="/single-quiz/:id"
               element={
                 <SingleQuiz
                   difficulty={difficulty}

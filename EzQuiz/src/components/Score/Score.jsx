@@ -5,10 +5,7 @@ import { useNavigate } from "react-router";
 import { AppContext } from "../../context/AppContext";
 import { updateUserData } from "../../services/user.service";
 
-export default function Score({
-  questions,
-  finishTime,
-}) {
+export default function Score({ questions, finishTime, quiz, category }) {
   const { user, userData } = useContext(AppContext);
   const [showAnswers, setShowAnswers] = useState(false);
   const [score, setScore] = useState(0);
@@ -32,9 +29,9 @@ export default function Score({
     }
   }, [score]);
 
-  const time = new Date(finishTime)
-  const minutes = time.getMinutes()
-  const seconds = time.getSeconds()
+  const time = new Date(finishTime);
+  const minutes = time.getMinutes();
+  const seconds = time.getSeconds();
 
   const statusAnswers = (index, a) => {
     if (
@@ -53,12 +50,21 @@ export default function Score({
     }
   };
 
+  const scorePercent = (+score / (questions.length * 10)) * 100;
+
   return (
     <div>
+      {quiz && <h1>{category}</h1>}
       <h1>
         Your score is {score} from {questions.length * 10}
       </h1>
-      <p>Best time: {minutes} : {seconds}</p>
+      {Object.values(quiz).length !== 0 &&
+        (scorePercent >= +quiz.passingScore
+          ? `Congratulations! You passed with a score of ${scorePercent}%.`
+          : `You did not pass with score of ${scorePercent}%. To pass, you need a minimum of ${quiz.passingScore}% correct answers.`)}
+      <p>
+        Best time: {minutes} : {seconds}
+      </p>
       <Button onClick={() => setShowAnswers(!showAnswers)}>
         View your answers
       </Button>
@@ -87,5 +93,7 @@ export default function Score({
 
 Score.propTypes = {
   questions: PropTypes.array,
-  finishTime: PropTypes.number
+  finishTime: PropTypes.number,
+  quiz: PropTypes.object,
+  category: PropTypes.string,
 };

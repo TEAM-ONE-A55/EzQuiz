@@ -5,11 +5,13 @@ import Button from "../../../components/Button/Button";
 import PropTypes from "prop-types";
 import { fetchQuizData } from "../../../services/quiz-api.service";
 import {
+  API_CATEGORIES,
   defaultQuizAmountSample,
   defaultQuizDifficultySamle,
 } from "../../../constants/constants";
 import Score from "../../../components/Score/Score";
 import Timer from "../../../components/Timer/Timer";
+import { getQuizById } from "../../../services/quiz.service";
 
 export default function SingleQuiz({
   difficulty,
@@ -23,18 +25,50 @@ export default function SingleQuiz({
   const [startTime, setStartTime] = useState(new Date().getTime());
   const [finishTime, setFinishTime] = useState(new Date().getTime());
   const [finishQuiz, setFinishQuiz] = useState(false);
+  const [quiz, setQuiz] = useState({});
+  const [time, setTime] = useState(new Date());
+  const [category, setCategory] = useState([
+    {
+      id: "",
+      name: "",
+    },
+  ]);
 
   const { id } = useParams();
   const navigate = useNavigate();
 
   useEffect(() => {
-    const data = fetchQuizData(
-      setQuestions,
-      setError,
-      id,
-      difficulty.toLowerCase(),
-      quizAmount
-    );
+    let data;
+    try {
+      if (id.length < 3) {
+        data = fetchQuizData(
+          setQuestions,
+          setError,
+          id,
+          difficulty.toLowerCase(),
+          quizAmount
+        );
+        updateTime(+quizAmount);
+      } else {
+        getQuizById(id).then((quiz) => {
+          setQuiz(quiz);
+          setQuestions(quiz.questions);
+          updateTime(+quiz.timeLimit);
+          fetch(API_CATEGORIES)
+            .then((response) => response.json())
+            .then((categories) =>
+              setCategory(
+                categories.trivia_categories.filter(
+                  (c) => c.id === quiz.category
+                )
+              )
+            );
+        });
+      }
+    } catch (e) {
+      console.log(e.message);
+    }
+
     if (data) setStartTime(new Date().getTime());
   }, []);
 
@@ -44,10 +78,13 @@ export default function SingleQuiz({
     }
   }, [finishQuiz]);
 
-  const time = new Date();
-  time.setMinutes(time.getMinutes() + +quizAmount);
-
   const timeScore = +finishTime - +startTime;
+
+  const updateTime = (givenTime) => {
+    const newTime = new Date(time);
+    newTime.setMinutes(newTime.getMinutes() + givenTime);
+    setTime(newTime);
+  };
 
   const handleAnswerChange = (questionIndex, selectedAnswer, answerIndex) => {
     const updatedQuestions = [...questions];
@@ -76,18 +113,29 @@ export default function SingleQuiz({
 
   if (finishQuiz) {
     if (timeScore && !isNaN(timeScore))
-      return <Score finishTime={timeScore} questions={questions} />;
+      return (
+        <Score
+          finishTime={timeScore}
+          questions={questions}
+          quiz={quiz}
+          category={category[0].name}
+        />
+      );
   }
 
   return (
     <div className="quiz-container">
       {questions.length !== 0 && (
         <>
-          <h2
-            dangerouslySetInnerHTML={{
-              __html: questions[currentIndex].category,
-            }}
-          />
+          {id.length < 3 ? (
+            <h2
+              dangerouslySetInnerHTML={{
+                __html: questions[currentIndex].category,
+              }}
+            />
+          ) : (
+            <h2> {category[0].name} </h2>
+          )}
           <Timer expiryTimestamp={time} setFinishQuiz={setFinishQuiz} />
           <div className="question-container">
             <h3
