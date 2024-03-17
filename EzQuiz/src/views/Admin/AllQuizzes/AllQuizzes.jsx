@@ -1,7 +1,5 @@
 import { useEffect, useState } from "react";
-import {
-  getAllQuizzesFromDatabase,
-} from "../../../services/quiz.service";
+import { getAllQuizzesFromDatabase } from "../../../services/quiz.service";
 import SimpleQuiz from "../../Quizzes/SimpleQuiz/SimpleQuiz";
 
 export default function AllQuizzes() {
@@ -32,24 +30,26 @@ export default function AllQuizzes() {
       <h1>All Quizzes</h1>
       {loading && <p>Loading...</p>}
       {error && <p>{error}</p>}
-        <input
-            type="text"
+      <div className="flex justify-center">
+        <div className="mb-3 xl:w-96">
+          <input
+            type="search"
+            onChange={(e) => setSearchTerm(e.target.value)}
+            className="relative m-0 block w-full min-w-0 flex-auto rounded border border-solid border-neutral-300 bg-transparent bg-clip-padding px-3 py-[0.25rem] text-base font-normal leading-[1.6] text-black outline-none transition duration-200 ease-in-out focus:z-[3] focus:border-primary focus:text-neutral-700 focus:shadow-neutral-600 focus:outline-none"
+            id="exampleSearch"
             placeholder="Search quizzes..."
-            value={searchTerm}
-            onChange={(e) => handleSearchTermChange(e.target.value)}
-        />
-        <br />
-        {quizzes
-            .filter((quiz) =>
-                quiz.title.toLowerCase().includes(searchTerm.toLowerCase())
-            )
-            .map((quiz) => (
-                <SimpleQuiz
-                    key={quiz.id}
-                    quiz={quiz}
-                    setChange={setQuizzes}
-                />
-            ))}
+          />
+        </div>
+      </div>
+
+      <br />
+      {quizzes
+        .filter((quiz) =>
+          quiz.title.toLowerCase().includes(searchTerm.toLowerCase())
+        )
+        .map((quiz) => (
+          <SimpleQuiz key={quiz.id} quiz={quiz} setChange={setQuizzes} />
+        ))}
     </div>
   );
 }
