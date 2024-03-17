@@ -55,20 +55,17 @@ export default function Search() {
         onChange={handleSearchChange}
       />
       <br /> <br />
-      {/* <div className="h-screen flex justify-center"> */}
-      <div className="flex justify-center"></div>
-      <div className="mb-3 xl:w-96">
-        <input
-          type="search"
-          onChange={(e) => setSearchTerm(e.target.value)}
-          className="relative m-0 block w-full min-w-0 flex-auto rounded border border-solid border-neutral-300 bg-transparent bg-clip-padding px-3 py-[0.25rem] text-base font-normal leading-[1.6] text-neutral-700 outline-none transition duration-200 ease-in-out focus:z-[3] focus:border-primary focus:text-neutral-700 focus:shadow-[inset_0_0_0_1px_rgb(59,113,202)] focus:outline-none dark:border-neutral-600 dark:text-neutral-200 dark:placeholder:text-neutral-200 dark:focus:border-primary"
-          id="exampleSearch"
-          placeholder={`Search ${search}...`}
-        />
+      <div className="flex justify-center">
+        <div className="mb-3 xl:w-96">
+          <input
+            type="search"
+            onChange={(e) => setSearchTerm(e.target.value)}
+            className="relative m-0 block w-full min-w-0 flex-auto rounded border border-solid border-neutral-300 bg-transparent bg-clip-padding px-3 py-[0.25rem] text-base font-normal leading-[1.6] text-neutral-700 outline-none transition duration-200 ease-in-out focus:z-[3] focus:border-primary focus:text-neutral-700 focus:shadow-[inset_0_0_0_1px_rgb(59,113,202)] focus:outline-none"
+            id="exampleSearch"
+            placeholder={`Search ${search}...`}
+          />
+        </div>
       </div>
-      <div/>
-{/* </div> */}
-      
       {search === "users" && (
         <div>
           {searchTerm !== "" && <strong>Results for: {searchTerm}</strong>}
@@ -80,7 +77,16 @@ export default function Search() {
               .map((user) => (
                 <div key={user.handle}>
                   <div>
-                    {user.handle}{" "}
+                    <div>
+                      <span>
+                        <img
+                          src={user.avatar}
+                          alt=""
+                          className="h-4 w-4 border-none mb-0.5 rounded-full"
+                        />
+                      </span>
+                      <span>{user.handle} </span>
+                    </div>
                     <button onClick={() => navigate(`/profile/${user.handle}`)}>
                       See Profile
                     </button>
