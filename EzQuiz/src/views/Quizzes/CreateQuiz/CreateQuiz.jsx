@@ -12,6 +12,7 @@ import { uploadQuizToDatabase, getAllQuizTitles } from "../../../services/quiz.s
 import { minimumQuizTitleLength, maximumQuizTitleLength } from "../../../constants/constants";
 import { Dropdown, Ripple, initTWE } from "tw-elements";
 import Datepicker from "react-tailwindcss-datepicker"; 
+import NewQuestion from "./NewQuestion";
 
 initTWE({ Dropdown, Ripple });
 
@@ -259,79 +260,25 @@ export default function CreateQuiz() {
                   value={datePicker} 
                   onChange={handleDatePickerChange} 
                   showShortcuts={true}
-                  separator="-" 
+                  separator="-"
+                  popoverDirection="left"
                   /> 
               </div>
             </div>
           </div>
         </div>
 
-        <div className="w-[80%] mx-auto">
+        <div className="w-[80%] mx-auto mt-2">
           <div className="mx-auto">
-            <span className="ml-2">Questions<span className=" text-red-600 ml-1">*</span></span><br />
             <button 
             className="w-full block rounded-lg bg-neutral-300 px-6 pt-2.5 pb-2 text-sm font-medium uppercase leading-normal text-neutral-800 shadow-[0_4px_9px_-4px_#3b71ca] transition duration-150 ease-in-out hover:bg-neutral-400 hover:shadow-neutral-800 focus:outline-none focus:ring-0"
             onClick={addQuestion}>New Question</button>
           </div>
-          {quiz.questions.map((question, indexQ) => {
-            return (
-              <div key={indexQ}>
-                <h4>Question {indexQ + 1}</h4>
-                <label htmlFor={`create-quiz-question-${indexQ}`}>
-                  Question {indexQ + 1} Title*
-                </label>
-                <br />
-                <input
-                  id={`create-quiz-question-${indexQ}`}
-                  type="text"
-                  value={question.question}
-                  onChange={(e) => handleChange("question", e.target.value, indexQ)}
-                />
-                <br />
-                <button onClick={() => addOption(indexQ)}>New Option</button>
-                <br />
-                {question.mixedAnswers.map((option, indexO) => {
-                  return (
-                    <div key={indexO}>
-                      <label htmlFor={`create-quiz-option-${indexO}`}>
-                        Option {indexO + 1}*
-                      </label>
-                      <br />
-                      <input
-                        id={`create-quiz-option-${indexO}`}
-                        type="text"
-                        value={option}
-                        onChange={(e) =>
-                          handleChange("option", e.target.value, indexQ, indexO)
-                        }
-                      />
-                      <br />
-                      <button onClick={() => removeOption(indexQ, indexO)}>
-                        Remove Option
-                      </button>
-                    </div>
-                  );
-                })}
-
-                <p>Choose correct answer*</p>
-                <Select
-                  id="question-amount-dropdown-select"
-                  options={quiz.questions[indexQ].incorrect_answers.map((option) => {
-                      return { value: option, label: option };
-                  })}
-                  onChange={(e) => setCorrectAnswer(indexQ, e.value)}
-                  className="basic-multi-select w-64 mx-auto"
-                />
-                <button onClick={() => removeQuestion(indexQ)}>
-                  Remove Question
-                </button>
-              </div>
-            );
-          })}
+          {quiz.questions.map((question, indexQ) => <NewQuestion key={indexQ} quiz={quiz} question={question} indexQ={indexQ} handleChange={handleChange} addOption={addOption} removeOption={removeOption} setCorrectAnswer={setCorrectAnswer} removeQuestion={removeQuestion} />)}
         </div>
 
         <button 
-        className="mt-8 inline-block w-full rounded-lg bg-yellow-400 px-6 pt-2.5 pb-2 text-sm font-medium uppercase leading-normal text-neutral-800 shadow-[0_4px_9px_-4px_#3b71ca] transition duration-150 ease-in-out hover:bg-yellow-500 hover:shadow-neutral-800 focus:outline-none focus:ring-0"
+        className="w-[80%] mx-auto mt-8 block rounded-lg bg-yellow-400 px-6 pt-2.5 pb-2 text-sm font-medium uppercase leading-normal text-neutral-800 shadow-[0_4px_9px_-4px_#3b71ca] transition duration-150 ease-in-out hover:bg-yellow-500 hover:shadow-neutral-800 focus:outline-none focus:ring-0"
         onClick={submitQuiz}>Submit Quiz</button>
       </div>
     </div>
