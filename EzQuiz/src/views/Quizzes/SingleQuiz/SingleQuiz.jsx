@@ -146,11 +146,8 @@ export default function SingleQuiz({
             <div className="text-neutral-800">
               <Timer expiryTimestamp={time} setFinishQuiz={setFinishQuiz} />
             </div>
-
             <br />
-
             {/* Question */}
-
             <h3
               className="mb-4  text-neutral-800 text-4xl"
               dangerouslySetInnerHTML={{
@@ -180,24 +177,32 @@ export default function SingleQuiz({
           <br />
           <div className="flex justify-between mt-4">
             {currentIndex !== 0 ? (
-              <button
-                onClick={handlePrev}
-                className="rounded bg-yellow-400 px-6 py-2 text-sm font-medium text-white shadow-md hover:bg-yellow-500 focus:outline-none shadow-neutral-500"
-              >
-                <svg
-                  className="h-6 w-6 fill-neutral-800"
-                  viewBox="0 0 24 24"
-                  xmlns="http://www.w3.org/2000/svg"
+              <>
+                <button
+                  onClick={handlePrev}
+                  className="rounded bg-yellow-400 px-6 py-2 text-sm font-medium text-white shadow-md hover:bg-yellow-500 focus:outline-none shadow-neutral-500"
                 >
-                  <path
-                    clipRule="evenodd"
-                    strokeLinejoin="round"
-                    strokeMiterlimit="2"
-                    d="m10.978 14.999v3.251c0 .412-.335.75-.752.75-.188 0-.375-.071-.518-.206-1.775-1.685-4.945-4.692-6.396-6.069-.2-.189-.312-.452-.312-.725 0-.274.112-.536.312-.725 1.451-1.377 4.621-4.385 6.396-6.068.143-.136.33-.207.518-.207.417 0 .752.337.752.75v3.251h9.02c.531 0 1.002.47 1.002 1v3.998c0 .53-.471 1-1.002 1z"
-                    fillRule="nonzero"
-                  />
-                </svg>
-              </button>
+                  <svg
+                    className="h-6 w-6 fill-neutral-800"
+                    viewBox="0 0 24 24"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      clipRule="evenodd"
+                      strokeLinejoin="round"
+                      strokeMiterlimit="2"
+                      d="m10.978 14.999v3.251c0 .412-.335.75-.752.75-.188 0-.375-.071-.518-.206-1.775-1.685-4.945-4.692-6.396-6.069-.2-.189-.312-.452-.312-.725 0-.274.112-.536.312-.725 1.451-1.377 4.621-4.385 6.396-6.068.143-.136.33-.207.518-.207.417 0 .752.337.752.75v3.251h9.02c.531 0 1.002.47 1.002 1v3.998c0 .53-.471 1-1.002 1z"
+                      fillRule="nonzero"
+                    />
+                  </svg>
+                </button>
+                <button
+                  onClick={() => setFinishQuiz(true)}
+                  className="rounded bg-yellow-400 px-6 py-2 text-l font-medium text-neutral-800 shadow-md shadow-neutral-500 hover:bg-yellow-500 focus:outline-none "
+                >
+                  Submit
+                </button>
+              </>
             ) : (
               <>
                 <button className="rounded bg-neutral-200 px-6 py-2 text-sm font-medium text-white shadow-md focus:outline-none shadow-neutral-500">
@@ -224,33 +229,11 @@ export default function SingleQuiz({
               </>
             )}
             {currentIndex < questions.length - 1 ? (
-              <button
-                onClick={handleNext}
-                className="rounded bg-yellow-400 px-6 py-2 text-sm font-medium text-white shadow-md shadow-neutral-500 hover:bg-yellow-500 focus:outline-none "
-              >
-                <svg
-                  className="h-6 w-6 fill-neutral-800"
-                  viewBox="0 0 24 24"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    clipRule="evenodd"
-                    strokeLinejoin="round"
-                    strokeMiterlimit="2"
-                    d="m13.022 14.999v3.251c0 .412.335.75.752.75.188 0 .375-.071.518-.206 1.775-1.685 4.945-4.692 6.396-6.069.2-.189.312-.452.312-.725 0-.274-.112-.536-.312-.725-1.451-1.377-4.621-4.385-6.396-6.068-.143-.136-.33-.207-.518-.207-.417 0-.752.337-.752.75v3.251h-9.02c-.531 0-1.002.47-1.002 1v3.998c0 .53.471 1 1.002 1z"
-                    fillRule="nonzero"
-                  />
-                </svg>
-              </button>
-            ) : (
               <>
                 <button
-                  onClick={() => setFinishQuiz(true)}
-                  className="rounded bg-yellow-400 px-6 py-2 text-l font-medium text-neutral-800 shadow-md shadow-neutral-500 hover:bg-yellow-500 focus:outline-none "
+                  onClick={handleNext}
+                  className="rounded bg-yellow-400 px-6 py-2 text-sm font-medium text-white shadow-md shadow-neutral-500 hover:bg-yellow-500 focus:outline-none "
                 >
-                  Submit
-                </button>
-                <button className="rounded bg-neutral-200 px-6 py-2 text-l font-medium text-neutral-800 shadow-md shadow-neutral-500">
                   <svg
                     className="h-6 w-6 fill-neutral-800"
                     viewBox="0 0 24 24"
@@ -266,7 +249,29 @@ export default function SingleQuiz({
                   </svg>
                 </button>
               </>
+            ) : (
+              <button className="rounded bg-neutral-200 px-6 py-2 text-l font-medium text-neutral-800 shadow-md shadow-neutral-500">
+                <svg
+                  className="h-6 w-6 fill-neutral-800"
+                  viewBox="0 0 24 24"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    clipRule="evenodd"
+                    strokeLinejoin="round"
+                    strokeMiterlimit="2"
+                    d="m13.022 14.999v3.251c0 .412.335.75.752.75.188 0 .375-.071.518-.206 1.775-1.685 4.945-4.692 6.396-6.069.2-.189.312-.452.312-.725 0-.274-.112-.536-.312-.725-1.451-1.377-4.621-4.385-6.396-6.068-.143-.136-.33-.207-.518-.207-.417 0-.752.337-.752.75v3.251h-9.02c-.531 0-1.002.47-1.002 1v3.998c0 .53.471 1 1.002 1z"
+                    fillRule="nonzero"
+                  />
+                </svg>
+              </button>
             )}
+            {/* <button
+                onClick={() => setFinishQuiz(true)}
+                className="rounded bg-yellow-400 px-6 py-2 text-l font-medium text-neutral-800 shadow-md shadow-neutral-500 hover:bg-yellow-500 focus:outline-none "
+              >
+                Submit
+              </button> */}
           </div>
         </div>
         <br />
