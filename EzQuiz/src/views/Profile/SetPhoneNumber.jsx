@@ -82,7 +82,9 @@ export default function SetPhoneNumber() {
             </div>
           ) : (
             <p>
-              Phone number: {userData.phoneNumber} &nbsp;
+              <span className="material-symbols-outlined mr-2">
+                      smartphone
+                    </span>: {userData.phoneNumber} &nbsp;
               <FontAwesomeIcon
                 icon={faPen}
                 onClick={handleEdit}
