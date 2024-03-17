@@ -1,11 +1,15 @@
 import { useEffect, useState } from "react";
-import { getHubsById, updateHub } from "../../../services/hub.service";
+import {
+  deleteHub,
+  getHubsById,
+  updateHub,
+} from "../../../services/hub.service";
 import {
   getAllUsers,
   getUserByHandle,
   updateUserData,
 } from "../../../services/user.service";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import { getAllQuizzesFromDatabase } from "../../../services/quiz.service";
 import DropdownSelectQuizzes from "../../../components/Dropdown/DropdownSelectQuizzes/DropdownSelectQuizzes";
 import DropdownSelectUsers from "../../../components/Dropdown/DropdownSelectUsers/DropdownSelectUsers";
@@ -14,6 +18,11 @@ import SimpleQuiz from "../../Quizzes/SimpleQuiz/SimpleQuiz";
 import PropTypes from "prop-types";
 import "./SingleHub.css";
 import toast from "react-hot-toast";
+import { defaultCoverRoom } from "../../../constants/constants";
+import {
+  deleteCoverImage,
+  getCoverImage,
+} from "../../../services/storage.service";
 
 export default function SingleHub({
   hubType,
@@ -43,6 +52,8 @@ export default function SingleHub({
   const [onClickAddQuiz, setOnClickAddQuiz] = useState(false);
   const [onClickAddMember, setOnClickAddMember] = useState(false);
 
+  const navigate = useNavigate();
+
   useEffect(() => {
     getHubsById(hubType, id).then(setHub);
   }, [usersChange, quizzesChange]);
@@ -71,7 +82,7 @@ export default function SingleHub({
       .then((snapshot) => setCreator(snapshot.val()))
       .then(setHasCreator(true));
 
-    if (hub.quizzes) {
+    if (hub && hub.quizzes) {
       const promises = Object.keys(hub.quizzes).map((id) => {
         return getAllQuizzesFromDatabase("id").then((quizzes) =>
           quizzes.filter((quiz) => quiz.id === id)
@@ -85,6 +96,8 @@ export default function SingleHub({
         .then(setHasQuizzes(true));
     }
   }, [hub]);
+
+  console.log(hub);
 
   useEffect(() => {
     if (userData && userData.handle) {
@@ -101,7 +114,6 @@ export default function SingleHub({
         .then((data) =>
           setUsers(data.map((u) => ({ value: u.handle, label: u.handle })))
         )
-
         .catch((error) => console.log(error));
     }
   }, [participants]);
@@ -178,6 +190,51 @@ export default function SingleHub({
     }
   };
 
+  const deleteHub = async (hubType, hubId, uuid, coverUrl) => {
+    try {
+      const room = await getHubsById(hubType, hubId);
+      if (room.participants) {
+        const participants = room.participants;
+        Object.entries(participants).map((p) => {
+          if (p[1] === "accepted") {
+            updateUserData(p[0], `${hubType}/${hubId}`, null);
+          }
+        });
+      }
+      console.log(room.participants)
+
+      await updateUserData(userData.handle, `${hubType}/${hubId}`, null);
+      await deleteHub(hubId, hubId);
+
+      if (coverUrl !== defaultCoverRoom) {
+        const coverImage = await getCoverImage(hubType, uuid);
+        const coverImagePath = coverImage._location.path.split("/");
+        const coverImageId = coverImagePath[1];
+        await deleteCoverImage(hubType, coverImageId);
+      }
+
+      toast.success(
+        `Your ${hubType.slice(0, hubType.length - 1)} has been deleted successfully.`
+      );
+      navigate(`/my-${hubType}`);
+    } catch (e) {
+      console.log(e.message);
+    }
+  };
+
+  const leaveHub = async (hubId) => {
+    try {
+      await updateUserData(userData.handle, `${hubType}/${hubId}`, null);
+      await updateHub(hubType, hubId, "participants", userData.handle, "left");
+      toast.success(
+        `Left the ${hubType.slice(0, hubType.length - 1)} successfully.`
+      );
+      navigate(`/my-${hubType}`);
+    } catch (e) {
+      console.log(e.message);
+    }
+  };
+
   return (
     hub && (
       <div>
@@ -230,7 +287,33 @@ export default function SingleHub({
             </div>
           )}
         </div>
+
         <div className=" mt-80">
+          {userData.handle === hub.creator ? (
+            <div className=" mx-auto">
+              <button
+                type="button"
+                onClick={() => deleteHub(hubType, hub.id, hub.uuid, hub.image_cover)}
+                data-te-ripple-init
+                data-te-ripple-color="light"
+                className="inline-block w-1/6 rounded px-6 pt-2.5 pb-2 text-sm font-bold uppercase leading-normal text-neutral-800 hover:shadow-lg transition duration-150 ease-in-out "
+              >
+                Delete {hubType.slice(0, hubType.length - 1)}
+              </button>
+            </div>
+          ) : (
+            <div className=" mx-auto">
+              <button
+                type="button"
+                onClick={() => leaveHub(id)}
+                data-te-ripple-init
+                data-te-ripple-color="light"
+                className="inline-block w-1/6 rounded px-6 pt-2.5 pb-2 text-sm font-bold uppercase leading-normal text-neutral-800 hover:shadow-lg transition duration-150 ease-in-out "
+              >
+                Leave {hubType.slice(0, hubType.length - 1)}
+              </button>
+            </div>
+          )}
           <br />
           <h5 className="mb-12 mt-6 leading-none font-bold tracking-tight text-neutral-800 md:text-4xl lg:text-4xl">
             {" "}
@@ -265,15 +348,6 @@ export default function SingleHub({
                   </div>
 
                   <div className="w-1/5 mx-auto mt-5">
-                    {/* <button
-                      type="button"
-                      onClick={addUsers}
-                      data-te-ripple-init
-                      data-te-ripple-color="light"
-                      className="mt-8 mb-6 inline-block w-full rounded bg-yellow-400 px-6 pt-2.5 pb-2 text-sm font-medium uppercase leading-normal text-neutral-800 shadow-lg shadow-neutral-400 transition duration-150 ease-in-out hover:bg-yellow-400 hover:shadow-neutral-400 focus:outline-none focus:ring-0"
-                    >
-                      Send Invitations
-                    </button> */}
                     <br />
                     <Button onClick={addUsers}>Send Invitations</Button>
                   </div>
@@ -351,7 +425,7 @@ export default function SingleHub({
                         {userData.handle === p.handle &&
                           userData.handle !== hub.creator && (
                             <div className="flex justify-center items-center mb-2 text-neutral-600 dark:text-neutral-300">
-                              <Button onClick={() => removeUser(id, p.handle)}>
+                              <Button onClick={() => leaveHub(id)}>
                                 Leave{" "}
                                 {hubType.toUpperCase()[0] +
                                   hubType.slice(1, hubType.length - 1)}

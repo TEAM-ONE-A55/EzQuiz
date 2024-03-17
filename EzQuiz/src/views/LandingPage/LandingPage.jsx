@@ -30,7 +30,7 @@ export default function LandingPage() {
                   explore a range of benefits tailored to enhance your
                   experience. Sign up today!
                 </p>
-                <div className="mb-6 flex min-h-[1.5rem] justify-center pl-[1.5rem] font-sans"></div>
+                <div className="mb-6 flex min-h-[1.5rem] justify-center pl-[1.5rem]"></div>
                 <ButtonLanding onClick={() => navigate("/sample-quiz")}>
                   Get Started with a Sample Quiz
                 </ButtonLanding>
@@ -112,9 +112,11 @@ export default function LandingPage() {
           </Benefits>
           <Benefits heading="Ready to try? Start with a sample quiz now!">
             <br />
-            <Button onClick={() => navigate("/sample-quiz")}>
-              Get Started
-            </Button>
+            <div className="w-2/4 mx-auto">
+              <Button onClick={() => navigate("/sample-quiz")}>
+                Get Started
+              </Button>
+            </div>
           </Benefits>
 
           <ButtonLanding
@@ -153,8 +155,7 @@ export default function LandingPage() {
               />
             </Benefits>
           )}
-          <Benefits heading="What People Are Saying About EzQuiz">
-          </Benefits>
+          <Benefits heading="What People Are Saying About EzQuiz"></Benefits>
         </div>
         <Testimonials />
       </section>
