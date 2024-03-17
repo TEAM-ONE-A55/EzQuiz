@@ -73,6 +73,13 @@ export const usersSortingOptions = [
   { label: "Sort by Username (Z-A)", value: "usernameDescending" },
 ];
 
+export const quizSortingOptions = [
+  { label: "Easy", value: "easy" },
+  { label: "Medium", value: "medium" },
+  { label: "Hard", value: "hard" },
+  { label: "All Quizzes", value: "all" },
+]
+
 export const userSearchOptions = [
   { label: "Username", value: "username" },
   { label: "First Name", value: "firstName" },
