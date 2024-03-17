@@ -336,6 +336,20 @@ export default function App() {
               }
             ></Route>
             <Route
+              path="all-rooms/profile/:handle"
+              element={
+                <Authenticated>
+                  {context &&
+                  context.userData &&
+                  context.userData.role === "admin" ? (
+                    <PublicProfile />
+                  ) : (
+                    <Forbidden />
+                  )}
+                </Authenticated>
+              }
+            ></Route>
+            <Route
               path="/all-groups"
               element={
                 <Authenticated>
