@@ -1,5 +1,6 @@
 import Select from "react-select";
 import PropTypes from "prop-types";
+import { reactSelectStyles } from "../../../services/react-select-styles";
 
 export default function DropdownSelectUsers({
   users,
@@ -15,7 +16,8 @@ export default function DropdownSelectUsers({
       isMulti
       name="users"
       options={users.map((user) => user)}
-      className="basic-multi-select"
+      className="basic-multi-select mx-auto -m-2 shadow-lg shadow-neutral-400"
+      styles={reactSelectStyles}
       classNamePrefix="select"
       value={selectedUsers}
       onChange={handleSelectedOptionsUsers}

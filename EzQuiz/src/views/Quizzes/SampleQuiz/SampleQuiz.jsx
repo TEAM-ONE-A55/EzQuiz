@@ -16,9 +16,8 @@ export default function SampleQuiz({ setDifficulty, setQuizAmount }) {
   return (
     <div className="m-32 min-w-lg">
       <div className=" w-2/4 mx-auto min-w-lg ">
-        <h2 className="mb-6 mt-6 font-extrabold leading-none tracking-tight text-neutral-800 md:text-5xl lg:text-5xl">
-          Customize your own sample quiz and give it a try
-        </h2>
+        <h2 className="mb-6 mt-6 font-extrabold leading-none tracking-tight text-neutral-800 md:text-4xl lg:text-4xl">
+        Customize your own sample quiz and dive into learning with our rich database</h2>
       </div>
       <br />
       <div className=" w-2/4 mx-auto">

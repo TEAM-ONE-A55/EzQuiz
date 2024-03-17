@@ -266,12 +266,6 @@ export default function SingleQuiz({
                 </svg>
               </button>
             )}
-            {/* <button
-                onClick={() => setFinishQuiz(true)}
-                className="rounded bg-yellow-400 px-6 py-2 text-l font-medium text-neutral-800 shadow-md shadow-neutral-500 hover:bg-yellow-500 focus:outline-none "
-              >
-                Submit
-              </button> */}
           </div>
         </div>
         <br />
