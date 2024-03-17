@@ -20,7 +20,7 @@ export default function SampleQuiz({ setDifficulty, setQuizAmount }) {
           Customize your own sample quiz and give it a try
         </h2>
       </div>
-      <br/>
+      <br />
       <div className=" w-2/4 mx-auto">
         <div className="block rounded-xl bg-neutral-100 p-12 text-surface shadow-neutral-500 shadow-lg mx-auto ">
           <div className=" bg-yellow-400 mx-auto min-w-lg rounded-xl p-8  shadow-neutral-500 shadow-inner mb-4">
@@ -41,11 +41,7 @@ export default function SampleQuiz({ setDifficulty, setQuizAmount }) {
             <br />
             <QuizAmount setQuizAmount={setQuizAmount} />
           </div>
-          {/* <h3>Select Amount of Questions</h3>
-          <QuizAmount setQuizAmount={setQuizAmount} /> */}
-          {/* 
-          <Button onClick={handleSetCategory}>Start Quiz</Button> */}
-          <br/>
+          <br />
           <button
             type="button"
             onClick={handleSetCategory}
