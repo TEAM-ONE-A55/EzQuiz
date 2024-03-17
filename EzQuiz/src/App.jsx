@@ -37,7 +37,7 @@ import MyQuizzes from "./views/Quizzes/MyQuizzes/MyQuizzes";
 import AllQuizzes from "./views/Admin/AllQuizzes/AllQuizzes";
 import CreateRoom from "./views/Hubs/Rooms/CreateRoom/CreateRoom";
 import CreateGroup from "./views/Hubs/Groups/CreateGroup/CreateGroup";
-import MyRooms from "./views/Hubs/Rooms/MyRooms/MyRooms"
+import MyRooms from "./views/Hubs/Rooms/MyRooms/MyRooms";
 import SingleRoom from "./views/Hubs/Rooms/SingleRoom/SingleRoom";
 import MyGroups from "./views/Hubs/Groups/MyGroups/MyGroups";
 import SingleGroup from "./views/Hubs/Groups/SingleGroup/SingleGroup";
@@ -77,7 +77,10 @@ export default function App() {
       <BrowserRouter>
         <AppContext.Provider value={{ ...context, setContext: setContext }}>
           <Toaster position="bottom-right" reverseOrder={true} />
-          <NavBar notifications={notifications} setNotifications={setNotifications}/>
+          <NavBar
+            notifications={notifications}
+            setNotifications={setNotifications}
+          />
           <Routes className="min-h-screen">
             <Route path="/" element={<LandingPage />}></Route>
             <Route path="/signup" element={<Registration />}></Route>
@@ -142,7 +145,7 @@ export default function App() {
               path="/my-rooms"
               element={
                 <Authenticated>
-                  <MyRooms notifications={notifications}/>
+                  <MyRooms notifications={notifications} />
                 </Authenticated>
               }
             ></Route>
@@ -154,7 +157,7 @@ export default function App() {
                 </Authenticated>
               }
             ></Route>
-             <Route
+            <Route
               path="/my-groups"
               element={
                 <Authenticated>
@@ -162,7 +165,7 @@ export default function App() {
                 </Authenticated>
               }
             ></Route>
-             <Route
+            <Route
               path="/my-groups/:id"
               element={
                 <Authenticated>
@@ -170,11 +173,11 @@ export default function App() {
                 </Authenticated>
               }
             ></Route>
-             <Route
+            <Route
               path="/my-quizzes"
               element={
                 <Authenticated>
-                  <MyQuizzes/>
+                  <MyQuizzes />
                 </Authenticated>
               }
             ></Route>
@@ -377,8 +380,35 @@ export default function App() {
                 </Authenticated>
               }
             ></Route>
+            <Route
+              path="all-quizzes/profile/:handle"
+              element={
+                <Authenticated>
+                  {context &&
+                  context.userData &&
+                  context.userData.role === "admin" ? (
+                    <PublicProfile />
+                  ) : (
+                    <Forbidden />
+                  )}
+                </Authenticated>
+              }
+            ></Route>
             <Route path="browse-quizzes" element={<BrowseQuizzes />} />
-            <Route path="all-quizzes" element={<AllQuizzes />} />
+            <Route
+              path="all-quizzes"
+              element={
+                <Authenticated>
+                  {context &&
+                  context.userData &&
+                  context.userData.role === "admin" ? (
+                    <AllQuizzes />
+                  ) : (
+                    <Forbidden />
+                  )}
+                </Authenticated>
+              }
+            />
           </Routes>
           <Footer />
         </AppContext.Provider>
