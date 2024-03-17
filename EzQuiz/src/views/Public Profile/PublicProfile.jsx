@@ -6,7 +6,16 @@ import Avatar from "../../components/Avatar/Avatar";
 import { deleteUser } from "firebase/auth";
 import toast from "react-hot-toast";
 import { blockUser, changeRole } from "../../services/admin-functions";
-
+import {
+  faCalendar,
+  faEnvelope,
+  faUserCircle,
+  faStar,
+  faS,
+  faTrophy,
+} from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { getRank } from "../../components/Score/scores-students";
 export default function PublicProfile() {
   const { userData } = useContext(AppContext);
   const [users, setUsers] = useState([]);
@@ -21,6 +30,17 @@ export default function PublicProfile() {
     role: "",
     isAdmin: "",
   });
+  const [rank, setRank] = useState("Novice Learner");
+  
+  useEffect(() => {
+    if (user) {
+      try {
+        setRank(getRank(user.score));
+      } catch (error) {
+        console.log(error);
+      }
+    }
+  }, [user]);
 
   useEffect(() => {
     getAllUsers()
@@ -44,6 +64,8 @@ export default function PublicProfile() {
           role: snapshot.val().role,
           phoneNumber: snapshot.val().phoneNumber,
           score: snapshot.val().score,
+          rooms: Object.keys(snapshot.val().rooms).length,
+          rank: snapshot.val().rank,
         });
       } else {
         navigate("*");
@@ -66,13 +88,14 @@ export default function PublicProfile() {
     <div>
       <h1>Public Profile</h1>
       <div>
-        <Avatar
-          width="200px"
-          height="200px"
-          url={user.avatar}
-          onClick={() => {}}
+        <img
+          src={user.avatar}
+          alt={user.firstName + "" + user.lastName}
+          className="w-40 h-40 rounded-full shadow-lg dark:shadow-black/30 mx-auto"
         />
-        <strong>Username: </strong> {user.handle}
+        <p className="mb-2 font-semibold text-primary dark:text-primary-400">
+          @{user?.handle}
+        </p>
         <p>
           <strong>First Name:</strong> {user.firstName}
         </p>
@@ -80,19 +103,37 @@ export default function PublicProfile() {
           <strong>Last Name:</strong> {user.lastName}
         </p>
         <p>
-          <strong>Email:</strong> {user.email}
+          <strong>
+            <FontAwesomeIcon icon={faEnvelope}></FontAwesomeIcon> :{" "}
+          </strong>{" "}
+          {user.email}
         </p>
         <p>
-          <strong>Role:</strong> {user.role}
+          <strong>
+            <FontAwesomeIcon icon={faUserCircle}></FontAwesomeIcon> :{" "}
+          </strong>{" "}
+          {user.role}
         </p>
         <p>
-          <strong>Created on:</strong> {user.createdOn}
+          <strong>
+            <FontAwesomeIcon icon={faCalendar}></FontAwesomeIcon> :{" "}
+          </strong>{" "}
+          {user.createdOn}
+        </p>
+        <p>
+          <strong>
+            <FontAwesomeIcon icon={faStar}></FontAwesomeIcon>:
+          </strong>{" "}
+          {user.score}
+        </p>
+        <p>
+          <strong>
+            <FontAwesomeIcon icon={faTrophy} ></FontAwesomeIcon>
+          </strong>
+          : {rank}
         </p>
         <p>
           <strong>Rooms:</strong> {user.rooms}
-        </p>
-        <p>
-          <strong>Score:</strong> {user.score}
         </p>
         <p>
           <strong>Status:</strong>{" "}
@@ -106,6 +147,8 @@ export default function PublicProfile() {
         </p>
         <p>
           <button
+          type="button"
+          className="inline-block rounded bg-neutral-800 px-6 pb-2 pt-2.5 text-xs font-medium uppercase leading-normal text-neutral-50 shadow-[0_4px_9px_-4px_rgba(51,45,45,0.7)] transition duration-150 ease-in-out hover:bg-neutral-800 hover:shadow-[0_8px_9px_-4px_rgba(51,45,45,0.2),0_4px_18px_0_rgba(51,45,45,0.1)] focus:bg-neutral-800 focus:shadow-[0_8px_9px_-4px_rgba(51,45,45,0.2),0_4px_18px_0_rgba(51,45,45,0.1)] focus:outline-none focus:ring-0 active:bg-neutral-900 active:shadow-[0_8px_9px_-4px_rgba(51,45,45,0.2),0_4px_18px_0_rgba(51,45,45,0.1)] dark:bg-neutral-900 dark:shadow-[0_4px_9px_-4px_#030202] dark:hover:bg-neutral-900 dark:hover:shadow-[0_8px_9px_-4px_rgba(3,2,2,0.3),0_4px_18px_0_rgba(3,2,2,0.2)] dark:focus:bg-neutral-900 dark:focus:shadow-[0_8px_9px_-4px_rgba(3,2,2,0.3),0_4px_18px_0_rgba(3,2,2,0.2)] dark:active:bg-neutral-900 dark:active:shadow-[0_8px_9px_-4px_rgba(3,2,2,0.3),0_4px_18px_0_rgba(3,2,2,0.2)]"
             onClick={() => {
               user.handle && removeUser(user.handle);
             }}
@@ -116,6 +159,8 @@ export default function PublicProfile() {
         <p>
           {user.role === "educator" ? (
             <button
+            type="button"
+            className="inline-block rounded bg-neutral-800 px-6 pb-2 pt-2.5 text-xs font-medium uppercase leading-normal text-neutral-50 shadow-[0_4px_9px_-4px_rgba(51,45,45,0.7)] transition duration-150 ease-in-out hover:bg-neutral-800 hover:shadow-[0_8px_9px_-4px_rgba(51,45,45,0.2),0_4px_18px_0_rgba(51,45,45,0.1)] focus:bg-neutral-800 focus:shadow-[0_8px_9px_-4px_rgba(51,45,45,0.2),0_4px_18px_0_rgba(51,45,45,0.1)] focus:outline-none focus:ring-0 active:bg-neutral-900 active:shadow-[0_8px_9px_-4px_rgba(51,45,45,0.2),0_4px_18px_0_rgba(51,45,45,0.1)] dark:bg-neutral-900 dark:shadow-[0_4px_9px_-4px_#030202] dark:hover:bg-neutral-900 dark:hover:shadow-[0_8px_9px_-4px_rgba(3,2,2,0.3),0_4px_18px_0_rgba(3,2,2,0.2)] dark:focus:bg-neutral-900 dark:focus:shadow-[0_8px_9px_-4px_rgba(3,2,2,0.3),0_4px_18px_0_rgba(3,2,2,0.2)] dark:active:bg-neutral-900 dark:active:shadow-[0_8px_9px_-4px_rgba(3,2,2,0.3),0_4px_18px_0_rgba(3,2,2,0.2)]"
               onClick={() => {
                 user.handle && changeRole(user, setUser);
               }}
@@ -124,6 +169,8 @@ export default function PublicProfile() {
             </button>
           ) : (
             <button
+            type="button"
+            className="inline-block rounded bg-neutral-800 px-6 pb-2 pt-2.5 text-xs font-medium uppercase leading-normal text-neutral-50 shadow-[0_4px_9px_-4px_rgba(51,45,45,0.7)] transition duration-150 ease-in-out hover:bg-neutral-800 hover:shadow-[0_8px_9px_-4px_rgba(51,45,45,0.2),0_4px_18px_0_rgba(51,45,45,0.1)] focus:bg-neutral-800 focus:shadow-[0_8px_9px_-4px_rgba(51,45,45,0.2),0_4px_18px_0_rgba(51,45,45,0.1)] focus:outline-none focus:ring-0 active:bg-neutral-900 active:shadow-[0_8px_9px_-4px_rgba(51,45,45,0.2),0_4px_18px_0_rgba(51,45,45,0.1)] dark:bg-neutral-900 dark:shadow-[0_4px_9px_-4px_#030202] dark:hover:bg-neutral-900 dark:hover:shadow-[0_8px_9px_-4px_rgba(3,2,2,0.3),0_4px_18px_0_rgba(3,2,2,0.2)] dark:focus:bg-neutral-900 dark:focus:shadow-[0_8px_9px_-4px_rgba(3,2,2,0.3),0_4px_18px_0_rgba(3,2,2,0.2)] dark:active:bg-neutral-900 dark:active:shadow-[0_8px_9px_-4px_rgba(3,2,2,0.3),0_4px_18px_0_rgba(3,2,2,0.2)]"
               onClick={() => {
                 user.handle && changeRole(user, setUser);
               }}
@@ -134,6 +181,8 @@ export default function PublicProfile() {
         </p>
         <p>
           <button
+          type="button"
+          className="inline-block rounded bg-neutral-800 px-6 pb-2 pt-2.5 text-xs font-medium uppercase leading-normal text-neutral-50 shadow-[0_4px_9px_-4px_rgba(51,45,45,0.7)] transition duration-150 ease-in-out hover:bg-neutral-800 hover:shadow-[0_8px_9px_-4px_rgba(51,45,45,0.2),0_4px_18px_0_rgba(51,45,45,0.1)] focus:bg-neutral-800 focus:shadow-[0_8px_9px_-4px_rgba(51,45,45,0.2),0_4px_18px_0_rgba(51,45,45,0.1)] focus:outline-none focus:ring-0 active:bg-neutral-900 active:shadow-[0_8px_9px_-4px_rgba(51,45,45,0.2),0_4px_18px_0_rgba(51,45,45,0.1)] dark:bg-neutral-900 dark:shadow-[0_4px_9px_-4px_#030202] dark:hover:bg-neutral-900 dark:hover:shadow-[0_8px_9px_-4px_rgba(3,2,2,0.3),0_4px_18px_0_rgba(3,2,2,0.2)] dark:focus:bg-neutral-900 dark:focus:shadow-[0_8px_9px_-4px_rgba(3,2,2,0.3),0_4px_18px_0_rgba(3,2,2,0.2)] dark:active:bg-neutral-900 dark:active:shadow-[0_8px_9px_-4px_rgba(3,2,2,0.3),0_4px_18px_0_rgba(3,2,2,0.2)]"
             onClick={() => {
               user.handle && blockUser(user, setUser);
             }}
