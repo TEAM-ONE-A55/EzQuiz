@@ -4,6 +4,8 @@ import { useNavigate } from "react-router";
 import SortingDropdown from "../Dropdown/Dropdown";
 import { getAllHubs } from "../../services/hub.service";
 import { searchingOptions } from "../../constants/constants";
+import { reactSelectStyles } from "../../services/react-select-styles";
+import Select from "react-select";
 
 export default function Search() {
   const [users, setUsers] = useState([]);
@@ -49,11 +51,15 @@ export default function Search() {
   return (
     <div>
       <h1>Search</h1>
-      <SortingDropdown
-        options={searchingOptions}
-        defaultOption="users"
-        onChange={handleSearchChange}
-      />
+      <Select
+        id="categories-dropdown-select"
+        options={searchingOptions && searchingOptions.map((searchingOptions) => {
+            return { value: searchingOptions.value, label: searchingOptions.label };
+        })}
+        onChange={(e) => handleSearchChange(e.value)}
+        className="basic-multi-select w-64 mx-auto"
+        styles={reactSelectStyles}
+    />
       <br /> <br />
       <div className="flex justify-center">
         <div className="mb-3 xl:w-96">
