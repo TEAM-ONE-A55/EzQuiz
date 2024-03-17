@@ -1,9 +1,8 @@
+import { reactSelectStyles } from "../../services/react-select-styles";
 import { useEffect, useState } from "react";
 import { API_CATEGORIES } from "../../constants/constants";
 import PropTypes from "prop-types";
-import "./Categories.css";
 import Select from "react-select";
-import { reactSelectStyles } from "../../services/react-select-styles";
 
 export default function Categories({ setCategory }) {
   const [options, setOptions] = useState(null);

@@ -1,10 +1,9 @@
+import { reactSelectStyles } from "../../services/react-select-styles";
 import { difficultyOptionsSample } from "../../constants/constants";
 import PropTypes from "prop-types";
 import Select from "react-select";
-import { reactSelectStyles } from "../../services/react-select-styles";
 
 export function QuizDifficulty({ setDifficulty }) {
-
   return (
       <Select
         id="difficulty-dropdown-select"

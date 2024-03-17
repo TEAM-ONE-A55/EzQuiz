@@ -7,24 +7,19 @@ export default function Dashboard({ children }) {
   const { user, userData } = useContext(AppContext);
 
   return (
-    <>
+    <div>
       <div className="flex">
-        <div className="relative flex flex-col bg-clip-border rounded-xl bg-black text-gray-700 h-[calc(100vh-2rem)] w-full max-w-[20rem] p-4 shadow-xl shadow-blue-gray-900/5">
-          <div className="mb-2 p-4">
-            <h5 className="block antialiased tracking-normal text-3xl leading-snug text-gray-300">
-              Dashboard
-            </h5>
-          </div>
+        <div className="relative duration-200 flex flex-col bg-clip-border bg-neutral-900 text-neutral-100 h-[100vh] w-full max-w-[16rem] p-4 shadow-xl shadow-blue-gray-900/5">
           {user && userData && userData.role !== "admin" ? (
-            <div>
+            <div className="">
               <NavLink
                 to="/my-quizzes"
-                className="flex flex-col gap-1 min-w-[240px] p-2 text-base font-normal text-gray-300"
+                className="flex flex-col gap-1 min-w-[240px] p-2 text-base font-normal text-neutral-100"
               >
                 <div
                   role="button"
                   tabIndex="0"
-                  className="flex items-center w-full p-3 rounded-lg text-start leading-tight transition-all hover:bg-blue-50 hover:bg-opacity-80 focus:bg-blue-50 focus:bg-opacity-80 active:bg-gray-50 active:bg-opacity-80 hover:text-blue-900 focus:text-blue-900 active:text-blue-900 outline-none"
+                  className="flex items-center w-[90%] p-3 rounded-md transition-all hover:bg-neutral-800 hover:text-white outline-none"
                 >
                   <div className="grid place-items-center mr-4">
                     <span className="material-symbols-outlined">
@@ -36,12 +31,12 @@ export default function Dashboard({ children }) {
               </NavLink>
               <NavLink
                 to="/my-rooms"
-                className="flex flex-col gap-1 min-w-[240px] p-2 text-base font-normal text-gray-300"
+                className="flex flex-col gap-1 min-w-[240px] p-2 text-base font-normal text-neutral-100"
               >
                 <div
                   role="button"
                   tabIndex="0"
-                  className="flex items-center w-full p-3 rounded-lg text-start leading-tight transition-all hover:bg-blue-50 hover:bg-opacity-80 focus:bg-blue-50 focus:bg-opacity-80 active:bg-gray-50 active:bg-opacity-80 hover:text-blue-900 focus:text-blue-900 active:text-blue-900 outline-none"
+                  className="flex items-center w-[90%] p-3 rounded-md transition-all hover:bg-neutral-800 hover:text-white outline-none"
                 >
                   <div className="grid place-items-center mr-4">
                     <span className="material-symbols-outlined">school</span>
@@ -52,12 +47,12 @@ export default function Dashboard({ children }) {
               {user && userData && userData.role === "educator" && (
                 <NavLink
                   to="/my-groups"
-                  className="flex flex-col gap-1 min-w-[240px] p-2 text-base font-normal text-gray-300"
+                  className="flex flex-col gap-1 min-w-[240px] p-2 text-base font-normal text-neutral-100"
                 >
                   <div
                     role="button"
                     tabIndex="0"
-                    className="flex items-center w-full p-3 rounded-lg text-start leading-tight transition-all hover:bg-blue-50 hover:bg-opacity-80 focus:bg-blue-50 focus:bg-opacity-80 active:bg-gray-50 active:bg-opacity-80 hover:text-blue-900 focus:text-blue-900 active:text-blue-900 outline-none"
+                    className="flex items-center w-[90%] p-3 rounded-md transition-all hover:bg-neutral-800 hover:text-white outline-none"
                   >
                     <div className="grid place-items-center mr-4">
                       <span className="material-symbols-outlined">group</span>
@@ -70,12 +65,12 @@ export default function Dashboard({ children }) {
               
                 <NavLink
                   to="/scoreboard"
-                  className="flex flex-col gap-1 min-w-[240px] p-2 text-base font-normal text-gray-300"
+                  className="flex flex-col gap-1 min-w-[240px] p-2 text-base font-normal text-neutral-100"
                 >
                   <div
                     role="button"
                     tabIndex="0"
-                    className="flex items-center w-full p-3 rounded-lg text-start leading-tight transition-all hover:bg-blue-50 hover:bg-opacity-80 focus:bg-blue-50 focus:bg-opacity-80 active:bg-gray-50 active:bg-opacity-80 hover:text-blue-900 focus:text-blue-900 active:text-blue-900 outline-none"
+                    className="flex items-center w-[90%] p-3 rounded-md transition-all hover:bg-neutral-800 hover:text-white outline-none"
                   >
                     <div className="grid place-items-center mr-4">
                       <span className="material-symbols-outlined">
@@ -88,15 +83,15 @@ export default function Dashboard({ children }) {
               
             </div>
           ) : (
-            <div>
+            <div className="">
                <NavLink
                 to="/all-users"
-                className="flex flex-col gap-1 min-w-[240px] p-2 text-base font-normal text-gray-300"
+                className="flex flex-col gap-1 min-w-[240px] p-2 text-base font-normal text-neutral-100"
               >
                 <div
                   role="button"
                   tabIndex="0"
-                  className="flex items-center w-full p-3 rounded-lg text-start leading-tight transition-all hover:bg-blue-50 hover:bg-opacity-80 focus:bg-blue-50 focus:bg-opacity-80 active:bg-gray-50 active:bg-opacity-80 hover:text-blue-900 focus:text-blue-900 active:text-blue-900 outline-none"
+                  className="flex items-center w-[90%] p-3 rounded-md transition-all hover:bg-neutral-800 hover:text-white outline-none"
                 >
                   <div className="grid place-items-center mr-4">
                     <span className="material-symbols-outlined">
@@ -108,12 +103,12 @@ export default function Dashboard({ children }) {
               </NavLink>
               <NavLink
                 to="/all-quizzes"
-                className="flex flex-col gap-1 min-w-[240px] p-2 text-base font-normal text-gray-300"
+                className="flex flex-col gap-1 min-w-[240px] p-2 text-base font-normal text-neutral-100"
               >
                 <div
                   role="button"
                   tabIndex="0"
-                  className="flex items-center w-full p-3 rounded-lg text-start leading-tight transition-all hover:bg-blue-50 hover:bg-opacity-80 focus:bg-blue-50 focus:bg-opacity-80 active:bg-gray-50 active:bg-opacity-80 hover:text-blue-900 focus:text-blue-900 active:text-blue-900 outline-none"
+                  className="flex items-center w-[90%] p-3 rounded-md transition-all hover:bg-neutral-800 hover:text-white outline-none"
                 >
                   <div className="grid place-items-center mr-4">
                     <span className="material-symbols-outlined">
@@ -125,12 +120,12 @@ export default function Dashboard({ children }) {
               </NavLink>
               <NavLink
                 to="/all-groups"
-                className="flex flex-col gap-1 min-w-[240px] p-2 text-base font-normal text-gray-300"
+                className="flex flex-col gap-1 min-w-[240px] p-2 text-base font-normal text-neutral-100"
               >
                 <div
                   role="button"
                   tabIndex="0"
-                  className="flex items-center w-full p-3 rounded-lg text-start leading-tight transition-all hover:bg-blue-50 hover:bg-opacity-80 focus:bg-blue-50 focus:bg-opacity-80 active:bg-gray-50 active:bg-opacity-80 hover:text-blue-900 focus:text-blue-900 active:text-blue-900 outline-none"
+                  className="flex items-center w-[90%] p-3 rounded-md transition-all hover:bg-neutral-800 hover:text-white outline-none"
                 >
                   <div className="grid place-items-center mr-4">
                     <span className="material-symbols-outlined">
@@ -142,12 +137,12 @@ export default function Dashboard({ children }) {
               </NavLink>
               <NavLink
                 to="/all-rooms"
-                className="flex flex-col gap-1 min-w-[240px] p-2 text-base font-normal text-gray-300"
+                className="flex flex-col gap-1 min-w-[240px] p-2 text-base font-normal text-neutral-100"
               >
                 <div
                   role="button"
                   tabIndex="0"
-                  className="flex items-center w-full p-3 rounded-lg text-start leading-tight transition-all hover:bg-blue-50 hover:bg-opacity-80 focus:bg-blue-50 focus:bg-opacity-80 active:bg-gray-50 active:bg-opacity-80 hover:text-blue-900 focus:text-blue-900 active:text-blue-900 outline-none"
+                  className="flex items-center w-[90%] p-3 rounded-md transition-all hover:bg-neutral-800 hover:text-white outline-none"
                 >
                   <div className="grid place-items-center mr-4">
                     <span className="material-symbols-outlined">
@@ -159,12 +154,12 @@ export default function Dashboard({ children }) {
               </NavLink>
               <NavLink
                 to="/scoreboard"
-                className="flex flex-col gap-1 min-w-[240px] p-2 text-base font-normal text-gray-300"
+                className="flex flex-col gap-1 min-w-[240px] p-2 text-base font-normal text-neutral-100"
               >
                 <div
                   role="button"
                   tabIndex="0"
-                  className="flex items-center w-full p-3 rounded-lg text-start leading-tight transition-all hover:bg-blue-50 hover:bg-opacity-80 focus:bg-blue-50 focus:bg-opacity-80 active:bg-gray-50 active:bg-opacity-80 hover:text-blue-900 focus:text-blue-900 active:text-blue-900 outline-none"
+                  className="flex items-center w-[90%] p-3 rounded-md transition-all hover:bg-neutral-800 hover:text-white outline-none"
                 >
                   <div className="grid place-items-center mr-4">
                     <span className="material-symbols-outlined">
@@ -179,7 +174,7 @@ export default function Dashboard({ children }) {
         </div>
         <div className="flex-grow">{children}</div>
       </div>
-    </>
+    </div>
   );
 }
 

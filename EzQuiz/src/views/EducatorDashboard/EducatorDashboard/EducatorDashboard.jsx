@@ -1,22 +1,7 @@
-import Button from "../../../components/Button/Button";
-
 export default function EducatorDashboard() {
   return (
-    <>
       <div>
-        <div>
-          <h2>Create a Quiz</h2>
-          <Button onClick={() => {}}>Add Quiz</Button>
-        </div>
-
-        <div style={{ border: "solid" }}>
-          <h2>Best Players</h2>
-          <p>Dancho</p>
-          <p>Pesho</p>
-          <p>Gosho</p>
-          <p>Stamat</p>
-        </div>
+        <h1 className="text-5xl px-20 py-20 font-bold">TO BE CREATED</h1>
       </div>
-    </>
   );
 }
