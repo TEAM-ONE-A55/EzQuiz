@@ -13,6 +13,7 @@ import Button from "../../../components/Button/Button";
 import SimpleQuiz from "../../Quizzes/SimpleQuiz/SimpleQuiz";
 import PropTypes from "prop-types";
 import "./SingleHub.css";
+import toast from "react-hot-toast";
 
 export default function SingleHub({
   hubType,
@@ -143,6 +144,8 @@ export default function SingleHub({
             "pending"
           );
         }
+      } else {
+        toast.error("Select users to proceed with invitations!");
       }
     } catch (e) {
       console.log(e.message);
@@ -177,24 +180,33 @@ export default function SingleHub({
 
   return (
     hub && (
-      <div className="single-hub-container">
+      <div>
+        <div style={{ position: "relative" }}>
+          <div
+            style={{
+              backgroundImage: `url(${hub.image_cover})`,
+              backgroundSize: "cover",
+              backgroundPosition: "center",
+              height: "500px",
+            }}
+          ></div>
+        </div>
         <div
+          className="block rounded-xl bg-neutral-50 p-16 text-surface shadow-neutral-500 shadow-lg mx-auto w-3/5 mt-32"
           style={{
-            position: "relative",
-            backgroundImage: `linear-gradient(rgba(0,0,0,0.8), rgba(0,0,0,0.8)), url(${hub.image_cover})`,
-            backgroundSize: "cover",
-            backgroundPosition: "center",
-            width: "100%",
-            height: "400px",
-            display: "flex",
-            flexDirection: "column",
-            justifyContent: "center",
-            alignItems: "center",
-            borderRadius: "15px",
+            position: "absolute",
+            top: "35%",
+            left: "50%",
+            transform: "translate(-50%, -50%)",
+            maxHeight: "600px",
+            overflowY: "auto",
+            zIndex: "10",
           }}
         >
           <div className="text-center">
-            <h2 className="mb-6 text-4xl font-bold">{hub.name}</h2>
+            <h2 className="mb-12 mt-6 font-extrabold leading-none tracking-tight text-neutral-800 md:text-4xl lg:text-4xl">
+              {hub.name}
+            </h2>
             {hubType === "groups" && (
               <h3 className="mb-6 text-2xl pb-2 text-neutral-600 dark:text-neutral-300 md:mb-12 md:pb-0">
                 {hub.description}
@@ -209,156 +221,207 @@ export default function SingleHub({
                 <img
                   src={creator.avatar}
                   alt={creator.firstName + " " + creator.lastName}
-                  className="w-16 h-16 rounded-full shadow-lg dark:shadow-black/30 mx-auto"
+                  className="w-20 h-20 rounded-full shadow-lg mx-auto border-none shadow-neutral-700"
                 />
               </div>
-              <h6 className="mb-2 font-semibold text-primary text-m dark:text-primary-400">
+              <span className="mb-2 font-extrabold text-neutral-900 text-lg">
                 Creator: @{creator.handle}
-              </h6>
+              </span>
             </div>
           )}
         </div>
-        <br />
-        <h5 className="mb-4 text-xl font-semibold">
-          {" "}
-          {userData.role === "student" ? "Participants:" : "Members:"}{" "}
-        </h5>
-        {(userData.role === "educator" || userData.handle === hub.creator) && (
-          <>
-            <Button onClick={() => setOnClickAddMember(!onClickAddMember)}>
-              {!onClickAddMember ? "Invite Members" : "Cancel Invitations"}
-            </Button>
-            {onClickAddMember && (
-              <>
-                <Button onClick={addUsers}>Send Invitations</Button>
-                <br />
-                <br />
-                <DropdownSelectUsers
-                  users={users}
-                  selectedUsers={selectedParticipants}
-                  setSelectedUsers={setSelectedParticipants}
-                />
-              </>
-            )}
-          </>
-        )}
-
-        <br />
-        <br />
-        <br />
-        <div className="flex flex-wrap justify-center">
-          {hasParticipants &&
-            participants.map((p) => (
-              <div key={p.handle} className={userData.handle !== p.handle ? "mx-4 mb-6" : "mx-4 mb-6 userData-handle"}>
-                <div className="text-center">
-                  <div className="mb-6">
-                    <img
-                      src={p.avatar}
-                      alt={p.firstName + " " + p.lastName}
-                      className="w-32 h-32 rounded-full shadow-lg dark:shadow-black/30 mx-auto"
-                    />
-                  </div>
-                  <h5 className="mb-2 text-xl font-semibold">
-                    {p.firstName} {p.lastName}
-                  </h5>
-                  <h6 className="mb-2 font-semibold text-primary dark:text-primary-400">
-                    @{p.handle}
-                  </h6>
-                  <br />
-                  <div className="flex justify-center items-center mb-2 text-neutral-600 dark:text-neutral-300">
-                    <span className="material-symbols-outlined mr-2">
-                      smartphone
-                    </span>
-                    {p.phoneNumber || "Not provided"}
-                  </div>
-                  <div className="flex justify-center items-center mb-2 text-neutral-600 dark:text-neutral-300">
-                    <span className="material-symbols-outlined mr-2">
-                      email
-                    </span>
-                    {p.email || "Not provided"}
-                  </div>
-                  <div className="flex justify-center items-center mb-2 text-neutral-600 dark:text-neutral-300">
-                    <p>
-                      <span className="font-bold">Status: </span>
-                      <span>
-                        {" "}
-                        {
-                          Object.entries(hub.participants)
-                            .filter((user) => {
-                              if (user[0] === p.handle) {
-                                return user[1];
-                              }
-                            })
-                            .join(" ")
-                            .split(",")[1]
-                        }
-                      </span>
-                    </p>
-                  </div>
-                  <br />
-                  {userData.handle === hub.creator && (
-                    <div className="flex justify-center items-center mb-2 text-neutral-600 dark:text-neutral-300">
-                      <Button onClick={() => removeUser(id, p.handle)}>
-                        Remove
-                      </Button>
-                    </div>
-                  )}
-                  {userData.handle === p.handle && (
-                    <div className="flex justify-center items-center mb-2 text-neutral-600 dark:text-neutral-300">
-                      <Button onClick={() => removeUser(id, p.handle)}>
-                        Leave {hubType.toUpperCase()[0] + hubType.slice(1, hubType.length - 1)}
-                      </Button>
-                    </div>
-                  )}
-                </div>
+        <div className=" mt-56">
+          <br />
+          <h5 className="mb-12 mt-6 leading-none font-bold tracking-tight text-neutral-800 md:text-4xl lg:text-4xl">
+            {" "}
+            {userData.role === "student" ? "Participants" : "Members"}{" "}
+          </h5>
+          <br />
+          {(userData.role === "educator" ||
+            userData.handle === hub.creator) && (
+            <div className="-mt-10 mb-20">
+              <div className="w-3/5 mx-auto flex-col">
+                <button
+                  type="button"
+                  onClick={() => setOnClickAddMember(!onClickAddMember)}
+                  data-te-ripple-init
+                  data-te-ripple-color="light"
+                  className="mb-6 inline-block w-full rounded bg-yellow-400 px-6 pt-2.5 pb-2 text-sm font-bold uppercase leading-normal text-neutral-800 shadow-lg shadow-neutral-400 transition duration-150 ease-in-out "
+                >
+                  {!onClickAddMember ? "Invite Members" : "Cancel Invitations"}
+                </button>
               </div>
-            ))}
-        </div>
-        <hr />
-        <br />
-        <h5 className="mb-4 text-xl font-semibold">Quizzes: </h5>
-        {userData.role !== "student" && (
-          <>
-            <Button onClick={() => setOnClickAddQuiz(!onClickAddQuiz)}>
-              {!onClickAddQuiz ? "Select Quizzes" : "Cancel"}
-            </Button>
-            {onClickAddQuiz && (
+              {onClickAddMember && (
+                <>
+                  <br />
+                  <div className="w-3/5 mx-auto">
+                    <div className="w-3/4 mx-auto">
+                      <DropdownSelectUsers
+                        users={users}
+                        selectedUsers={selectedParticipants}
+                        setSelectedUsers={setSelectedParticipants}
+                      />
+                    </div>
+                  </div>
+
+                  <div className="w-1/5 mx-auto mt-5">
+                    {/* <button
+                      type="button"
+                      onClick={addUsers}
+                      data-te-ripple-init
+                      data-te-ripple-color="light"
+                      className="mt-8 mb-6 inline-block w-full rounded bg-yellow-400 px-6 pt-2.5 pb-2 text-sm font-medium uppercase leading-normal text-neutral-800 shadow-lg shadow-neutral-400 transition duration-150 ease-in-out hover:bg-yellow-400 hover:shadow-neutral-400 focus:outline-none focus:ring-0"
+                    >
+                      Send Invitations
+                    </button> */}
+                    <br/>
+                    <Button
+                      onClick={addUsers}
+                    >
+                      Send Invitations
+                    </Button>
+                  </div>
+                </>
+              )}
+            </div>
+          )}
+          <div className="w-3/5 grid grid-cols-4 mx-auto gap-y-10 -mt-10 mb-10">
+            {hasParticipants &&
+              participants.map((p) => {
+                if (p.handle !== creator)
+                  return (
+                    <div
+                      key={p.handle}
+                      className={
+                        userData.handle !== p.handle
+                          ? "mx-4 mb-6 "
+                          : "mx-4 mb-6 bg-yellow-400 userData-handle"
+                      }
+                    >
+                      <div className="text-center">
+                        <div className="mb-6">
+                          <img
+                            src={p.avatar}
+                            alt={p.firstName + " " + p.lastName}
+                            className="w-32 h-32 rounded-full shadow-lg mx-auto border-none shadow-neutral-700"
+                          />
+                        </div>
+                        <h5 className="mb-2 text-xl font-semibold text-neutral-800">
+                          {p.firstName} {p.lastName}
+                        </h5>
+                        <h6 className="mb-2 font-bold text-neutral-900 ">
+                          @{p.handle}
+                        </h6>
+                        <br />
+                        <div className="flex justify-center items-center mb-2 text-neutral-800">
+                          <span className="material-symbols-outlined mr-2">
+                            smartphone
+                          </span>
+                          {p.phoneNumber || "Not provided"}
+                        </div>
+                        <div className="flex justify-center items-center mb-2 text-neutral-800">
+                          <span className="material-symbols-outlined mr-2">
+                            email
+                          </span>
+                          {p.email || "Not provided"}
+                        </div>
+                        <div className="flex justify-center items-center mb-2 text-neutral-800">
+                          <p>
+                            <span className="font-bold">Status: </span>
+                            <span>
+                              {" "}
+                              {
+                                Object.entries(hub.participants)
+                                  .filter((user) => {
+                                    if (user[0] === p.handle) {
+                                      return user[1];
+                                    }
+                                  })
+                                  .join(" ")
+                                  .split(",")[1]
+                              }
+                            </span>
+                          </p>
+                        </div>
+
+                        <br />
+                        {userData.handle === hub.creator && (
+                          <div className="flex justify-center items-center mb-2 text-neutral-600 dark:text-neutral-300">
+                            <Button onClick={() => removeUser(id, p.handle)}>
+                              Remove
+                            </Button>
+                          </div>
+                        )}
+                        {userData.handle === p.handle &&
+                          userData.handle !== hub.creator && (
+                            <div className="flex justify-center items-center mb-2 text-neutral-600 dark:text-neutral-300">
+                              <Button onClick={() => removeUser(id, p.handle)}>
+                                Leave{" "}
+                                {hubType.toUpperCase()[0] +
+                                  hubType.slice(1, hubType.length - 1)}
+                              </Button>
+                            </div>
+                          )}
+                      </div>
+                    </div>
+                  );
+              })}
+          </div>
+          <div className="block rounded-xl bg-yellow-400 p-16 text-surface shadow-neutral-500 shadow-lg mx-auto w-3/5">
+            <h5 className="mb-12  leading-none font-bold tracking-tight text-neutral-800 md:text-4xl lg:text-4xl">
+              Quizzes
+            </h5>
+            {userData.role !== "student" && (
               <>
-                <Button onClick={addQuizzes}>Add Quizzes</Button>
-                <br />
-                <br />
-                <DropdownSelectQuizzes
-                  quizzes={availableQuizzes}
-                  selectedQuizzes={selectedQuizzes}
-                  setSelectedQuizzes={setSelectedQuizzes}
-                />
-                {availableQuizzes.length === 0 && (
-                  <p>
-                    No quizzes are currently available.{" "}
-                    <NavLink className=" text-purple-700" to="/create-quiz">
-                      Why not create one now?
-                    </NavLink>
-                  </p>
+                <Button onClick={() => setOnClickAddQuiz(!onClickAddQuiz)}>
+                  {!onClickAddQuiz ? "Select Quizzes" : "Cancel"}
+                </Button>
+                {onClickAddQuiz && (
+                  <>
+                    <Button onClick={addQuizzes}>Add Quizzes</Button>
+                    <br />
+                    <br />
+                    <div className="w-3/4 mx-auto">
+                      <DropdownSelectQuizzes
+                        quizzes={availableQuizzes}
+                        selectedQuizzes={selectedQuizzes}
+                        setSelectedQuizzes={setSelectedQuizzes}
+                      />
+                    </div>
+                    <br />
+                    <br />
+                    {availableQuizzes.length === 0 && (
+                      <p className=" text-neutral-900">
+                        No quizzes are currently available.{" "}
+                        <NavLink
+                          className=" text-neutral-900 font-extrabold"
+                          to="/create-quiz"
+                        >
+                          Why not create one now?
+                        </NavLink>
+                      </p>
+                    )}
+                  </>
                 )}
               </>
             )}
-          </>
-        )}
-        {hasQuizzes && quizzes.length !== 0 && (
-          <div className="grid grid-cols-4 mt-16 max-w-screen-xl m-auto justify-items-center gap-y-16">
-            {quizzes.map((quiz) => (
-              <div key={quiz.id} className="flex gap-10">
-                <SimpleQuiz
-                  key={quiz.id}
-                  quiz={quiz}
-                  setChange={setQuizzesChange}
-                  hubType={hubType}
-                  hubId={hub.id}
-                />
-              </div>
-            ))}
           </div>
-        )}
+          {hasQuizzes && quizzes.length !== 0 && (
+            <div className=" w-3/5 grid grid-cols-4 mt-16 max-w-screen-xl m-auto justify-items-center gap-y-16">
+              {quizzes.map((quiz) => (
+                <div key={quiz.id} className="flex gap-10">
+                  <SimpleQuiz
+                    key={quiz.id}
+                    quiz={quiz}
+                    setChange={setQuizzesChange}
+                    hubType={hubType}
+                    hubId={hub.id}
+                  />
+                </div>
+              ))}
+            </div>
+          )}
+        </div>
       </div>
     )
   );

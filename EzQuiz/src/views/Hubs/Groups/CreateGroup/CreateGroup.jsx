@@ -132,7 +132,6 @@ export default function CreateGroup() {
         <span className="text-yellow-400">quiz creation and assessment</span>
       </h2>
       <br />
-
       <p className="text-lg font-normal text-neutral-600 lg:text-xl">
         Collaborate with fellow educators to tailor quizzes to your teaching
         needs and analyze participant performance. Whether refining teaching
@@ -140,9 +139,6 @@ export default function CreateGroup() {
         feature ensures effective management and analysis of participant
         performance.
       </p>
-
-      <br />
-
       <div className="create-group-box -mt-10">
         <div className="block rounded-xl bg-neutral-50 p-16 text-surface shadow-neutral-500 shadow-lg m-12 mx-auto">
           {!changeCover ? (
