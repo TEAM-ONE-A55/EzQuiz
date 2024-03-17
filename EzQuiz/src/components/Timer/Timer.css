@@ -7,9 +7,9 @@
 }
 
 .timer-values {
-  font-size: 30px;
+  font-size: 20px;
   display: grid;
-  grid-template-columns: auto 1px auto 1px auto 1px auto;
+  grid-template-columns: auto 1px auto;
   grid-row: 1;
   text-align: center;
 }
@@ -17,6 +17,6 @@
 .timer-str {
   font-size: 0.25 * 30px;
   display: grid;
-  grid-template-columns: auto auto auto auto;
+  grid-template-columns: auto auto;
   grid-row: 2;
 }

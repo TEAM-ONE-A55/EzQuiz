@@ -3,20 +3,18 @@ import { useTimer } from "react-timer-hook";
 import PropTypes from "prop-types";
 
 export default function Timer({ expiryTimestamp, setFinishQuiz }) {
-  const { seconds, minutes, hours, days } = useTimer({
+  const { seconds, minutes } = useTimer({
     expiryTimestamp,
     onExpire: () => setFinishQuiz(true),
   });
 
   return (
-    <div className="timer">
+    <div className="timer mx-auto">
       <div className="timer-values">
-        <span>{days}</span> :<span>{hours}</span> :<span>{minutes}</span> :
-        <span>{seconds}</span>
+        <span>{minutes}</span> :<span>{seconds}</span>
       </div>
       <div className="timer-str">
-        <span>days</span> <span>hours</span> <span>minutes</span>{" "}
-        <span>seconds</span>{" "}
+        <span>minutes</span> <span>seconds</span>{" "}
       </div>
     </div>
   );
