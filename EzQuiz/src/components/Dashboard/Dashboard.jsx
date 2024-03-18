@@ -26,9 +26,28 @@ export default function Dashboard({ children }) {
                       note_stack
                     </span>
                   </div>
-                  My Quizzes
+                  {userData.role === "educator" ? "My Quizzes" : "Pending Quizzes"}
                 </div>
               </NavLink>
+              {userData.role === "student" &&
+              <NavLink
+              to="/my-completed-quizzes"
+              className="flex flex-col gap-1 min-w-[240px] p-2 text-base font-normal text-neutral-100"
+            >
+              <div
+                role="button"
+                tabIndex="0"
+                className="flex items-center w-[90%] p-3 rounded-md transition-all hover:bg-neutral-800 hover:text-white outline-none"
+              >
+                <div className="grid place-items-center mr-4">
+                  <span className="material-symbols-outlined">
+                    note_stack
+                  </span>
+                </div>
+                Quiz Results
+              </div>
+            </NavLink>
+              }
               <NavLink
                 to="/my-rooms"
                 className="flex flex-col gap-1 min-w-[240px] p-2 text-base font-normal text-neutral-100"
@@ -44,6 +63,7 @@ export default function Dashboard({ children }) {
                   My Rooms
                 </div>
               </NavLink>
+
               {user && userData && userData.role === "educator" && (
                 <NavLink
                   to="/my-groups"

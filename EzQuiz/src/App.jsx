@@ -42,6 +42,7 @@ import SingleRoom from "./views/Hubs/Rooms/SingleRoom/SingleRoom";
 import MyGroups from "./views/Hubs/Groups/MyGroups/MyGroups";
 import SingleGroup from "./views/Hubs/Groups/SingleGroup/SingleGroup";
 import LandingPage from "./views/LandingPage/LandingPage";
+import MyCompletedQuizzes from "./views/Quizzes/MyCompletedQuizzes/MyCompletedQuizzes";
 
 export default function App() {
   const [user] = useAuthState(auth);
@@ -178,6 +179,20 @@ export default function App() {
               element={
                 <Authenticated>
                   <MyQuizzes />
+                </Authenticated>
+              }
+            ></Route>
+            <Route
+              path="/my-completed-quizzes"
+              element={
+                <Authenticated>
+                  {context &&
+                  context.userData &&
+                  context.userData.role === "student" ? (
+                    <MyCompletedQuizzes />
+                  ) : (
+                    <Forbidden />
+                  )}
                 </Authenticated>
               }
             ></Route>

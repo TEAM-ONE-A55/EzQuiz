@@ -1,6 +1,6 @@
 import "./SingleQuiz.css";
 import { useEffect, useState } from "react";
-import { useNavigate, useParams } from "react-router";
+import { useLocation, useNavigate, useParams } from "react-router";
 import PropTypes from "prop-types";
 import { fetchQuizData } from "../../../services/quiz-api.service";
 import {
@@ -36,6 +36,9 @@ export default function SingleQuiz({
   const { id } = useParams();
   const navigate = useNavigate();
 
+  const location = useLocation();
+  const { state } = location;
+
   useEffect(() => {
     let data;
     try {
@@ -52,7 +55,7 @@ export default function SingleQuiz({
         getQuizById(id).then((quiz) => {
           setQuiz(quiz);
           setQuestions(quiz.questions);
-          updateTime(+quiz.timeLimit);
+          if (!location.state) updateTime(+quiz.timeLimit);
           fetch(API_CATEGORIES)
             .then((response) => response.json())
             .then((categories) =>
@@ -69,6 +72,8 @@ export default function SingleQuiz({
     }
 
     if (data) setStartTime(new Date().getTime());
+
+
   }, []);
 
   useEffect(() => {
@@ -76,6 +81,18 @@ export default function SingleQuiz({
       setFinishTime(new Date().getTime());
     }
   }, [finishQuiz]);
+
+  if (location.state) {
+    const { resFinishTime, resCategory, resQuiz, resQuestions } = state;
+    return (
+      <Score
+        finishTime={resFinishTime}
+        questions={resQuestions}
+        quiz={resQuiz}
+        category={resCategory}
+      />
+    );
+  }
 
   const timeScore = +finishTime - +startTime;
 
@@ -160,7 +177,7 @@ export default function SingleQuiz({
           {/* Answer Options */}
           <div className="grid grid-cols-2 grid-rows-2 gap-4">
             {questions[currentIndex].mixedAnswers.map((answer, answerIndex) => (
-              <>
+              <div key={answerIndex}>
                 <button
                   key={answerIndex}
                   onClick={() =>
@@ -170,7 +187,7 @@ export default function SingleQuiz({
                 >
                   <span dangerouslySetInnerHTML={{ __html: answer }} />
                 </button>
-              </>
+              </div>
             ))}
           </div>
           {/* Buttons */}

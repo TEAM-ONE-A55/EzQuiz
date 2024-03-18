@@ -7,19 +7,17 @@ import {
 } from "../../../services/quiz.service";
 import Button from "../../../components/Button/Button";
 import { useNavigate } from "react-router";
-import { getUserByHandle, getUserData } from "../../../services/user.service";
 import { getHubsById } from "../../../services/hub.service";
 
-const listOfQuizIds = [];
 
 export default function MyQuizzes() {
   const { userData } = useContext(AppContext);
   const [quizzes, setQuizzes] = useState([]);
-  const [hasQuizzes, setHasQuizzes] = useState(false);
   const [change, setChange] = useState(0);
   const [rooms, setRooms] = useState([]);
   const navigate = useNavigate();
   const [quizIds, setQuizIds] = useState([]);
+  
   useEffect(() => {
     if (userData.role === "educator") {
       getAllQuizzesFromDatabase()
@@ -27,28 +25,6 @@ export default function MyQuizzes() {
           quizzes.filter((quiz) => quiz.creator === userData.handle)
         )
         .then(setQuizzes);
-      // } else if (userData.role === "student") {
-      //   if (userData.rooms) {
-      //     const roomsIds = Object.keys(userData.rooms);
-      //     const promises = roomsIds.map((roomId) => {
-      //       const promise = getHubsById("rooms", roomId).then((room) => {
-      //         if (room.quizzes) {
-      //           setRooms([...rooms, room.id])
-      //           // const quizzesIds = Object.keys(room.quizzes);
-      //           // quizzesIds.map((quizId) => {
-      //           //   getAllQuizzesFromDatabase()
-      //           //     .then((quizzes) =>
-      //           //       quizzes.filter((quiz) => quiz.id === quizId)
-      //           //     )
-      //           //     .then(setQuizzes);
-      //           // });
-      //         }
-
-      //       });
-      //       // Promise.all(promises).then(setRooms)
-      //     });
-      //   }
-      // }
     } else if (userData.role === "student") {
       if (userData.rooms) {
         const roomsIds = Object.keys(userData.rooms);

@@ -1,6 +1,6 @@
 import PropTypes from "prop-types";
 import { useContext, useEffect, useState } from "react";
-import { useNavigate } from "react-router";
+import { useNavigate, useParams } from "react-router";
 import { AppContext } from "../../context/AppContext";
 import { updateUserData } from "../../services/user.service";
 
@@ -8,6 +8,8 @@ export default function Score({ questions, finishTime, quiz, category }) {
   const { user, userData } = useContext(AppContext);
   const [showAnswers, setShowAnswers] = useState(false);
   const [score, setScore] = useState(0);
+
+  const { id } = useParams();
 
   const navigate = useNavigate();
 
@@ -24,6 +26,29 @@ export default function Score({ questions, finishTime, quiz, category }) {
         updateUserData(userData.handle, "score", (userData.score += score));
       } else {
         updateUserData(userData.handle, "score", score);
+      }
+
+      if (id.length > 3) {
+        if (
+          userData.participatedQuizzes &&
+          !Object.keys(userData.participatedQuizzes).includes(id)
+        ) {
+          updateUserData(userData.handle, `participatedQuizzes/${id}`, {
+            id: id,
+            questions: questions,
+            finishTime: finishTime,
+            quiz: quiz,
+            category: category,
+          });
+        } else if (!userData.participatedQuizzes) {
+          updateUserData(userData.handle, `participatedQuizzes/${id}`, {
+            id: id,
+            questions: questions,
+            finishTime: finishTime,
+            quiz: quiz,
+            category: category,
+          });
+        }
       }
     }
   }, [score]);
@@ -49,7 +74,7 @@ export default function Score({ questions, finishTime, quiz, category }) {
     }
   };
 
-  const scorePercent = (+score / (questions.length * 10)) * 100;
+  const scorePercent = ((+score / (questions.length * 10)) * 100).toFixed(2);
 
   return (
     <div className="m-32 min-w-lg">
