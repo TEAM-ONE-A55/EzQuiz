@@ -5,6 +5,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPen } from "@fortawesome/free-solid-svg-icons";
 import toast from "react-hot-toast";
 import React from "react";
+import { useNavigate } from "react-router-dom";
 
 export default function BestPlayers() {
   const [users, setUsers] = useState([]);
@@ -13,6 +14,8 @@ export default function BestPlayers() {
   const [userToEdit, setUserToEdit] = useState("");
   const [bestPlayers, setBestPlayers] = useState([]);
   const [editedScore, setEditedScore] = useState(0);
+
+  const navigate = useNavigate();
 
   const getUsers = async () => {
     const users = await getAllUsers();
@@ -101,7 +104,12 @@ export default function BestPlayers() {
                           {user.lastName}
                         </td>
                         <td className="whitespace-nowrap px-6 py-4">
-                          {user.handle}
+                          <span
+                            onClick={() => navigate(`profile/${user.handle}`)}
+                            className="hover:cursor-pointer mb-2 font-semibold text-primary dark:text-primary-400"
+                          >
+                            {user.handle}
+                          </span>
                         </td>
                         {userData.role === "admin" &&
                         editing &&
@@ -131,6 +139,7 @@ export default function BestPlayers() {
                             {userData.role === "admin" && (
                               <FontAwesomeIcon
                                 icon={faPen}
+                                className="hover:cursor-pointer"
                                 onClick={() => {
                                   handleEdit(user.handle);
                                 }}
