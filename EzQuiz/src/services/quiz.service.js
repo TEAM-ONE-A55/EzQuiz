@@ -45,6 +45,7 @@ export const updateQuizInDatabase = async (quizId, quiz) => {
   } catch (e) {
     console.error(e.message);
     return toast.error("Error updating quiz");
+  }
 };
 
 export const getAllQuizzesFromDatabase = async (key = "createdOn") => {
@@ -120,4 +121,3 @@ export const determineQuizStatus = (quiz) => {
     return "Finished";
   }
 }
-
