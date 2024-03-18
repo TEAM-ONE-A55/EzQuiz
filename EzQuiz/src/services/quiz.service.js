@@ -36,6 +36,17 @@ export const uploadQuizToDatabase = async (quiz) => {
   }
 };
 
+export const updateQuizInDatabase = async (quizId, quiz) => {
+  try {
+    const path = `quizzes/${quizId}`;
+    await update(ref(db), { [path]: quiz });
+    toast.success("Quiz edited successfully");
+    return quizId;
+  } catch (e) {
+    console.error(e.message);
+    return toast.error("Error updating quiz");
+};
+
 export const getAllQuizzesFromDatabase = async (key = "createdOn") => {
   const snapshot = await get(query(ref(db, "quizzes"), orderByChild(key)));
   if (!snapshot.exists()) {
@@ -110,8 +121,3 @@ export const determineQuizStatus = (quiz) => {
   }
 }
 
-export const updateQuizInDatabase = async (quizId, quiz) => {
-  const path = `quizzes/${quizId}`;
-  await update(ref(db), { [path]: quiz });
-  return quizId;
-};
