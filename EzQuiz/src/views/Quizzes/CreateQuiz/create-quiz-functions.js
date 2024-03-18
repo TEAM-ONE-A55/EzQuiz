@@ -8,7 +8,7 @@ import { minQuizTitleLength, maxQuizTitleLength,
 export const submitQuiz = async (quiz, allQuizTitles, navigate) => {
     if(!quiz.title) return toast.error("Please enter a title for the quiz");
     if(quiz.title.length < minQuizTitleLength) return toast.error("Title must be at least 3 characters long");
-    if(quiz.title.length > maxQuizTitleLength) return toast.error("Title must be at most 30 characters long");
+    if(quiz.title.length > maxQuizTitleLength) return toast.error("Title must be at most 180 characters long");
     if(allQuizTitles.includes(quiz.title)) return toast.error("A quiz with this title already exists");
     if(!quiz.visibility) return toast.error("Please choose a visibility for the quiz");
     if(!quiz.category) return toast.error("Please choose a category for the quiz");

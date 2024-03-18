@@ -58,7 +58,7 @@ export default function BrowseQuizzes() {
                 }
               })
               .filter((quiz) => {
-                if (user && userData.role === "student") {
+                if (user && userData.role === "student" || user && userData.role === "educator") {
                   return quiz.visibility === "public";
                 } else if (!user) {
                   return quiz.visibility === "public";

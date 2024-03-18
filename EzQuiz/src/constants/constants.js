@@ -26,7 +26,7 @@ export const quizAmountSample = ["5", "10", "15", "20"];
 
 export const minQuizTitleLength = 3;
 
-export const maxQuizTitleLength = 60;
+export const maxQuizTitleLength = 180;
 
 export const minQuizTimeLimit = 1;
 
