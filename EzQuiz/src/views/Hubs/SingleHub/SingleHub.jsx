@@ -1,9 +1,5 @@
 import { useEffect, useState } from "react";
-import {
-  deleteHub,
-  getHubsById,
-  updateHub,
-} from "../../../services/hub.service";
+import { getHubsById, updateHub } from "../../../services/hub.service";
 import {
   getAllUsers,
   getUserByHandle,
@@ -97,8 +93,6 @@ export default function SingleHub({
     }
   }, [hub]);
 
-  console.log(hub);
-
   useEffect(() => {
     if (userData && userData.handle) {
       getAllUsers()
@@ -180,6 +174,8 @@ export default function SingleHub({
             selectedQuizzes[quiz].value
           );
         }
+      } else {
+        toast.error("Select quizzes to proceed!");
       }
     } catch (e) {
       console.log(e.message);
@@ -188,6 +184,12 @@ export default function SingleHub({
       setQuizzesChange(quizzesChange + 1);
       setOnClickAddQuiz(false);
     }
+  };
+
+  const removeQuiz = async (hubId, quizId) => {
+    await updateHub(hubType, hubId, "quizzes", quizId, null);
+    const updateQuizzes = quizzes.filter((q) => q.id !== quizId);
+    setQuizzes(updateQuizzes);
   };
 
   const deleteHub = async (hubType, hubId, uuid, coverUrl) => {
@@ -201,7 +203,7 @@ export default function SingleHub({
           }
         });
       }
-      console.log(room.participants)
+      console.log(room.participants);
 
       await updateUserData(userData.handle, `${hubType}/${hubId}`, null);
       await deleteHub(hubId, hubId);
@@ -214,7 +216,10 @@ export default function SingleHub({
       }
 
       toast.success(
-        `Your ${hubType.slice(0, hubType.length - 1)} has been deleted successfully.`
+        `Your ${hubType.slice(
+          0,
+          hubType.length - 1
+        )} has been deleted successfully.`
       );
       navigate(`/my-${hubType}`);
     } catch (e) {
@@ -293,7 +298,9 @@ export default function SingleHub({
             <div className=" mx-auto">
               <button
                 type="button"
-                onClick={() => deleteHub(hubType, hub.id, hub.uuid, hub.image_cover)}
+                onClick={() =>
+                  deleteHub(hubType, hub.id, hub.uuid, hub.image_cover)
+                }
                 data-te-ripple-init
                 data-te-ripple-color="light"
                 className="inline-block w-1/6 rounded px-6 pt-2.5 pb-2 text-sm font-bold uppercase leading-normal text-neutral-800 hover:shadow-lg transition duration-150 ease-in-out "
@@ -479,14 +486,23 @@ export default function SingleHub({
           {hasQuizzes && quizzes.length !== 0 && (
             <div className=" w-3/5 grid grid-cols-4 mt-16 max-w-screen-xl m-auto justify-items-center gap-y-16">
               {quizzes.map((quiz) => (
-                <div key={quiz.id} className="flex gap-10">
-                  <SimpleQuiz
-                    key={quiz.id}
-                    quiz={quiz}
-                    setChange={setQuizzesChange}
-                    hubType={hubType}
-                    hubId={hub.id}
-                  />
+                <div key={quiz.id}>
+                  <div className="flex flex-col gap-10">
+                    <SimpleQuiz
+                      key={quiz.id}
+                      quiz={quiz}
+                      setChange={setQuizzesChange}
+                      hubType={hubType}
+                      hubId={hub.id}
+                    />
+                    {userData.role === "educator" && (
+                      <div className="w-full mx-auto -mt-4">
+                        <Button onClick={() => removeQuiz(hub.id, quiz.id)}>
+                          Remove Quiz
+                        </Button>
+                      </div>
+                    )}
+                  </div>
                 </div>
               ))}
             </div>
