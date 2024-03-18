@@ -13,6 +13,7 @@ import Registration from "./views/Registration/Registration";
 import SingleQuiz from "./views/Quizzes/SingleQuiz/SingleQuiz";
 import SampleQuiz from "./views/Quizzes/SampleQuiz/SampleQuiz";
 import CreateQuiz from "./views/Quizzes/CreateQuiz/CreateQuiz";
+import EditQuiz from "./views/Quizzes/EditQuiz/EditQuiz";
 import {
   defaultQuizAmountSample,
   defaultQuizDifficultySamle,
@@ -308,6 +309,14 @@ export default function App() {
               element={
                 <Authenticated>
                   <CreateQuiz />
+                </Authenticated>
+              }
+            ></Route>
+            <Route
+              path="/edit-quiz/:id"
+              element={
+                <Authenticated>
+                  <EditQuiz />
                 </Authenticated>
               }
             ></Route>

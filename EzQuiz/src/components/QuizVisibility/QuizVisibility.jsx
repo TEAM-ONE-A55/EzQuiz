@@ -3,10 +3,11 @@ import { reactSelectStyles } from "../../services/react-select-styles";
 import PropTypes from "prop-types";
 import Select from "react-select";
 
-export default function QuizVisibility({ setVisibility }) {
-  return (
+export default function QuizVisibility({ setVisibility, initialValue = "" }) {
+  const label = initialValue.split(" ").map((word) => word.charAt(0).toUpperCase() + word.slice(1)).join(" ");
+  if (initialValue) {return (
     <Select
-        id="visibility-dropdown-select"
+        value={{ value: initialValue, label: label }}
         options={quizVisibilityOptions.map((option) => {
             return { value: option, label: option };
           })}
@@ -14,11 +15,23 @@ export default function QuizVisibility({ setVisibility }) {
           className="basic-multi-select w-64 mx-auto"
           styles={reactSelectStyles}
           />
-          );
+  )} else {
+    return (
+      <Select
+        options={quizVisibilityOptions.map((option) => {
+            return { value: option, label: option };
+          })}
+          onChange={(e) => setVisibility(e.value)}
+          className="basic-multi-select w-64 mx-auto"
+          styles={reactSelectStyles}
+          />
+    )
+  }
 }
 
 QuizVisibility.propTypes = {
   setVisibility: PropTypes.func,
+  initialValue: PropTypes.string,
 };
 
 // import { Dropdown, Ripple, initTWE } from "tw-elements";

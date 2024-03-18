@@ -4,7 +4,7 @@ import { TECollapse } from "tw-elements-react";
 import { useState } from "react";
 import { reactSelectStyles } from "../../../services/react-select-styles";
 
-export default function NewQuestion({ quiz, indexQ, handleChange, setCorrectAnswer, removeQuestion }) {
+export default function NewQuestion({ quiz, setQuiz, indexQ, handleChange, setCorrectAnswer, removeQuestion }) {
 
     const [activeAccElement, setActiveAccElement] = useState("");
     
@@ -65,53 +65,58 @@ export default function NewQuestion({ quiz, indexQ, handleChange, setCorrectAnsw
                         <div className="mt-1 mb-4">
                             <div className="max-w-[80%] mx-auto mb-5">
                                 <span className="ml-4">Title<span className=" text-red-600 ml-1">*</span></span><br />
-                                <input 
+                                <input
+                                value={quiz.questions[indexQ].question} 
                                 className="pl-3 border border-neutral-300 outline-none border-none2 rounded-md p-2 w-full focus:border-neutral-400 transition duration-300 ease-in-out" 
                                 type="text" placeholder="Add question title..." 
-                                onChange={(e) => handleChange("question", e.target.value, indexQ)}
+                                onChange={(e) => handleChange(quiz, setQuiz, "question", e.target.value, indexQ)}
                                 />
                             </div>
     
                             <div className="max-w-[80%] mx-auto">
                                 <span className="ml-4">Option 1<span className=" text-red-600 ml-1">*</span></span><br />
-                                <input 
+                                <input
+                                value={quiz.questions[indexQ].mixedAnswers[0]} 
                                 className="pl-3 border border-neutral-300 outline-none border-none2 rounded-md p-2 w-full focus:border-neutral-400 transition duration-300 ease-in-out" 
                                 type="text" placeholder="Add option 1" 
                                 onChange={(e) =>
-                                    handleChange("option", e.target.value, indexQ, 0)
+                                    handleChange(quiz, setQuiz, "option", e.target.value, indexQ, 0)
                                 }
                                 />
                             </div>
     
                             <div className="max-w-[80%] mx-auto">
                                 <span className="ml-4">Option 2<span className=" text-red-600 ml-1">*</span></span><br />
-                                <input 
+                                <input
+                                value={quiz.questions[indexQ].mixedAnswers[1]} 
                                 className="pl-3 border border-neutral-300 outline-none border-none2 rounded-md p-2 w-full focus:border-neutral-400 transition duration-300 ease-in-out" 
                                 type="text" placeholder="Add option 2" 
                                 onChange={(e) =>
-                                    handleChange("option", e.target.value, indexQ, 1)
+                                    handleChange(quiz, setQuiz, "option", e.target.value, indexQ, 1)
                                 }
                                 />
                             </div>
     
                             <div className="max-w-[80%] mx-auto">
                                 <span className="ml-4">Option 3<span className=" text-red-600 ml-1">*</span></span><br />
-                                <input 
+                                <input
+                                value={quiz.questions[indexQ].mixedAnswers[2]} 
                                 className="pl-3 border border-neutral-300 outline-none border-none2 rounded-md p-2 w-full focus:border-neutral-400 transition duration-300 ease-in-out" 
                                 type="text" placeholder="Add option 3" 
                                 onChange={(e) =>
-                                    handleChange("option", e.target.value, indexQ, 2)
+                                    handleChange(quiz, setQuiz, "option", e.target.value, indexQ, 2)
                                 }
                                 />
                             </div>
     
                             <div className="max-w-[80%] mx-auto">
                                 <span className="ml-4">Option 4<span className=" text-red-600 ml-1">*</span></span><br />
-                                <input 
+                                <input
+                                value={quiz.questions[indexQ].mixedAnswers[3]} 
                                 className="pl-3 border border-neutral-300 outline-none border-none2 rounded-md p-2 w-full focus:border-neutral-400 transition duration-300 ease-in-out" 
                                 type="text" placeholder="Add option 4" 
                                 onChange={(e) =>
-                                    handleChange("option", e.target.value, indexQ, 3)
+                                    handleChange(quiz, setQuiz, "option", e.target.value, indexQ, 3)
                                 }
                                 />
                             </div>
@@ -120,10 +125,11 @@ export default function NewQuestion({ quiz, indexQ, handleChange, setCorrectAnsw
                         <div className="max-w-[50%] mx-auto">
                             <span className="ml-8">Choose correct answer<span className=" text-red-600 ml-1">*</span></span><br />
                             <Select
+                                defaultValue={{ value: quiz.questions[indexQ].correct_answer, label: quiz.questions[indexQ].correct_answer }}
                                 options={quiz.questions[indexQ].incorrect_answers.map((option) => {
                                     return { value: option, label: option };
                                 })}
-                                onChange={(e) => setCorrectAnswer(indexQ, e.value || '')}
+                                onChange={(e) => setCorrectAnswer(quiz, setQuiz, indexQ, e.value || '')}
                                 className="basic-multi-select w-64 mx-auto"
                                 styles={reactSelectStyles}
                             />
@@ -132,7 +138,7 @@ export default function NewQuestion({ quiz, indexQ, handleChange, setCorrectAnsw
                         <span className="mt-16 mb-16 text-xl text-center block">10 points</span>
     
                         <button 
-                        onClick={() => removeQuestion(indexQ)}
+                        onClick={() => removeQuestion(quiz, setQuiz, indexQ)}
                         className="w-[40%] mx-auto mb-4 block rounded-lg bg-neutral-300 px-6 pt-2.5 pb-2 text-sm font-medium uppercase leading-normal text-neutral-800 shadow-[0_4px_9px_-4px_#3b71ca] transition duration-150 ease-in-out hover:bg-neutral-400 hover:shadow-neutral-800 focus:outline-none focus:ring-0"
                         >
                             Remove Question
@@ -178,6 +184,7 @@ export default function NewQuestion({ quiz, indexQ, handleChange, setCorrectAnsw
 
 NewQuestion.propTypes = {
     quiz: PropTypes.object,
+    setQuiz: PropTypes.func,
     question: PropTypes.object,
     indexQ: PropTypes.number,
     indexO: PropTypes.number,
