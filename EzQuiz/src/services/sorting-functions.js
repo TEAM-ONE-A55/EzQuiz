@@ -20,3 +20,20 @@ export const sortUsers = (users, sortBy) => {
         }
     }
 }
+
+export const sortQuizzes = (quizzes, sortBy) => {
+    if (quizzes) {
+        switch(sortBy) {
+            case "easy":
+                return quizzes.filter((quiz) => quiz.difficulty === "easy");
+            case "medium":
+                return quizzes.filter((quiz) => quiz.difficulty === "medium");
+            case "hard":
+                return quizzes.filter((quiz) => quiz.difficulty === "hard");
+            case "all":
+                return quizzes;
+            default:
+                return quizzes;
+        }
+    }
+}
