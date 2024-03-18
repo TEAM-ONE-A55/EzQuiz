@@ -8,6 +8,7 @@ import {
   orderByChild,
   remove,
   set,
+  update
 } from "firebase/database";
 import { shuffleArray } from "./helper.js";
 
@@ -108,3 +109,9 @@ export const determineQuizStatus = (quiz) => {
     return "Finished";
   }
 }
+
+export const updateQuizInDatabase = async (quizId, quiz) => {
+  const path = `quizzes/${quizId}`;
+  await update(ref(db), { [path]: quiz });
+  return quizId;
+};
