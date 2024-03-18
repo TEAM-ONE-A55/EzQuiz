@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { getHubsById, updateHub } from "../../../services/hub.service";
+import { deleteHub, getHubsById, updateHub } from "../../../services/hub.service";
 import {
   getAllUsers,
   getUserByHandle,
@@ -192,7 +192,7 @@ export default function SingleHub({
     setQuizzes(updateQuizzes);
   };
 
-  const deleteHub = async (hubType, hubId, uuid, coverUrl) => {
+  const deleteHubEverywhere = async (hubType, hubId, uuid, coverUrl) => {
     try {
       const room = await getHubsById(hubType, hubId);
       if (room.participants) {
@@ -205,15 +205,15 @@ export default function SingleHub({
       }
       console.log(room.participants);
 
-      await updateUserData(userData.handle, `${hubType}/${hubId}`, null);
-      await deleteHub(hubId, hubId);
-
       if (coverUrl !== defaultCoverRoom) {
         const coverImage = await getCoverImage(hubType, uuid);
         const coverImagePath = coverImage._location.path.split("/");
         const coverImageId = coverImagePath[1];
         await deleteCoverImage(hubType, coverImageId);
       }
+      await updateUserData(userData.handle, `${hubType}/${hubId}`, null);
+      await deleteHub(hubType, hubId);
+
 
       toast.success(
         `Your ${hubType.slice(
@@ -299,7 +299,7 @@ export default function SingleHub({
               <button
                 type="button"
                 onClick={() =>
-                  deleteHub(hubType, hub.id, hub.uuid, hub.image_cover)
+                  deleteHubEverywhere(hubType, hub.id, hub.uuid, hub.image_cover)
                 }
                 data-te-ripple-init
                 data-te-ripple-color="light"
