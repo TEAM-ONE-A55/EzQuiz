@@ -114,7 +114,7 @@ export default function BestPlayers() {
                         {userData.role === "admin" &&
                         editing &&
                         userToEdit === user.handle ? (
-                          <td className="px-6 py-4 whitespace-nowrap">
+                          <td className="px-6 py-2 whitespace-nowrap max-w-14">
                             <input
                               type="number"
                               value={editedScore}
