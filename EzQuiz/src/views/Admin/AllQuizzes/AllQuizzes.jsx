@@ -8,6 +8,8 @@ import { faPen } from "@fortawesome/free-solid-svg-icons";
 import { useNavigate } from "react-router";
 import toast from "react-hot-toast";
 import React from "react";
+import { quizSortingOptions } from "../../../constants/constants";
+import Select from "react-select";
 
 export default function AllQuizzes() {
   const [quizzes, setQuizzes] = useState([]);
@@ -17,10 +19,15 @@ export default function AllQuizzes() {
   const [editing, setEditing] = useState(false);
   const [quizTitle, setQuizTitle] = useState("");
   const [quizEditId, setQuizEditId] = useState("");
+  const [quizSortBy, setQuizSortBy] = useState("all");
 
   const getAllQuizzes = async () => {
     const allQuizzes = await getAllQuizzesFromDatabase();
     setQuizzes(allQuizzes);
+  };
+
+  const handleSort = (e) => {
+    setQuizSortBy(e.value);
   };
 
   const editQuizTitle = async (quiz, id, key, value) => {
@@ -90,6 +97,16 @@ export default function AllQuizzes() {
             placeholder="Search quizzes..."
           />
         </div>
+        {
+            <Select
+              name="quizzes"
+              options={quizSortingOptions}
+              className="basic-multi-select"
+              classNamePrefix="select"
+              value={quizSortBy}
+              onChange={handleSort}
+            />
+          }
       </div>
       <br />
       <table className="min-w-full text-left text-sm font-light">
@@ -110,7 +127,14 @@ export default function AllQuizzes() {
           </tr>
         </thead>
         <tbody>
-          {quizzes
+          {quizzes &&
+            quizzes.filter((quiz) => { 
+              if (quizSortBy === "all") {
+                return true;
+              } else {
+                return quiz.difficulty === quizSortBy;
+              }
+            })
             .filter((quiz) =>
               quiz.title.toLowerCase().includes(searchTerm.toLowerCase())
             )
