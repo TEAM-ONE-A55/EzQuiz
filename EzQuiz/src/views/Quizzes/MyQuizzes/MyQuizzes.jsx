@@ -74,7 +74,7 @@ export default function MyQuizzes() {
 
   return (
     <div>
-      {quizzes && quizzes.length !== 0 ? (
+      {quizzes && quizzes.length !== 0  ? (
         <>
           <div className="my-groups-content">
             <h2 className="mb-4 font-extrabold leading-none tracking-tight text-gray-900 md:text-5xl lg:text-4xl dark:text-white">
@@ -104,6 +104,7 @@ export default function MyQuizzes() {
 
           <div className="grid grid-cols-4 mt-16 max-w-screen-xl m-auto justify-items-center gap-y-16">
             {quizzes.map((quiz) => (
+              
               <div key={quiz.id} className="flex gap-10">
                 <SimpleQuiz key={quiz.id} quiz={quiz} setChange={setChange} />
               </div>

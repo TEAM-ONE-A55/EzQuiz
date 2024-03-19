@@ -8,9 +8,10 @@ import {
   orderByChild,
   remove,
   set,
-  update
+  update,
 } from "firebase/database";
 import { shuffleArray } from "./helper.js";
+import { updateUserData } from "./user.service.js";
 
 export const uploadQuizToDatabase = async (quiz) => {
   try {
@@ -65,9 +66,11 @@ export const getAllQuizTitles = async () => {
   if (!snapshot.exists()) {
     return [];
   }
-  const titles = Object.keys(snapshot.val()).map((key) => snapshot.val()[key].title);
+  const titles = Object.keys(snapshot.val()).map(
+    (key) => snapshot.val()[key].title
+  );
   return titles;
-}
+};
 
 export const deleteQuizFromDatabase = async (
   quizId,
@@ -76,6 +79,13 @@ export const deleteQuizFromDatabase = async (
   hubId = null
 ) => {
   try {
+    const quiz = await getQuizById(quizId);
+    if (quiz.quizTakers) {
+      const quizTakersArray = Object.keys(quiz.quizTakers);
+      quizTakersArray.map(async (taker) => {
+        await updateUserData(taker, `participatedQuizzes/${quizId}`, null);
+      });
+    }
     await remove(ref(db, `quizzes/${quizId}`));
     await remove(ref(db, `users/${handle}/createdQuizzes/${quizId}`));
 
@@ -120,10 +130,9 @@ export const determineQuizStatus = (quiz) => {
   if (end < now) {
     return "Finished";
   }
-}
+};
 
-
-export const updateQuizWithKey = async(id, key, value) => {
-const path = `quizzes/${id}/${key}`;
-return update(ref(db), {[path]: value})
-}
+export const updateQuizWithKey = async (id, key, value) => {
+  const path = `quizzes/${id}/${key}`;
+  return update(ref(db), { [path]: value });
+};

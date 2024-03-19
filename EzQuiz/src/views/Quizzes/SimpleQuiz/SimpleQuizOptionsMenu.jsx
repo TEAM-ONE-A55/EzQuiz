@@ -6,6 +6,7 @@ import { Bars3Icon } from "@heroicons/react/24/outline";
 import { useNavigate } from 'react-router';
 import { deleteQuizFromDatabase } from "../../../services/quiz.service";
 import PropTypes from 'prop-types';
+import { updateHub } from "../../../services/hub.service";
 
 export default function SimpleQuizOptionsMenu({ quiz, id, handle, setChange, hubType, hubId}) {
     const { userData } = useContext(AppContext);
@@ -40,6 +41,7 @@ export default function SimpleQuizOptionsMenu({ quiz, id, handle, setChange, hub
                 <button className="block px-4 py-2 text-sm text-gray-700 hover:bg-slate-100 w-full duration-75 ease-in-out"
                 onClick={() => {
                     deleteQuizFromDatabase(id, handle, hubType, hubId);
+                    updateHub(hubType, hubId, "quizzes", id, null )
                     setChange((prev) => prev + 1);
                     }}>
                     Delete
