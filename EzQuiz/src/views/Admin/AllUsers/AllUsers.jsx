@@ -45,7 +45,7 @@ export default function AllUsers() {
   };
 
   return (
-    <div className="mt-8">
+    <div className="mt-8 max-w-[1350px] mx-auto">
       <div className="mb-6 mx-auto w-4/5 rounded-xl p-8 bg-neutral-200 shadow-neutral-400 shadow-inner text-neutral-800 font-bold">
         <h2 className="text-4xl text-neutral-800 ">All Users</h2>
       </div>
@@ -70,17 +70,20 @@ export default function AllUsers() {
           />
         }
       </div>
-      <table className=" mt-10 w-[1700px] mx-auto text-center text-sm font-light">
+      <table className="mt-10 mx-auto text-center text-sm font-light">
         <thead className="border-b bg-neutral-50 font-medium border-neutral-300">
           <tr>
+            <th scope="col" className="px-6 py-4">
+              #
+            </th>
             <th scope="col" className="px-6 py-4">
               Username
             </th>
             <th scope="col" className="px-6 py-4">
-              First name
+              Name
             </th>
             <th scope="col" className="px-6 py-4">
-              Last name
+              Surname
             </th>
             <th scope="col" className="px-6 py-4">
               Email
@@ -99,7 +102,7 @@ export default function AllUsers() {
             </th>
           </tr>
         </thead>
-        <tbody>
+        <tbody className="">
           {users &&
             sortUsers(users, usersSortBy)
               .filter(
@@ -118,26 +121,28 @@ export default function AllUsers() {
               .map((user) => (
                 <tr
                   key={user.id}
-                  className="border-b transition duration-300 ease-in-out hover:bg-neutral-100"
+                  className="border-b transition duration-75 ease-in-out hover:bg-neutral-100 border h-[80px] text-center items-center"
                 >
-                  <td className="whitespace-nowrap py-4 px-6 flex items-center justify-center">
-                    <span>
+                  <td className=" pl-4">
                       <img
                         src={user.avatar}
                         alt={user.handle}
-                        className="w-8 h-8 rounded-full mr-2 border-none shadow-neutral-600 shadow-sm"
+                        className="w-8 h-8 rounded-full mr-4 border-none shadow-neutral-600 shadow-sm"
                       />
-                    </span>
-                    <span className="w-20">{user.handle}</span>
                   </td>
-                  <td className="whitespace-nowrap px-6 py-4">
+                  <td className="text-center align-middle">
+                    <span>
+                    <span className="">{user.handle}</span>
+                    </span>
+                  </td>
+                  <td className="text-center align-middle">
                     {user.firstName}
                   </td>
-                  <td className="whitespace-nowrap px-6 py-4">
+                  <td className="text-center align-middle">
                     {user.lastName}
                   </td>
-                  <td className="whitespace-nowrap px-6 py-4">{user.email}</td>
-                  <td className="whitespace-nowrap px-6 py-4">
+                  <td className="text-center align-middle">{user.email}</td>
+                  <td className="text-center align-middle">
                     {user.role === "admin" ? (
                       <span
                         className="font-medium"
@@ -158,7 +163,7 @@ export default function AllUsers() {
                       </span>
                     )}
                   </td>
-                  <td className="whitespace-nowrap px-6 py-4">
+                  <td className="">
                     {user.blocked ? (
                       <span
                         className="font-medium"
@@ -175,14 +180,14 @@ export default function AllUsers() {
                       </span>
                     )}
                   </td>
-                  <td className="whitespace-nowrap px-6 py-4">
+                  <td className="">
                     {new Date(user.createdOn).toLocaleDateString()}
                   </td>
                   {user.role !== "admin" && (
-                    <td>
+                    <td className="max-w-[250px] grid grid-cols-2 gap-1 text-center items-center mt-1.5 mr-4">
                       <button
                         type="button"
-                        className="mx-1 w-[120px] inline-block rounded bg-neutral-800 pb-2 pt-2.5  text-[10px] font-medium uppercase leading-normal text-neutral-50 shadow-[0_4px_9px_-4px_rgba(51,45,45,0.7)] transition duration-150 ease-in-out hover:bg-neutral-800 hover:shadow-[0_8px_9px_-4px_rgba(51,45,45,0.2),0_4px_18px_0_rgba(51,45,45,0.1)] focus:bg-neutral-800 focus:shadow-[0_8px_9px_-4px_rgba(51,45,45,0.2),0_4px_18px_0_rgba(51,45,45,0.1)] focus:outline-none focus:ring-0 active:bg-neutral-900 active:shadow-[0_8px_9px_-4px_rgba(51,45,45,0.2),0_4px_18px_0_rgba(51,45,45,0.1)]"
+                        className="rounded bg-neutral-700 pb-1 pt-1.5 px-2 text-[10px] font-medium uppercase text-neutral-50 transition duration-75 ease-in-out hover:bg-neutral-800"
                         onClick={() => {
                           changeRole(user, setUser);
                         }}
@@ -191,7 +196,7 @@ export default function AllUsers() {
                       </button>
                       <button
                         type="button"
-                        className="mx-1 w-[120px] inline-block rounded bg-neutral-800 px-6 pb-2 pt-2.5  text-[10px] font-medium uppercase leading-normal text-neutral-50 shadow-[0_4px_9px_-4px_rgba(51,45,45,0.7)] transition duration-150 ease-in-out hover:bg-neutral-800 hover:shadow-[0_8px_9px_-4px_rgba(51,45,45,0.2),0_4px_18px_0_rgba(51,45,45,0.1)] focus:bg-neutral-800 focus:shadow-[0_8px_9px_-4px_rgba(51,45,45,0.2),0_4px_18px_0_rgba(51,45,45,0.1)] focus:outline-none focus:ring-0 active:bg-neutral-900 active:shadow-[0_8px_9px_-4px_rgba(51,45,45,0.2),0_4px_18px_0_rgba(51,45,45,0.1)]"
+                        className="rounded bg-neutral-700 pb-1 pt-1.5 px-2 text-[10px] font-medium uppercase text-neutral-50 transition duration-75 ease-in-out hover:bg-neutral-800"
                         onClick={() => {
                           user.handle && removeUser(user.handle);
                         }}
@@ -200,7 +205,7 @@ export default function AllUsers() {
                       </button>
                       <button
                         type="button"
-                        className="mx-1 w-[120px] inline-block rounded bg-neutral-800 px-6 pb-2 pt-2.5  text-[10px] font-medium uppercase leading-normal text-neutral-50 shadow-[0_4px_9px_-4px_rgba(51,45,45,0.7)] transition duration-150 ease-in-out hover:bg-neutral-800 hover:shadow-[0_8px_9px_-4px_rgba(51,45,45,0.2),0_4px_18px_0_rgba(51,45,45,0.1)] focus:bg-neutral-800 focus:shadow-[0_8px_9px_-4px_rgba(51,45,45,0.2),0_4px_18px_0_rgba(51,45,45,0.1)] focus:outline-none focus:ring-0 active:bg-neutral-900 active:shadow-[0_8px_9px_-4px_rgba(51,45,45,0.2),0_4px_18px_0_rgba(51,45,45,0.1)]"
+                        className="rounded bg-neutral-700 pb-1 pt-1.5 px-2 text-[10px] font-medium uppercase text-neutral-50 transition duration-75 ease-in-out hover:bg-neutral-800"
                         onClick={() => {
                           navigate(`/profile/${user.handle}`);
                         }}
@@ -209,7 +214,7 @@ export default function AllUsers() {
                       </button>
                       <button
                         type="button"
-                        className="mx-1 w-[120px] inline-block rounded bg-neutral-800 px-6 pb-2 pt-2.5  text-[10px] font-medium uppercase leading-normal text-neutral-50 shadow-[0_4px_9px_-4px_rgba(51,45,45,0.7)] transition duration-150 ease-in-out hover:bg-neutral-800 hover:shadow-[0_8px_9px_-4px_rgba(51,45,45,0.2),0_4px_18px_0_rgba(51,45,45,0.1)] focus:bg-neutral-800 focus:shadow-[0_8px_9px_-4px_rgba(51,45,45,0.2),0_4px_18px_0_rgba(51,45,45,0.1)] focus:outline-none focus:ring-0 active:bg-neutral-900 active:shadow-[0_8px_9px_-4px_rgba(51,45,45,0.2),0_4px_18px_0_rgba(51,45,45,0.1)]"
+                        className="rounded bg-neutral-700 pb-1 pt-1.5 px-2 text-[10px] font-medium uppercase text-neutral-50 transition duration-75 ease-in-out hover:bg-neutral-800"
                         onClick={() => {
                           blockUser(user, setUser);
                         }}
