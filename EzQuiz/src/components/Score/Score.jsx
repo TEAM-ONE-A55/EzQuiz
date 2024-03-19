@@ -3,6 +3,7 @@ import { useContext, useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router";
 import { AppContext } from "../../context/AppContext";
 import { updateUserData } from "../../services/user.service";
+import { updateQuizWithKey } from "../../services/quiz.service";
 
 export default function Score({ questions, finishTime, quiz, category }) {
   const { user, userData } = useContext(AppContext);
@@ -28,7 +29,7 @@ export default function Score({ questions, finishTime, quiz, category }) {
         updateUserData(userData.handle, "score", score);
       }
 
-      if (id.length > 3) {
+      if (id.length > 3 && userData.role === "student") {
         if (
           userData.participatedQuizzes &&
           !Object.keys(userData.participatedQuizzes).includes(id)
@@ -49,6 +50,22 @@ export default function Score({ questions, finishTime, quiz, category }) {
             category: category,
           });
         }
+      }
+      const quizTakerData = {
+        questions: questions,
+        finishTime: finishTime,
+        quiz: quiz,
+        category: category,
+        score: score,
+        handle: userData.handle
+      };
+      if (
+        quiz.quizTakers &&
+        !Object.keys(quiz.quizTakers).includes(userData.hande)
+      ) {
+        updateQuizWithKey(id, `quizTakers/${userData.handle}`, quizTakerData);
+      } else if (!quiz.quizTakers) {
+        updateQuizWithKey(id, `quizTakers/${userData.handle}`, quizTakerData);
       }
     }
   }, [score]);
