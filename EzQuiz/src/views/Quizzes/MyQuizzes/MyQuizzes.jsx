@@ -59,22 +59,28 @@ export default function MyQuizzes() {
 
   useEffect(() => {
     if (quizIds && quizIds.length !== 0) {
-      const filtered = quizIds.filter(
-        (id) =>
-          userData &&
-          userData.participatedQuizzes &&
-          !Object.keys(userData.participatedQuizzes).includes(id)
-      );
-      const promises = filtered.map((id) =>
+      const promises = quizIds.map(async (id) =>
         getQuizById(id).then((quiz) => quiz)
       );
-      Promise.all(promises).then(setQuizzes);
+      Promise.all(promises).then(allQuizzes => {
+        if (
+          allQuizzes &&
+          allQuizzes.length !== 0 &&
+          userData &&
+          userData.participatedQuizzes
+        ) {
+          const filtered = [...allQuizzes].filter(
+            (quiz) => !Object.keys(userData.participatedQuizzes).includes(quiz.id)
+          );
+          setQuizzes(filtered);
+        }
+      });
     }
   }, [quizIds]);
 
   return (
     <div>
-      {quizzes && quizzes.length !== 0  ? (
+      {quizzes && quizzes.length !== 0 ? (
         <>
           <div className="my-groups-content">
             <h2 className="mb-4 font-extrabold leading-none tracking-tight text-gray-900 md:text-5xl lg:text-4xl dark:text-white">
@@ -104,7 +110,6 @@ export default function MyQuizzes() {
 
           <div className="grid grid-cols-4 mt-16 max-w-screen-xl m-auto justify-items-center gap-y-16">
             {quizzes.map((quiz) => (
-              
               <div key={quiz.id} className="flex gap-10">
                 <SimpleQuiz key={quiz.id} quiz={quiz} setChange={setChange} />
               </div>
