@@ -10,7 +10,7 @@ export default function EducatorDashboard() {
     userData && (
       <div className="mt-32 w-4/5 mx-auto">
         <h2 className="mb-4 font-extrabold leading-none tracking-tight text-neutral-800 md:text-4xl lg:text-4xl">
-          Hello, <span className="text-yellow-400">{userData.handle}</span>!
+          Hello, <span className="text-yellow-400">{userData.handle}</span> !
           Welcome to Your Personalized Hub!
         </h2>
         <br />
@@ -35,8 +35,8 @@ export default function EducatorDashboard() {
               } ${
                 userData.createdQuizzes &&
                 Object.keys(userData.createdQuizzes).length === 1
-                  ? `Active personalized Quizzes Crafted`
-                  : `Active personalized Quiz Crafted`
+                  ? `Active Personalized Quiz Crafted`
+                  : `Active Personalized Quizzes Crafted`
               }`}
               subheading="Total Number of Quizzes Created"
               text="This metric simply indicates the total count of quizzes you've personally designed. It reflects your active involvement in crafting assessments tailored to your needs and those of your participants."
@@ -57,7 +57,7 @@ export default function EducatorDashboard() {
             />
             <BenefitSimple
               iconPath={
-                <path d="M12 0c-6.627 0-12 5.373-12 12s5.373 12 12 12 12-5.373 12-12-5.373-12-12-12zm8 12c0 4.418-3.582 8-8 8s-8-3.582-8-8 3.582-8 8-8 8 3.582 8 8zm-19 0c0-6.065 4.935-11 11-11v2c-4.962 0-9 4.038-9 9 0 2.481 1.009 4.731 2.639 6.361l-1.414 1.414.015.014c-2-1.994-3.24-4.749-3.24-7.789z" />
+                <path d="M24 21h-3l1-3h1l1 3zm-12.976-4.543l8.976-4.575v6.118c-1.007 2.041-5.607 3-8.5 3-3.175 0-7.389-.994-8.5-3v-6.614l8.024 5.071zm11.976.543h-1v-7.26l-10.923 5.568-11.077-7 12-5.308 11 6.231v7.769z" />
               }
               heading={`Active ${
                 userData.rooms ? Object.keys(userData.rooms).length : 0
