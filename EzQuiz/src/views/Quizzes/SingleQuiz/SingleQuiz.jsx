@@ -190,7 +190,7 @@ export default function SingleQuiz({
                   onClick={() =>
                     handleAnswerChange(currentIndex, answer, answerIndex)
                   }
-                  className="  w-5/6 h-16 rounded-lg bg-neutral-100 p-4 text-neutral-800  shadow-neutral-500 shadow-lg hover:bg-yellow-400 focus:outline-none focus:bg-yellow-400"
+                  className=" w-11/12 h-16 rounded-lg bg-neutral-100 p-4 text-neutral-800  shadow-neutral-500 shadow-lg hover:bg-yellow-400 focus:outline-none focus:bg-yellow-400"
                 >
                   <span dangerouslySetInnerHTML={{ __html: answer }} />
                 </button>

@@ -47,6 +47,8 @@ export default function Score({ questions, finishTime, quiz, category }) {
             finishTime: finishTime,
             quiz: quiz,
             category: category,
+            completedOn: Date.now(),
+            score: score
           }}
           setContext(prev => prev, userData)
         } else if (!userData.participatedQuizzes) {
@@ -56,6 +58,8 @@ export default function Score({ questions, finishTime, quiz, category }) {
             finishTime: finishTime,
             quiz: quiz,
             category: category,
+            completedOn: Date.now(),
+            score: score
           });
           userData.participatedQuizzes = {...userData.participatedQuizzes, [id]: {
             id: id,
@@ -63,6 +67,8 @@ export default function Score({ questions, finishTime, quiz, category }) {
             finishTime: finishTime,
             quiz: quiz,
             category: category,
+            completedOn: Date.now(),
+            score: score
           }}
           setContext(prev => prev, userData)
         }
@@ -72,7 +78,10 @@ export default function Score({ questions, finishTime, quiz, category }) {
           quiz: quiz,
           category: category,
           score: score,
-          handle: userData.handle
+          handle: userData.handle,
+          firstName: userData.firstName,
+          lastName: userData.lastName,
+          completedOn: Date.now()
         };
         if (
           quiz.quizTakers &&
@@ -83,22 +92,6 @@ export default function Score({ questions, finishTime, quiz, category }) {
           updateQuizWithKey(id, `quizTakers/${userData.handle}`, quizTakerData);
         }
       }
-      // const quizTakerData = {
-      //   questions: questions,
-      //   finishTime: finishTime,
-      //   quiz: quiz,
-      //   category: category,
-      //   score: score,
-      //   handle: userData.handle
-      // };
-      // if (
-      //   quiz.quizTakers &&
-      //   !Object.keys(quiz.quizTakers).includes(userData.hande)
-      // ) {
-      //   updateQuizWithKey(id, `quizTakers/${userData.handle}`, quizTakerData);
-      // } else if (!quiz.quizTakers) {
-      //   updateQuizWithKey(id, `quizTakers/${userData.handle}`, quizTakerData);
-      // }
     }
   }, [score]);
 
