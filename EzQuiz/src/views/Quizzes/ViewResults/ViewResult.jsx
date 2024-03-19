@@ -91,7 +91,7 @@ export default function ViewResults() {
                 return (
                   <tr key={taker.handle}>
                     <td className="whitespace-nowrap py-4 px-6">
-                      #{" "}{index + 1}{" "}
+                      # {index + 1}{" "}
                     </td>
                     <td className="whitespace-nowrap py-4 px-6 flex items-center justify-center">
                       <span>

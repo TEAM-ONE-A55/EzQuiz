@@ -134,7 +134,7 @@ export default function Score({ questions, finishTime, quiz, category }) {
       <br />
       <div className=" w-2/4 bg-yellow-400 mx-auto min-w-lg rounded-xl p-8  shadow-neutral-500 shadow-inner">
         <h2 className="mb-6 mt-6 font-extrabold leading-none tracking-tight text-neutral-800 md:text-5xl lg:text-5xl">
-          Your score is {score} from {questions.length * 10}
+          Your score is {score} out of {questions.length * 10}
         </h2>
         <h3 className="mb-6 mt-6 leading-none tracking-tight text-neutral-800 md:text-2xl lg:text-2xl">
           {Object.values(quiz).length !== 0 &&
