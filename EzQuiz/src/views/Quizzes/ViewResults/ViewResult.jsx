@@ -35,7 +35,7 @@ export default function ViewResults() {
   };
 
   return (
-    <div className="mt-24 mx-auto">
+    <div className="mt-8 mx-auto">
       {quiz && quiz.title && (
         <div className=" mx-auto w-4/5 pt-10 pb-10 rounded-xl p-8 bg-neutral-200 shadow-neutral-400 shadow-inner">
           <h2 className="text-4xl mb-4 text-neutral-800 ">{quiz.title}</h2>
