@@ -19,7 +19,6 @@ export default function EducatorDashboard() {
           content, and interact with your community effortlessly.
         </p>
         <div className="w-5/5 mx-auto flex items-center justify-center">
-          {/* <h1 className="text-5xl px-20 py-20 font-bold">TO BE CREATED</h1> */}
           <Benefits heading="Review Your Insights">
             <BenefitSimple
               iconPath={
