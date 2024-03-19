@@ -70,7 +70,7 @@ export default function AllUsers() {
           />
         }
       </div>
-      <table className="mt-10 mx-auto text-center text-sm font-light">
+      <table className="mt-10 mx-auto text-center text-sm font-light min-w-[1300px]">
         <thead className="border-b bg-neutral-50 font-medium border-neutral-300">
           <tr>
             <th scope="col" className="px-6 py-4">
