@@ -44,6 +44,7 @@ import MyGroups from "./views/Hubs/Groups/MyGroups/MyGroups";
 import SingleGroup from "./views/Hubs/Groups/SingleGroup/SingleGroup";
 import LandingPage from "./views/LandingPage/LandingPage";
 import MyCompletedQuizzes from "./views/Quizzes/MyCompletedQuizzes/MyCompletedQuizzes";
+import ViewResults from "./views/Quizzes/ViewResults/ViewResult";
 
 export default function App() {
   const [user] = useAuthState(auth);
@@ -197,6 +198,7 @@ export default function App() {
                 </Authenticated>
               }
             ></Route>
+            <Route path="/results/:id" element={<ViewResults />}></Route>
             <Route
               path="/dashboard"
               element={

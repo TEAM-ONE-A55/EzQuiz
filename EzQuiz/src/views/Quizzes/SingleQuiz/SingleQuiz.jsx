@@ -1,5 +1,5 @@
 import "./SingleQuiz.css";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useLocation, useNavigate, useParams } from "react-router";
 import PropTypes from "prop-types";
 import { fetchQuizData } from "../../../services/quiz-api.service";
@@ -11,6 +11,7 @@ import {
 import Score from "../../../components/Score/Score";
 import Timer from "../../../components/Timer/Timer";
 import { getQuizById } from "../../../services/quiz.service";
+import { AppContext } from "../../../context/AppContext";
 
 export default function SingleQuiz({
   difficulty,
@@ -18,6 +19,7 @@ export default function SingleQuiz({
   quizAmount,
   setQuizAmount,
 }) {
+  const { userData } = useContext(AppContext);
   const [questions, setQuestions] = useState([]);
   const [error, setError] = useState(null);
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -72,8 +74,6 @@ export default function SingleQuiz({
     }
 
     if (data) setStartTime(new Date().getTime());
-
-
   }, []);
 
   useEffect(() => {
@@ -142,6 +142,13 @@ export default function SingleQuiz({
   return (
     questions.length !== 0 && (
       <div className="quiz-container mt-24 mx-auto">
+        {userData &&
+          (userData.role === "educator" || userData.role === "admin") && (
+            <p className="text-neutral-500">
+              Your current role doesn&apos;t support scoring. Hence, your quiz scores
+              won&apos;t be factored into the results or the scoreboard.
+            </p>
+          )}
         <br />
         <div className="block rounded-xl bg-neutral-100 p-16 text-surface shadow-neutral-500 shadow-xl">
           {id.length < 3 ? (

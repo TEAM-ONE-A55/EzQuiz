@@ -79,7 +79,7 @@ export default function MyCompletedQuizzes() {
                         seeResults(quiz.id);
                       }}
                     >
-                      See Results
+                      View Results
                     </Button>
                   </div>
                 </div>
