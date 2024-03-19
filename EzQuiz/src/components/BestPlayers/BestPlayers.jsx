@@ -111,7 +111,7 @@ export default function BestPlayers() {
                             {user.handle}
                           </span>
                         </td>
-                        {userData.role === "admin" &&
+                        {userData ? (userData.role === "admin" &&
                         editing &&
                         userToEdit === user.handle ? (
                           <td className="px-6 py-2 whitespace-nowrap max-w-14">
@@ -146,7 +146,7 @@ export default function BestPlayers() {
                               />
                             )}
                           </td>
-                        )}
+                        )): <></>}
                       </tr>
                     );
                   }
