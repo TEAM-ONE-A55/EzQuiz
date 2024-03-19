@@ -50,7 +50,7 @@ export default function SimpleQuizOptionsMenu({ quiz, id, handle, setChange, hub
             <Menu.Item>
                 <button className="block px-4 py-2 text-sm text-gray-700 hover:bg-slate-100 w-full duration-75 ease-in-out"
                 onClick={() => {
-                    navigate(`/results/${id}`, {}); 
+                    navigate(`/results/${id}`); 
                     }}>
                    Results
                 </button>

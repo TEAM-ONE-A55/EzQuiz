@@ -149,7 +149,7 @@ export default function Score({ questions, finishTime, quiz, category }) {
         The quiz was completed in
         {seconds > 59
           ? minutes === 1
-            ? ` ${minutes} minutes and ${seconds}.`
+            ? ` ${minutes} minute and ${seconds}.`
             : ` ${minutes} minutes and ${seconds}.`
           : ` ${seconds} seconds.`}
       </p>

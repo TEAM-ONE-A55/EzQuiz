@@ -10,7 +10,7 @@ import { useNavigate } from "react-router";
 import { getHubsById } from "../../../services/hub.service";
 
 export default function MyQuizzes() {
-  const { userData, setContext } = useContext(AppContext);
+  const { userData } = useContext(AppContext);
   const [quizzes, setQuizzes] = useState([]);
   const [change, setChange] = useState(0);
   const [rooms, setRooms] = useState([]);
