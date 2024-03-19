@@ -4,7 +4,6 @@ import { AppContext } from "../../context/AppContext";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPen } from "@fortawesome/free-solid-svg-icons";
 import toast from "react-hot-toast";
-import React from "react";
 import { useNavigate } from "react-router-dom";
 
 export default function BestPlayers() {

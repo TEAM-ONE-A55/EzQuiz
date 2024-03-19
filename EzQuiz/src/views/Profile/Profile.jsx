@@ -1,16 +1,13 @@
 import { useContext, useEffect, useState } from "react";
 import { AppContext } from "../../context/AppContext";
+import { getRank } from "../../components/Score/scores-students";
+import { faStar, faTrophy } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import SetAvatar from "./SetAvatar";
 import SetPhoneNumber from "./SetPhoneNumber";
 import SetFirstName from "./SetFirstName";
 import SetLastName from "./SetLastName";
 import SetAddress from "./SetAddress";
-import { getRank } from "../../components/Score/scores-students";
-import { faStar, faTrophy } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-
-
-
 
 export default function Profile() {
   const { userData } = useContext(AppContext);
@@ -28,23 +25,19 @@ export default function Profile() {
 
   return (
     <div>
-      Profile
-      <SetAvatar />
-      <p
-      className="mb-2 font-semibold text-primary dark:text-primary-400"
-      >@{userData?.handle}</p>
-      <SetFirstName />
-      <SetLastName />
-      <SetPhoneNumber />
-      <SetAddress />
-      <p><FontAwesomeIcon
-        icon={faStar}
-      ></FontAwesomeIcon>: {userData?.score} points</p>
-      <p>
-        <FontAwesomeIcon
-        icon={faTrophy}
-        ></FontAwesomeIcon>
-        : {rank}</p>
+      <h1 className="text-3xl font-bold mt-8 mb-8">Your Profile</h1>
+      <div className="bg-neutral-100 max-w-lg rounded-xl flex-col py-8 px-10 relative shadow-neutral-500 shadow-2xl m-auto text-center">
+        <p className="mb-4 text-2xl font-semibold text-neutral-900 bg-neutral-200 max-w-fit mx-auto px-4 py-1 rounded-xl">@{userData?.handle}</p>
+        <SetAvatar />
+        <div className="flex flex-col gap-4 font-medium mb-4 text-lg text-neutral-900 bg-neutral-200 max-w-[90%] mx-auto px-4 py-4 rounded-xl shadow-neutral-500 shadow-inner ">
+          <SetFirstName />
+          <SetLastName />
+          <SetPhoneNumber />
+          <SetAddress />
+          <p><FontAwesomeIcon icon={faStar} />{userData?.score}</p>
+          <p><FontAwesomeIcon icon={faTrophy} />{rank}</p>
+        </div>
+      </div>
     </div>
   );
 }

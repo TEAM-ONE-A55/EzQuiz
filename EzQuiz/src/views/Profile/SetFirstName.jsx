@@ -63,17 +63,22 @@ export default function SetFirstName() {
   };
 
   return (
-    <div>
+    <div className="mx-auto max-w-[87%] gap-2 relative">
       <p>
         {editing ? (
           <>
-            <input type="text" value={firstName} onChange={handleChange} />
-            <Button onClick={handleSave}>Save</Button>
-            <Button onClick={handleCancel}>Cancel</Button>
+            <input className="px-3 py-2 text-lg outline-none border-none rounded-md transition duration-75"
+            type="text" value={firstName} onChange={handleChange} />
+            <div className="flex justify-center gap-1 mt-1">
+              <button className="rounded-md bg-neutral-700 text-neutral-50 px-3 pt-1.5 pb-1 text-sm font-medium uppercase transition duration-75 ease-in-out hover:bg-neutral-900 cursor-pointer"
+              onClick={handleSave}>Save</button>
+              <button className="rounded-md bg-neutral-700 text-neutral-50 px-3 pt-1.5 pb-1 text-sm font-medium uppercase transition duration-75 ease-in-out hover:bg-neutral-900 cursor-pointer"
+              onClick={handleCancel}>Cancel</button>
+            </div>
           </>
         ) : (
           <>
-            First name: {firstName} &nbsp;
+            Name: {firstName} &nbsp;
             <FontAwesomeIcon
               icon={faPen}
               onClick={handleEdit}

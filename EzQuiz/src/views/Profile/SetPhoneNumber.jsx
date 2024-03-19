@@ -69,22 +69,27 @@ export default function SetPhoneNumber() {
   return (
     <div>
       {userData.phoneNumber ? (
-        <div>
+        <div className="mx-auto max-w-[87%] gap-2 relative">
           {editing ? (
             <div>
               <input
+              className="px-3 py-2 text-lg outline-none border-none rounded-md transition duration-75"
                 type="text"
                 value={newPhoneNumber}
                 onChange={handleChange}
               />
-              <Button onClick={handleSave}>Save</Button>
-              <Button onClick={handleCancel}>Cancel</Button>
+              <div className="flex justify-center gap-1 mt-1">
+                <button className="rounded-md bg-neutral-700 text-neutral-50 px-3 pt-1.5 pb-1 text-sm font-medium uppercase transition duration-75 ease-in-out hover:bg-neutral-900 cursor-pointer"
+                onClick={handleSave}>Save</button>
+                <button className="rounded-md bg-neutral-700 text-neutral-50 px-3 pt-1.5 pb-1 text-sm font-medium uppercase transition duration-75 ease-in-out hover:bg-neutral-900 cursor-pointer"
+                onClick={handleCancel}>Cancel</button>
+              </div>
             </div>
           ) : (
             <p>
               <FontAwesomeIcon
                 icon={faPhone}
-              ></FontAwesomeIcon>: {userData.phoneNumber} &nbsp;
+              ></FontAwesomeIcon>&nbsp; {userData.phoneNumber} &nbsp;
               <FontAwesomeIcon
                 icon={faPen}
                 onClick={handleEdit}
@@ -100,15 +105,17 @@ export default function SetPhoneNumber() {
           )}
         </div>
       ) : (
-        <div>
+        <div className="flex mx-auto max-w-[87%] gap-2">
           <input
+          className="px-3 py-2 text-lg outline-none border-none rounded-md transition duration-75"
             type="text"
             placeholder="Add phone Number..."
             onChange={(e) => {
               setNewPhoneNumber(e.target.value);
             }}
           />
-          <Button
+          <button
+          className="rounded-md bg-neutral-700 text-neutral-50 px-3 pt-1.5 pb-1 text-sm font-medium uppercase transition duration-75 ease-in-out hover:bg-neutral-900 cursor-pointer"
             onClick={() => {
               if (Number.isNaN(Number(newPhoneNumber))) {
                 toast.error(
@@ -135,7 +142,7 @@ export default function SetPhoneNumber() {
             }}
           >
             Add
-          </Button>
+          </button>
         </div>
       )}
     </div>
