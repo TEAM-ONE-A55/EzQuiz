@@ -2,7 +2,7 @@ import { useState, useEffect, useContext } from "react";
 import { getAllQuizzesFromDatabase } from "../../../services/quiz.service";
 import { AppContext } from "../../../context/AppContext";
 import SimpleQuiz from "../SimpleQuiz/SimpleQuiz";
-import React from "react";
+
 import Select from "react-select";
 import { quizSortingOptions } from "../../../constants/constants";
 

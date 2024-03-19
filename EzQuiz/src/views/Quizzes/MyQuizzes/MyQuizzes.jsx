@@ -9,7 +9,6 @@ import Button from "../../../components/Button/Button";
 import { useNavigate } from "react-router";
 import { getHubsById } from "../../../services/hub.service";
 
-
 export default function MyQuizzes() {
   const { userData } = useContext(AppContext);
   const [quizzes, setQuizzes] = useState([]);
@@ -17,7 +16,7 @@ export default function MyQuizzes() {
   const [rooms, setRooms] = useState([]);
   const navigate = useNavigate();
   const [quizIds, setQuizIds] = useState([]);
-  
+
   useEffect(() => {
     if (userData.role === "educator") {
       getAllQuizzesFromDatabase()
@@ -53,21 +52,26 @@ export default function MyQuizzes() {
     if (rooms.length !== 0) {
       const quizzes = rooms.map((room) => room.quizzes);
       const ids = quizzes.map((room) => Object.values(room));
+
       setQuizIds(ids.flat());
     }
   }, [rooms]);
 
   useEffect(() => {
     if (quizIds && quizIds.length !== 0) {
-      const promises = quizIds.map((id) =>
-        getQuizById(id).then((quiz => quiz))
+      const filtered = quizIds.filter(
+        (id) =>
+          userData &&
+          userData.participatedQuizzes &&
+          !Object.keys(userData.participatedQuizzes).includes(id)
       );
-
+      const promises = filtered.map((id) =>
+        getQuizById(id).then((quiz) => quiz)
+      );
       Promise.all(promises).then(setQuizzes);
     }
   }, [quizIds]);
 
-  console.log(quizIds);
   return (
     <div>
       {quizzes && quizzes.length !== 0 ? (
@@ -130,7 +134,7 @@ export default function MyQuizzes() {
           ) : (
             <p className="mb-4 font-extrabold leading-none tracking-tight text-gray-900 md:text-5xl lg:text-4xl dark:text-white">
               {" "}
-              You haven&apos;t participated in any quizzes yet.
+              You&apos;re all caught up! No pending quizzes.
             </p>
           )}
         </div>

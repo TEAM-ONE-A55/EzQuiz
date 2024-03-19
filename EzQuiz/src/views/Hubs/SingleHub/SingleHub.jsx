@@ -445,11 +445,11 @@ export default function SingleHub({
               })}
           </div>
           <div className="block rounded-xl bg-yellow-400 p-16 text-surface shadow-neutral-500 shadow-lg mx-auto w-3/5">
-            <h5 className="mb-12  leading-none font-bold tracking-tight text-neutral-800 md:text-4xl lg:text-4xl">
+            <h5 className="leading-none font-bold tracking-tight text-neutral-800 md:text-4xl lg:text-4xl">
               Quizzes
             </h5>
             {userData.role !== "student" && (
-              <>
+              <div className="mt-12">
                 <Button onClick={() => setOnClickAddQuiz(!onClickAddQuiz)}>
                   {!onClickAddQuiz ? "Select Quizzes" : "Cancel"}
                 </Button>
@@ -480,7 +480,7 @@ export default function SingleHub({
                     )}
                   </>
                 )}
-              </>
+              </div>
             )}
           </div>
           {hasQuizzes && quizzes.length !== 0 && (
