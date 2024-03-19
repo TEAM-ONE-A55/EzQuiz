@@ -8,7 +8,7 @@ import { deleteQuizFromDatabase } from "../../../services/quiz.service";
 import PropTypes from 'prop-types';
 import { updateHub } from "../../../services/hub.service";
 
-export default function SimpleQuizOptionsMenu({ quiz, id, handle, setChange, hubType, hubId}) {
+export default function SimpleQuizOptionsMenu({ quiz, id, handle, setChange, hubType, hubId }) {
     const { userData } = useContext(AppContext);
 
     const navigate = useNavigate();

@@ -9,7 +9,7 @@ import QuizStatus from "./QuizStatus";
 import SQuizDifficulty from "./SQuizDifficulty";
 import PropTypes from "prop-types";
 
-export default function SimpleQuiz({ quiz, setChange, hubType, hubId }) {
+export default function SimpleQuiz({ quiz, setChange, hubType, hubId, groupView = false }) {
   const navigate = useNavigate();
   const { user, userData } = useContext(AppContext);
   const status = determineQuizStatus(quiz);
@@ -139,7 +139,7 @@ export default function SimpleQuiz({ quiz, setChange, hubType, hubId }) {
         </div>
       </div>
       {user &&
-        (userData.handle === quiz.creator || userData.role === "admin") && (
+        (userData.handle === quiz.creator || userData.role === "admin" || groupView) && (
           <div className="absolute bottom-12 right-12 text-slate-400">
             <SimpleQuizOptionsMenu
               quiz={quiz}
@@ -160,4 +160,5 @@ SimpleQuiz.propTypes = {
   setChange: PropTypes.func.isRequired,
   hubType: PropTypes.string,
   hubId: PropTypes.string,
+  groupView: PropTypes.bool
 };

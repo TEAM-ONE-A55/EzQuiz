@@ -494,6 +494,7 @@ export default function SingleHub({
                       setChange={setQuizzesChange}
                       hubType={hubType}
                       hubId={hub.id}
+                      groupView={true}
                     />
                     {userData.role === "educator" && (
                       <div className="w-full mx-auto -mt-4">
