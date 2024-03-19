@@ -10,7 +10,7 @@ import { useNavigate } from "react-router";
 import { getHubsById } from "../../../services/hub.service";
 
 export default function MyQuizzes() {
-  const { userData } = useContext(AppContext);
+  const { userData, setContext } = useContext(AppContext);
   const [quizzes, setQuizzes] = useState([]);
   const [change, setChange] = useState(0);
   const [rooms, setRooms] = useState([]);
@@ -62,17 +62,21 @@ export default function MyQuizzes() {
       const promises = quizIds.map(async (id) =>
         getQuizById(id).then((quiz) => quiz)
       );
-      Promise.all(promises).then(allQuizzes => {
+
+      Promise.all(promises).then((allQuizzes) => {
         if (
           allQuizzes &&
           allQuizzes.length !== 0 &&
           userData &&
           userData.participatedQuizzes
         ) {
-          const filtered = [...allQuizzes].filter(
-            (quiz) => !Object.keys(userData.participatedQuizzes).includes(quiz.id)
+          console.log(allQuizzes);
+          const filtered = allQuizzes.filter((quiz) => 
+            !Object.keys(userData.participatedQuizzes).includes(quiz.id)
           );
           setQuizzes(filtered);
+        } else {
+          setQuizzes(allQuizzes);
         }
       });
     }

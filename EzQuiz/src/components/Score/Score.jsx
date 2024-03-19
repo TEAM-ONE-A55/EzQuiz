@@ -81,7 +81,8 @@ export default function Score({ questions, finishTime, quiz, category }) {
           handle: userData.handle,
           firstName: userData.firstName,
           lastName: userData.lastName,
-          completedOn: Date.now()
+          completedOn: Date.now(),
+          avatar: userData.avatar
         };
         if (
           quiz.quizTakers &&
