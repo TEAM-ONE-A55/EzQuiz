@@ -88,7 +88,8 @@ export default function BestPlayers() {
                 {bestPlayers.map((user, index) => {
                   if (index < 10) {
                     return (
-                      <tr key={index} className="border-b bg-neutral-100">
+                      <tr key={index} className=" bg-neutral-100 border-b transition duration-300 ease-in-out hover:bg-neutral-100"
+                      >
                         <td className="whitespace-nowrap px-6 py-4">
                           # {index + 1}
                         </td>

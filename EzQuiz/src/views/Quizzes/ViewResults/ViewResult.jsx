@@ -89,7 +89,9 @@ export default function ViewResults() {
               })
               .map((taker, index) => {
                 return (
-                  <tr key={taker.handle}>
+                  <tr key={taker.handle}
+                  className="border-b transition duration-300 ease-in-out hover:bg-neutral-100"
+                  >
                     <td className="whitespace-nowrap py-4 px-6">
                       # {index + 1}{" "}
                     </td>
