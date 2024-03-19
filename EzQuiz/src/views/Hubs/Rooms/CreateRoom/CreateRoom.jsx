@@ -1,7 +1,6 @@
 import { useContext, useEffect, useState } from "react";
 import { AppContext } from "../../../../context/AppContext";
 import { getAllUsers, updateUserData } from "../../../../services/user.service";
-import "./CreateRoom.css";
 import toast from "react-hot-toast";
 import { createHub, updateHub } from "../../../../services/hub.service";
 import { defaultCoverRoom } from "../../../../constants/constants";
@@ -115,7 +114,7 @@ export default function CreateRoom() {
   };
 
   return (
-    <div className="create-room-container w-3/5 mx-auto">
+    <div className="mt-8 w-3/5 mx-auto">
       <h2 className="mb-4 font-extrabold leading-none tracking-tight text-neutral-800 md:text-4xl lg:text-4xl">
         Create a <span className="text-yellow-400">personalized room</span>{" "}
         where you can{" "}
@@ -130,7 +129,7 @@ export default function CreateRoom() {
         feature allows you to host engaging activities while managing and
         analyzing participants&apos; performance effectively.
       </p>
-      <div className="create-room-box  -mt-10">
+      <div className="mt-8">
         <div className="block rounded-xl bg-neutral-50 p-16 text-surface shadow-neutral-500 shadow-lg m-12 mx-auto">
           {!changeCover ? (
             <div className="attached-hub-image-container ">

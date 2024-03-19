@@ -50,8 +50,8 @@ export default function EditQuiz() {
   }, []);
 
   if (quiz && user && userData.role !== 'student') { return (
-    <div className="mt-4">
-      <h2 className="mb-6 mt-6 font-extrabold leading-none tracking-tight text-gray-900 md:text-5xl lg:text-4xl">
+    <div className="mt-8">
+      <h2 className="mb-8 mt-6 font-extrabold leading-none tracking-tight text-gray-900 md:text-5xl lg:text-4xl">
       Edit your quiz</h2>
       <div className=" bg-neutral-100 max-w-3xl rounded-xl flex-col py-8 px-10 relative shadow-neutral-500 shadow-xl m-auto mt-4 text-left">
 

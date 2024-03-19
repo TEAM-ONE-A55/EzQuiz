@@ -52,15 +52,15 @@ export default function CreateQuiz() {
   }, []);
 
   if (user && userData.role !== 'student') { return (
-    <div className="mt-4">
-      <h2 className="mb-6 mt-6 font-extrabold leading-none tracking-tight text-gray-900 md:text-5xl lg:text-4xl">
-      Create & tailor your own quiz</h2>
+    <div className="mt-8">
+      <h2 className="mb-8 font-extrabold leading-none tracking-tight text-gray-900 md:text-5xl lg:text-4xl">
+      Create & tailor <span className="text-yellow-400">your own</span> quiz</h2>
       <div className=" bg-neutral-100 max-w-3xl rounded-xl flex-col py-8 px-10 relative shadow-neutral-500 shadow-xl m-auto mt-4 text-left">
 
         <div className="max-w-[80%] mx-auto">
           <span className="ml-2">Title<span className=" text-red-600 ml-1">*</span></span><br />
           <input 
-          className="pl-3 outline-none border-none2 rounded-md p-2 w-full focus:border-blue-500 transition duration-300 ease-in-out" 
+          className="pl-3 outline-none border-none rounded-md p-2 w-full transition duration-75 ease-in-out" 
           type="text" placeholder="Add quiz title..." onChange={e => handleQuizChange(quiz, setQuiz, "title", e.target.value)} />
         </div>
 

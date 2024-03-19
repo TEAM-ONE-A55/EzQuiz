@@ -2,7 +2,7 @@ import { useState, useEffect, useContext } from "react";
 import { getAllQuizzesFromDatabase } from "../../../services/quiz.service";
 import { AppContext } from "../../../context/AppContext";
 import SimpleQuiz from "../SimpleQuiz/SimpleQuiz";
-
+import { reactSelectStyles } from "../../../services/react-select-styles";
 import Select from "react-select";
 import { quizSortingOptions } from "../../../constants/constants";
 
@@ -24,28 +24,31 @@ export default function BrowseQuizzes() {
 
   if (quizzes.length !== 0) {
     return (
-      <div>
-        <br />
-        <div className="flex justify-center">
-          <div className="mb-3 xl:w-96">
+      <div className="mt-8">
+        <div className="flex flex-col  max-w-[60%] justify-center mx-auto">
+          <h2 className="font-extrabold mb-8 tracking-tight text-neutral-800 md:text-4xl lg:text-4xl">
+            Explore a diverse collection of <span className="text-yellow-400">engaging quizzes </span>
+            tailored to your <span className="text-yellow-400">interests</span>  and knowledge levels. 
+            
+          </h2>
+          <div className="mx-auto min-w-[600px] flex flex-row">
             <input
               type="search"
               onChange={(e) => setSearchTerm(e.target.value)}
-              className="relative m-0 block w-full min-w-0 flex-auto rounded border border-solid border-neutral-300 bg-transparent bg-clip-padding px-3 py-[0.25rem] text-base font-normal leading-[1.6] text-black outline-none transition duration-200 ease-in-out focus:z-[3] focus:border-primary focus:text-neutral-700 focus:shadow-neutral-600 focus:outline-none"
+              className="pl-3 mr-2 h-[38px] outline-none border-none rounded-md p-2 w-full transition duration-75 ease-in-out shadow-lg shadow-neutral-200"
               id="exampleSearch"
               placeholder="Search quizzes..."
             />
+            {
+              <Select
+                defaultValue={quizSortingOptions[3]}
+                options={quizSortingOptions}
+                onChange={handleSort}
+                className="basic-multi-select w-56 mx-auto"
+                styles={reactSelectStyles}
+              />
+            }
           </div>
-          {
-            <Select
-              name="quizzes"
-              options={quizSortingOptions}
-              className="basic-multi-select"
-              classNamePrefix="select"
-              value={quizSortBy}
-              onChange={handleSort}
-            />
-          }
         </div>
         <div className="grid grid-cols-4 mt-16 max-w-screen-xl m-auto justify-items-center gap-y-16">
           {quizzes &&
@@ -77,12 +80,12 @@ export default function BrowseQuizzes() {
     );
   } else {
     return (
-      <div className="max-w-screen-xl m-auto justify-items-center mt-28">
-        <h2 className="mb-4 font-extrabold leading-none tracking-tight text-gray-900 md:text-5xl lg:text-4xl dark:text-white">
-          No quizzes are available at the moment.
-          <br />
-          Please contact your organizer for further details.
-        </h2>
+      <div className="mt-8">
+        <div className="flex flex-col  max-w-[60%] justify-center mx-auto">
+          <h2 className="font-extrabold mb-8 tracking-tight text-neutral-800 md:text-4xl lg:text-4xl">
+            No quizzes are available at the moment. Please contact your educator for further instructions.
+          </h2>
+        </div>
       </div>
     );
   }
