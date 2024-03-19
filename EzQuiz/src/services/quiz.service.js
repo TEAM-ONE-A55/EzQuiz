@@ -121,3 +121,9 @@ export const determineQuizStatus = (quiz) => {
     return "Finished";
   }
 }
+
+
+export const updateQuizWithKey = async(id, key, value) => {
+const path = `quizzes/${id}/${key}`;
+return update(ref(db), {[path]: value})
+}
