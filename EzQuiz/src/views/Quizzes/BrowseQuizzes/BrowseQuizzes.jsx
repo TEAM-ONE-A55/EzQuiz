@@ -19,7 +19,7 @@ export default function BrowseQuizzes() {
   };
 
   useEffect(() => {
-    getAllQuizzesFromDatabase("creator").then(setQuizzes);
+    getAllQuizzesFromDatabase("createdOn").then(setQuizzes);
   }, [change]);
 
   if (quizzes.length !== 0) {
@@ -35,7 +35,7 @@ export default function BrowseQuizzes() {
             <input
               type="search"
               onChange={(e) => setSearchTerm(e.target.value)}
-              className="pl-3 mr-2 h-[38px] outline-none border-none rounded-md p-2 w-full transition duration-75 ease-in-out shadow-lg shadow-neutral-200"
+              className="pl-3 mr-2 h-[38px] outline-none border-none rounded-[4px] p-2 w-full transition duration-75 ease-in-out shadow-lg shadow-neutral-200"
               id="exampleSearch"
               placeholder="Search quizzes..."
             />
@@ -62,9 +62,9 @@ export default function BrowseQuizzes() {
               })
               .filter((quiz) => {
                 if (user && userData.role === "student" || user && userData.role === "educator") {
-                  return quiz.visibility === "public";
+                  return quiz.visibility.toLowerCase() === "public";
                 } else if (!user) {
-                  return quiz.visibility === "public";
+                  return quiz.visibility.toLowerCase() === "public";
                 } else {
                   return true;
                 }

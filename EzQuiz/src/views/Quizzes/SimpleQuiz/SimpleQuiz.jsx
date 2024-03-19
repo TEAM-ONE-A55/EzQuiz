@@ -81,7 +81,7 @@ export default function SimpleQuiz({ quiz, setChange, hubType, hubId }) {
       </div>
       {user && userData.role !== "student" && (
         <div className="absolute bottom-5 left-6 text-slate-400">
-          {quiz.visibility === "public" ? (
+          {quiz.visibility.toLowerCase() === "public" ? (
             <svg
               xmlns="http://www.w3.org/2000/svg"
               fill="none"
@@ -129,7 +129,7 @@ export default function SimpleQuiz({ quiz, setChange, hubType, hubId }) {
               )
             : status === "Ongoing" && (
                 <button
-                  className=" text-gray-900 font-semibold text-sm rounded-md max-w-32 px-4 py-2 duration-75 ease-in-out bg-neutral-200 hover:bg-gray-50"
+                  className=" mx-auto block rounded-md bg-yellow-400 px-3 pt-1.5 pb-1 text-sm font-medium uppercase leading-normal text-neutral-800 shadow-[0_4px_9px_-4px_#3b71ca] transition duration-150 ease-in-out hover:bg-yellow-500 hover:shadow-neutral-800"
                   onClick={takeQuiz}
                 >
                   Take Quiz

@@ -39,9 +39,9 @@ export default function SimpleQuizOptionsMenu({ quiz, id, handle, setChange, hub
             </Menu.Item>
             <Menu.Item>
                 <button className="block px-4 py-2 text-sm text-gray-700 hover:bg-slate-100 w-full duration-75 ease-in-out"
-                onClick={() => {
-                    deleteQuizFromDatabase(id, handle, hubType, hubId);
-                    updateHub(hubType, hubId, "quizzes", id, null )
+                onClick={async () => {
+                    await deleteQuizFromDatabase(id, handle, hubType, hubId);
+                    await updateHub(hubType, hubId, "quizzes", id, null )
                     setChange((prev) => prev + 1);
                     }}>
                     Delete
