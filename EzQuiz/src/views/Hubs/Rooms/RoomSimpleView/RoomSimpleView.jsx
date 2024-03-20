@@ -3,7 +3,6 @@ import { useNavigate } from "react-router";
 import { AppContext } from "../../../../context/AppContext";
 import Loader from "../../../../components/Loader/Loader";
 import PropTypes from "prop-types";
-import "./RoomSimpleView.css";
 
 export default function RoomSimpleView({ room, hasRooms, loading, leaveRoom, deleteRoom }) {
   
@@ -21,60 +20,57 @@ export default function RoomSimpleView({ room, hasRooms, loading, leaveRoom, del
   return (
     <div
       key={room.id}
-      className="block max-w-[26rem] rounded-lg bg-white text-surface shadow-secondary-1 dark:bg-surface-dark dark:text-black simple-room-container"
+      className="bg-neutral-50 w-64 rounded-xl flex-col h-[450px] relative shadow-neutral-500 shadow-xl"
     >
       <div className="relative overflow-hidden bg-cover bg-no-repeat">
-        <img className="rounded-t-lg" src={room.image_cover} alt="" />
+        <img className="w-64 h-36 object-cover border-none rounded-t-xl" src={room.image_cover} alt="" />
       </div>
       <br />
       <h5 className="mb-2 text-xl font-medium leading-tight room-title">
         {room.name}
       </h5>
-      <div className="p-6">
+      <div className=" mb-3">
         <p className="text-base">Creator: {room.creator}</p>
       </div>
-      <ul className="w-full">
-        <li className="w-full border-b-2 border-neutral-100 border-opacity-100 px-6 py-3  dark:border-white/10">
+      <ul className="w-full flex flex-col justify-center items-center gap-3">
+        <li className="w-full border-opacity-100 ">
           Active Participants:{" "}
           {(room.participants &&
             Object.values(room.participants).filter((p) => p === "accepted")
               .length + 1) ||
             1}
         </li>
-        <li className="w-full border-b-2 border-neutral-100 border-opacity-100 px-6 py-3  dark:border-white/10">
+        <li className="w-full border-opacity-100 ">
           Total Participants:{" "}
           {(room.participants && Object.values(room.participants).length + 1) ||
             1}
         </li>
-        <li className="w-full border-neutral-100 border-opacity-100 px-6 py-3  dark:border-white/10">
+        <li className="w-full border-opacity-100 ">
           Total Quizzes:{" "}
           {(room.quizzes && Object.values(room.quizzes).length) || 0}
         </li>
       </ul>
-      <div className="p-6">
-        <a
-          type="button"
-          className="pointer-events-auto me-5 inline-block cursor-pointer rounded text-base font-normal leading-normal text-primary transition duration-150 ease-in-out hover:text-primary-600 focus:text-primary-600 focus:outline-none focus:ring-0 active:text-primary-700 dark:text-primary-400"
+      <div className="absolute bottom-6 left-[50%] translate-x-[-50%] flex mt-[25%] justify-center items-center gap-2">
+        <button
+          className="w-[80px] block rounded-lg bg-yellow-400 pt-1.5 pb-1 text-sm font-medium cursor-pointer uppercase leading-normal text-neutral-800 shadow-[0_4px_9px_-4px_#3b71ca] transition duration-75 ease-in-out hover:bg-yellow-500 hover:shadow-neutral-800"
           onClick={() => navigate(`/my-rooms/${room.id}`)}
         >
-          Enter room
-        </a>
+          Enter
+        </button>
         {userData.handle !== room.creator ? (
-          <a
-            type="button"
-            className="pointer-events-auto inline-block cursor-pointer rounded text-base font-normal leading-normal text-primary transition duration-150 ease-in-out hover:text-primary-600 focus:text-primary-600 focus:outline-none focus:ring-0 active:text-primary-700 dark:text-primary-400"
+          <button
+            className="w-[80px] block rounded-lg bg-yellow-400 pt-1.5 pb-1 text-sm font-medium cursor-pointer uppercase leading-normal text-neutral-800 shadow-[0_4px_9px_-4px_#3b71ca] transition duration-75 ease-in-out hover:bg-yellow-500 hover:shadow-neutral-800"
             onClick={() => leaveRoom(room.id)}
           >
-            Leave room
-          </a>
+            Leave
+          </button>
         ) : (
-          <a
-            type="button"
-            className="pointer-events-auto inline-block cursor-pointer rounded text-base font-normal leading-normal text-primary text-gray-800 transition duration-150 ease-in-out hover:text-primary-600 focus:text-primary-600 focus:outline-none focus:ring-0 active:text-primary-700 dark:text-primary-400"
+          <button
+            className="w-[80px] block rounded-lg bg-yellow-400 pt-1.5 pb-1 text-sm font-medium cursor-pointer uppercase leading-normal text-neutral-800 shadow-[0_4px_9px_-4px_#3b71ca] transition duration-75 ease-in-out hover:bg-yellow-500 hover:shadow-neutral-800"
             onClick={() => deleteRoom(room.id, room.uuid, room.image_cover)}
           >
-            Delete room
-          </a>
+            Delete
+          </button>
         )}
       </div>
     </div>
