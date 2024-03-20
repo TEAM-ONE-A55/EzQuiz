@@ -4,7 +4,7 @@ import { AppContext } from "../../../context/AppContext";
 import SimpleQuiz from "../SimpleQuiz/SimpleQuiz";
 import { reactSelectStyles } from "../../../services/react-select-styles";
 import Select from "react-select";
-import { quizSortingOptions } from "../../../constants/constants";
+import { API_CATEGORIES, quizSortingOptions } from "../../../constants/constants";
 
 export default function BrowseQuizzes() {
   const [quizzes, setQuizzes] = useState([]);
@@ -16,12 +16,15 @@ export default function BrowseQuizzes() {
 
   const handleSort = (e) => {
     setQuizSortBy(e.value);
+
   };
 
   useEffect(() => {
     getAllQuizzesFromDatabase("createdOn").then(setQuizzes);
   }, [change]);
 
+
+  
   if (quizzes.length !== 0) {
     return (
       <div className="mt-8">
@@ -40,7 +43,7 @@ export default function BrowseQuizzes() {
             />
             {
               <Select
-                defaultValue={quizSortingOptions[3]}
+                defaultValue={quizSortingOptions[0]}
                 options={quizSortingOptions}
                 onChange={handleSort}
                 className="basic-multi-select w-56 mx-auto"
@@ -56,7 +59,7 @@ export default function BrowseQuizzes() {
                 if (quizSortBy === "all") {
                   return true;
                 } else {
-                  return quiz.difficulty === quizSortBy;
+                  return quiz.category == quizSortBy;
                 }
               })
               .filter((quiz) => {
