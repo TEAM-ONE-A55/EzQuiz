@@ -92,7 +92,7 @@ export default function App() {
                 {context.userData && context.userData.role === "educator" && <Dashboard><EducatorDashboard /></Dashboard>}
                 {context.userData && context.userData.role === "admin" && <Dashboard><AdminDashboard /></Dashboard>}
               </>
-              ) : <LandingPage />} />
+            ) : <LandingPage />} />
 
             <Route path="/signup" element={<Registration />} />
             <Route path="/signin" element={<Login />} />

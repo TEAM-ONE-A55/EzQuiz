@@ -39,7 +39,7 @@ export const maxQuizPassingScore = 100;
 export const verificationCode = "1234";
 
 export const navigationEducator = [
-  { name: "Dashboard", href: "/dashboard-educators", current: true },
+  { name: "Dashboard", href: "/", current: true },
   { name: "Browse Quizzes", href: "/browse-quizzes", current: false },
   { name: "Sample Quiz", href: "/sample-quiz", current: false },
   { name: "Create Quiz", href: "/create-quiz", current: false },
@@ -48,13 +48,13 @@ export const navigationEducator = [
 ];
 
 export const navigationParticipant = [
-  { name: "Dashboard", href: "/dashboard", current: true },
+  { name: "Dashboard", href: "/", current: true },
   { name: "Browse Quizzes", href: "/browse-quizzes", current: false },
   { name: "Sample Quiz", href: "/sample-quiz", current: false },
 ];
 
 export const navigationAdmin = [
-  { name: "Dashboard", href: "/dashboard-admin", current: false },
+  { name: "Dashboard", href: "/", current: false },
   { name: "Browse Quizzes", href: "/browse-quizzes", current: false },
   { name: "Sample Quiz", href: "/sample-quiz", current: false },
   // { name: "Search", href: "/search", current: false },
