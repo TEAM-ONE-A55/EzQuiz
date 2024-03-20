@@ -21,13 +21,18 @@ export default function Score({ questions, finishTime, quiz, category }) {
     setScore(correctAnswers.length * 10);
   }, []);
 
+  console.log(score)
+
   useEffect(() => {
-    if (user && userData && userData.role !== "educator") {
+    if (user && userData && userData.role === "student") {
       if (userData.score) {
-        updateUserData(userData.handle, "score", (userData.score += score));
+        console.log(userData.score)
+        updateUserData(userData.handle, "score", (userData.score += +score));
       } else {
-        updateUserData(userData.handle, "score", score);
+        console.log(userData.score)
+        updateUserData(userData.handle, "score", +score);
       }
+      console.log(userData.score)
 
       if (id.length > 3 && userData.role === "student") {
         if (
