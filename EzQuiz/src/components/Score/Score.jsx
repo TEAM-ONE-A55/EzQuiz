@@ -26,13 +26,10 @@ export default function Score({ questions, finishTime, quiz, category }) {
   useEffect(() => {
     if (user && userData && userData.role === "student") {
       if (userData.score) {
-        console.log(userData.score)
         updateUserData(userData.handle, "score", (userData.score += +score));
       } else {
-        console.log(userData.score)
         updateUserData(userData.handle, "score", +score);
       }
-      console.log(userData.score)
 
       if (id.length > 3 && userData.role === "student") {
         if (
