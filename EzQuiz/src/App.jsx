@@ -421,6 +421,20 @@ export default function App() {
               }
             ></Route>
             <Route
+              path="all-users/profile/:handle"
+              element={
+                <Authenticated>
+                  {context &&
+                  context.userData &&
+                  context.userData.role === "admin" ? (
+                    <PublicProfile />
+                  ) : (
+                    <Forbidden />
+                  )}
+                </Authenticated>
+              }
+            ></Route>
+            <Route
               path="all-quizzes/profile/:handle"
               element={
                 <Authenticated>
