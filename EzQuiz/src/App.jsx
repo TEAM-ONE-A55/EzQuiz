@@ -85,9 +85,17 @@ export default function App() {
             setNotifications={setNotifications}
           />
           <Routes className="min-h-screen">
-            <Route path="/" element={<LandingPage />}></Route>
-            <Route path="/signup" element={<Registration />}></Route>
-            <Route path="/signin" element={<Login />}></Route>
+
+            <Route path="/" element={user ? (
+              <>
+                {context.userData && context.userData.role === "student" && <Dashboard><StudentsDashboard /></Dashboard>}
+                {context.userData && context.userData.role === "educator" && <Dashboard><EducatorDashboard /></Dashboard>}
+                {context.userData && context.userData.role === "admin" && <Dashboard><AdminDashboard /></Dashboard>}
+              </>
+              ) : <LandingPage />} />
+
+            <Route path="/signup" element={<Registration />} />
+            <Route path="/signin" element={<Login />} />
             <Route
               path="/single-quiz/:id"
               element={
@@ -198,40 +206,8 @@ export default function App() {
                 </Authenticated>
               }
             ></Route>
-            <Route path="/results/:id" element={<ViewResults />}></Route>
-            <Route
-              path="/dashboard"
-              element={
-                <Authenticated>
-                  {context &&
-                  context.userData &&
-                  context.userData.role === "student" ? (
-                    <Dashboard>
-                      <StudentsDashboard />
-                    </Dashboard>
-                  ) : (
-                    <Forbidden />
-                  )}
-                </Authenticated>
-              }
-            ></Route>
-            <Route
-              path="/dashboard-educators"
-              element={
-                <Authenticated>
-                  {context &&
-                  context.userData &&
-                  context.userData.role === "educator" ? (
-                    <Dashboard>
-                      <EducatorDashboard />
-                    </Dashboard>
-                  ) : (
-                    <Forbidden />
-                  )}
-                </Authenticated>
-              }
-            ></Route>
-            <Route path="scoreboard" element={<Scoreboards />}></Route>
+            <Route path="/results/:id" element={<ViewResults />} />
+            <Route path="scoreboard" element={<Scoreboards />} />
             <Route
               path="all-users"
               element={
@@ -240,22 +216,6 @@ export default function App() {
                   context.userData &&
                   context.userData.role === "admin" ? (
                     <AllUsers />
-                  ) : (
-                    <Forbidden />
-                  )}
-                </Authenticated>
-              }
-            ></Route>
-            <Route
-              path="dashboard-admin"
-              element={
-                <Authenticated>
-                  {context &&
-                  context.userData &&
-                  context.userData.role === "admin" ? (
-                    <Dashboard>
-                      <AdminDashboard />
-                    </Dashboard>
                   ) : (
                     <Forbidden />
                   )}

@@ -13,7 +13,7 @@ import {
     return signInWithEmailAndPassword(auth, email, password);
   };
   
-  export const logoutUser = () => {
-    signOut(auth);
+  export const logoutUser = async () => {
+    await signOut(auth);
   };
   

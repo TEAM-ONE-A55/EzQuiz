@@ -108,8 +108,8 @@ export default function NavBar({ notifications, setNotifications }) {
     setNavigation(updatedNavigation);
   };
 
-  const logout = () => {
-    logoutUser();
+  const logout = async () => {
+    await logoutUser();
     setContext({ user: null, userData: null });
     navigate("/");
     setNotifications({
@@ -148,17 +148,7 @@ export default function NavBar({ notifications, setNotifications }) {
                     src={Logo}
                     alt="ezquiz-logo"
                     onClick={() => {
-                      if (userData) {
-                        if (userData.role === "admin") {
-                          navigate("/dashboard-admin");
-                        } else if (userData.role === "educator") {
-                          navigate("/dashboard-educators");
-                        } else {
-                          navigate("/dashboard");
-                        }
-                      } else {
-                        navigate("/");
-                      }
+                      navigate("/");
                     }}
                   />
                 </div>
