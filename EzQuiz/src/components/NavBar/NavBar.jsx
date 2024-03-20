@@ -16,14 +16,14 @@ import "./NavBar.css";
 import Button from "../Button/Button";
 import { getAllHubs } from "../../services/hub.service";
 import Notifications from "../Notifications/Notifications";
-import PropTypes from "prop-types"
-import Logo from '../../images/Logo.png';
+import PropTypes from "prop-types";
+import Logo from "../../images/Logo.png";
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
 }
 
-export default function NavBar({notifications, setNotifications}) {
+export default function NavBar({ notifications, setNotifications }) {
   const { userData, user, setContext } = useContext(AppContext);
   const [navigation, setNavigation] = useState([]);
   const [rooms, setRooms] = useState([]);
@@ -87,7 +87,6 @@ export default function NavBar({notifications, setNotifications}) {
           return acc;
         }, []);
 
-
         if (newGroupInvitations.length > 0) {
           setNotifications((prevNotifications) => ({
             ...prevNotifications,
@@ -122,7 +121,10 @@ export default function NavBar({notifications, setNotifications}) {
   };
 
   return (
-    <Disclosure as="nav" className="bg-neutral-900 border-b border-b-neutral-700">
+    <Disclosure
+      as="nav"
+      className="bg-neutral-900 border-b border-b-neutral-700"
+    >
       {({ open }) => (
         <>
           <div className="mx-auto max-w-15xl px-2 sm:px-6 lg:px-8 navigation-bar">
@@ -145,7 +147,19 @@ export default function NavBar({notifications, setNotifications}) {
                     className="h-8 w-auto border-none cursor-pointer mt-2"
                     src={Logo}
                     alt="ezquiz-logo"
-                    onClick={() => navigate("/")}
+                    onClick={() => {
+                      if (userData) {
+                        if (userData.role === "admin") {
+                          navigate("/dashboard-admin");
+                        } else if (userData.role === "educator") {
+                          navigate("/dashboard-educators");
+                        } else {
+                          navigate("/dashboard");
+                        }
+                      } else {
+                        navigate("/");
+                      }
+                    }}
                   />
                 </div>
                 <div className="hidden sm:ml-6 sm:block">
@@ -258,5 +272,5 @@ export default function NavBar({notifications, setNotifications}) {
 
 NavBar.propTypes = {
   notifications: PropTypes.object,
-  setNotifications: PropTypes.func
-}
+  setNotifications: PropTypes.func,
+};
