@@ -18,7 +18,6 @@ import {
   getCoverImage,
 } from "../../../../services/storage.service";
 import { defaultCoverGroup } from "../../../../constants/constants";
-import "./MyGroups.css";
 
 export default function MyGroups({ notifications }) {
   const { userData } = useContext(AppContext);
@@ -130,13 +129,12 @@ export default function MyGroups({ notifications }) {
   return (
     <div>
       {userData && userData.groups && hasGroups ? (
-        <>
-          <div className="my-groups-content">
-            <h2 className="mb-4 font-extrabold leading-none tracking-tight text-gray-900 md:text-5xl lg:text-4xl dark:text-white">
+        <div className="mt-8 max-w-screen-xl mx-auto">
+          <div className="">
+            <h2 className="mb-4 font-extrabold leading-none tracking-tighter text-gray-900 md:text-5xl lg:text-4xl dark:text-white">
               My{" "}
-              <span className="text-blue-600 dark:text-blue-500">Groups</span>
+              <span className="text-yellow-400">Groups</span>
             </h2>
-            <br />
 
             <p className="text-lg font-normal text-gray-500 lg:text-xl dark:text-gray-400">
               Your personalized hubs for seamless collaborating with fellow
@@ -144,7 +142,7 @@ export default function MyGroups({ notifications }) {
               participant performance.
             </p>
           </div>
-          <div className="groups-container">
+          <div className="grid grid-cols-4 mt-16 max-w-screen-xl m-auto justify-items-center gap-y-16">
             {groups.length !== 0 &&
               groups.map((group) => {
                 return (
@@ -160,32 +158,26 @@ export default function MyGroups({ notifications }) {
                 );
               })}
           </div>
-        </>
+        </div>
       ) : (
-        <div className="my-groups-content">
-          <p className="mb-4 font-extrabold leading-none tracking-tight text-gray-900 md:text-5xl lg:text-4xl dark:text-white">
+        <div className="w-3/5 mx-auto mt-16">
+          <p className="font-extrabold leading-none tracking-tighter text-gray-900 md:text-5xl lg:text-4xl">
             {" "}
-            You don&apos;t have any groups yet.
+            You aren&apos;t participating in any groups yet.
           </p>
-
-          <br />
-          <Button onClick={() => navigate("/create-group")}>
-            Create Group
-          </Button>
-          <br />
-          <br />
-          <p className="text-lg font-normal text-gray-500 lg:text-xl dark:text-gray-400">
-            If you haven&apos;t created any groups yet, you can start by
-            creating one. Click on the &quot;Create Group&quot; button to
-            initiate the process.
-          </p>
-          <br />
-          <br />
-          <p className="text-lg font-normal text-gray-500 lg:text-xl dark:text-gray-400">
-            If you&apos;ve been invited to join a group, make sure to accept the
-            invitation. Check your notifications to see if there are any pending
-            group invites.
-          </p>
+          <div className="my-8">
+            <p className="text-lg font-normal text-gray-500 lg:text-xl dark:text-gray-400">
+                  However, you can start by
+                  creating one. If you&apos;ve been invited to join a group, make sure to accept the
+                  invitation. Check your notifications to see if there are any pending
+                  group invites.
+            </p>
+            <button 
+            className="w-[40%] mx-auto my-8 block rounded-lg bg-yellow-400 px-6 pt-2.5 pb-2 text-sm font-medium uppercase leading-normal text-neutral-800 shadow-[0_4px_9px_-4px_#3b71ca] transition duration-150 ease-in-out hover:bg-yellow-500 hover:shadow-neutral-800"
+            onClick={() => navigate("/create-group")}>
+              Create Group
+            </button>
+          </div>
         </div>
       )}
     </div>
