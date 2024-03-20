@@ -61,7 +61,7 @@ export const register = async (form, navigate) => {
     );
     setTimeout(() => {
       if (form.role === "educator") navigate("/dashboard-educators");
-      else navigate("/dashboard");
+      else navigate("/");
     }, 2000);
     return toast.success(
       "Congratulations! Your account has been successfully created!"

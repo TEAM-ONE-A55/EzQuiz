@@ -9,8 +9,8 @@ export default function StudentsDashboard() {
 
   return (
     userData && (
-      <div className="mt-32 w-4/5 mx-auto">
-        <h2 className="mb-4 font-extrabold leading-none tracking-tight text-neutral-800 md:text-4xl lg:text-4xl">
+      <div className="mt-16 w-4/5 mx-auto">
+        <h2 className="mb-4 font-extrabold leading-none tracking-tighter text-neutral-800 md:text-4xl lg:text-4xl">
           Hello, <span className="text-yellow-400">{userData.handle}</span>!
           Welcome to Your Personalized Hub!
         </h2>
