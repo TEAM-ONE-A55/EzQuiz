@@ -68,7 +68,7 @@ export default function SetAvatar() {
       <img src={userData.avatar} alt={userData.firstName + "" + userData.lastName}
       className="w-64 h-64 rounded-full border-none shadow-neutral-500 shadow-lg  opacity-100 bg-black"
       />
-      <div className="bg-black absolute w-64 h-64 rounded-full top-0 left-[21px] opacity-25"></div>
+      <div className="bg-black absolute w-64 h-64 rounded-full top-0 left-[22px] opacity-25"></div>
       <div>
         {userData.avatar === defaultAvatar && (
           <div className="">

@@ -83,11 +83,11 @@ export default function MyQuizzes() {
   }, [quizIds]);
 
   return (
-    <div>
+    <div className="">
       {quizzes && quizzes.length !== 0 ? (
-        <>
-          <div className="my-groups-content">
-            <h2 className="mb-4 font-extrabold leading-none tracking-tight text-gray-900 md:text-5xl lg:text-4xl dark:text-white">
+        <div className="mt-8 max-w-screen-xl mx-auto">
+          <div className="">
+            <h2 className="font-extrabold leading-none tracking-tighter text-gray-900 md:text-5xl lg:text-4xl dark:text-white">
               My{" "}
               <span className="text-yellow-400">Quizzes</span>
             </h2>
@@ -119,30 +119,27 @@ export default function MyQuizzes() {
               </div>
             ))}
           </div>
-        </>
+        </div>
       ) : (
-        <div className="my-groups-content">
+        <div className="mt-16">
           {userData.role === "educator" ? (
-            <>
-              <p className="mb-4 font-extrabold leading-none tracking-tight text-gray-900 md:text-5xl lg:text-4xl dark:text-white">
+            <div className="max-w-screen-md mx-auto flex flex-col justify-center items-center gap-4">
+              <p className="font-extrabold leading-none tracking-tighter text-gray-900 md:text-4xl">
                 {" "}
-                You don&apos;t have any quizzes yet.
+                You haven&apos;t created any quizzes yet.
               </p>
-              <br />
-              <Button onClick={() => navigate("/create-quiz")}>
+              <p className="text-lg font-normal text-gray-500 lg:text-xl dark:text-gray-400 tracking-tight">
+                However, you can start by creating one.
+              </p>
+              <button 
+              className="w-[40%] mx-auto mt-4 block rounded-lg bg-yellow-400 px-6 pt-2.5 pb-2 text-sm font-medium uppercase leading-normal text-neutral-800 shadow-[0_4px_9px_-4px_#3b71ca] transition duration-150 ease-in-out hover:bg-yellow-500 hover:shadow-neutral-800 focus:outline-none focus:ring-0"
+              onClick={() => navigate("/create-quiz")}>
                 Create Quiz
-              </Button>
+              </button>
               <br />
-              <br />
-              <p className="text-lg font-normal text-gray-500 lg:text-xl dark:text-gray-400">
-                If you haven&apos;t created any quizzes yet, you can start by
-                creating one. Click on the &quot;Create Quiz&quot; button to
-                initiate the process.
-              </p>
-              <br />
-            </>
+            </div>
           ) : (
-            <p className="mb-4 font-extrabold leading-none tracking-tight text-gray-900 md:text-5xl lg:text-4xl dark:text-white">
+            <p className="font-extrabold leading-none tracking-tighter text-gray-900 md:text-5xl lg:text-4xl dark:text-white">
               {" "}
               You&apos;re all caught up! No pending quizzes.
             </p>

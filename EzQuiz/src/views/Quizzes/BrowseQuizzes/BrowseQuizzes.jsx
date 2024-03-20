@@ -26,10 +26,9 @@ export default function BrowseQuizzes() {
     return (
       <div className="mt-8">
         <div className="flex flex-col  max-w-[60%] justify-center mx-auto">
-          <h2 className="font-extrabold mb-8 tracking-tight text-neutral-800 md:text-4xl lg:text-4xl">
+          <h2 className="font-extrabold mb-8 tracking-tighter text-neutral-800 md:text-4xl lg:text-4xl">
             Explore a diverse collection of <span className="text-yellow-400">engaging quizzes </span>
             tailored to your <span className="text-yellow-400">interests</span>  and knowledge levels. 
-            
           </h2>
           <div className="mx-auto min-w-[600px] flex flex-row">
             <input

@@ -88,21 +88,23 @@ export default function MyCompletedQuizzes() {
           </div>
         </>
       ) : (
-        <div className="create-room-container w-3/5 mx-auto">
-          <h2 className="mb-4 font-extrabold leading-none tracking-tight text-neutral-800 md:text-4xl lg:text-4xl">
-            No Completed Quizzes Yet
+        <div className="create-room-container w-3/5 mx-auto mt-16">
+          <h2 className="mb-4 font-extrabold leading-none tracking-tighter text-neutral-800 md:text-4xl lg:text-4xl">
+            No Completed Quizzes Yet.
           </h2>
           <br />
-          <p className="text-lg font-normal text-neutral-600 lg:text-xl">
+          <p className="text-lg font-normal tracking-tight text-neutral-600 lg:text-xl">
             Looks like you haven&apos;t completed any quizzes yet! Start your
             quiz journey now and challenge yourself. Explore our quiz library
             and test your knowledge on various topics. Let the learning
             adventure begin!
           </p>
           <div className="mx-auto mt-12">
-            <ButtonLanding onClick={() => navigate("/browse-quizzes")}>
+            <button
+            className="w-[60%] mx-auto mt-8 block rounded-lg bg-yellow-400 px-6 pt-2.5 pb-2 text-sm font-medium uppercase text-neutral-800 shadow-[0_4px_9px_-4px_#3b71ca] transition duration-150 ease-in-out hover:bg-yellow-500 hover:shadow-neutral-800 focus:outline-none focus:ring-0"
+            onClick={() => navigate("/browse-quizzes")}>
               Start Your Journey with Public Quizzes
-            </ButtonLanding>
+            </button>
           </div>
         </div>
       )}

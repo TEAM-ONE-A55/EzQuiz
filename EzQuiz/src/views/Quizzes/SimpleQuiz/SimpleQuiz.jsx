@@ -37,9 +37,9 @@ export default function SimpleQuiz({ quiz, setChange, hubType, hubId, groupView 
 
 
   return (
-    <div className=" bg-gray-50 w-64 rounded-xl flex-col h-[450px] relative shadow-neutral-500 shadow-xl">
+    <div className="bg-neutral-50 w-64 rounded-xl flex-col h-[450px] relative shadow-neutral-500 shadow-xl">
       <img
-        className=" w-64 h-36 object-cover border-none rounded-t-xl"
+        className="w-64 h-36 object-cover border-none rounded-t-xl"
         src={simpleQuizImage}
         alt="quiz"
       />
