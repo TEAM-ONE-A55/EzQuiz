@@ -26,12 +26,6 @@ function classNames(...classes) {
 export default function NavBar({notifications, setNotifications}) {
   const { userData, user, setContext } = useContext(AppContext);
   const [navigation, setNavigation] = useState([]);
-  // const [notifications, setNotifications] = useState({
-  //   quizInvitations: [],
-  //   roomInvitations: [],
-  //   groupInvitations: [],
-  //   feedback: [],
-  // });
   const [rooms, setRooms] = useState([]);
   const [groups, setGroups] = useState([]);
   const navigate = useNavigate();

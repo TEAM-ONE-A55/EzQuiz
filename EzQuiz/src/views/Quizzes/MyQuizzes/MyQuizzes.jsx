@@ -5,7 +5,6 @@ import {
   getAllQuizzesFromDatabase,
   getQuizById,
 } from "../../../services/quiz.service";
-import Button from "../../../components/Button/Button";
 import { useNavigate } from "react-router";
 import { getHubsById } from "../../../services/hub.service";
 

@@ -73,7 +73,6 @@ export default function AllGroups() {
 
   useEffect(() => {
     getAllGroups();
-    console.log("render");
   }, []);
 
   useEffect(() => {

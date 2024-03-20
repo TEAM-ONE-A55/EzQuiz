@@ -4,10 +4,8 @@ import { updateUserData } from "../../services/user.service";
 import { deleteAvatar, uploadAvatar } from "../../services/storage.service";
 import toast from "react-hot-toast";
 import { defaultAvatar } from "../../constants/constants";
-import Avatar from "../../components/Avatar/Avatar";
-import { faTrash, faUpload } from "@fortawesome/free-solid-svg-icons";
+import { faUpload } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import Button from "../../components/Button/Button";
 
 export default function SetAvatar() {
   const { userData, setContext } = useContext(AppContext);
@@ -59,12 +57,6 @@ export default function SetAvatar() {
 
   return (
     <div className="max-w-[300px] mx-auto relative mt-4 mb-8">
-      {/* <Avatar
-        width="200px"
-        height="200px"
-        url={userData.avatar}
-        onClick={() => {}}
-      /> */}
       <img src={userData.avatar} alt={userData.firstName + "" + userData.lastName}
       className="w-64 h-64 rounded-full border-none shadow-neutral-500 shadow-lg  opacity-100 bg-black"
       />

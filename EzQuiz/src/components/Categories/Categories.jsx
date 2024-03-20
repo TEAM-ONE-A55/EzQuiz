@@ -44,6 +44,6 @@ export default function Categories({ setCategory, initialValue = "" }) {
 }
 
 Categories.propTypes = {
-  initialValue: PropTypes.string,
+  initialValue: PropTypes.number,
   setCategory: PropTypes.func.isRequired,
 };

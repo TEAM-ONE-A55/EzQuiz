@@ -32,8 +32,6 @@ export default function AllUsers() {
 
   const navigate = useNavigate();
 
-  useEffect(() => {}, [user]);
-
   const removeUser = async (handle) => {
     try {
       await deleteUser(handle);
@@ -120,7 +118,7 @@ export default function AllUsers() {
               )
               .map((user) => (
                 <tr
-                  key={user.id}
+                  key={user.handle}
                   className="border-b transition duration-75 ease-in-out hover:bg-neutral-100 border h-[80px] text-center items-center"
                 >
                   <td className=" pl-4">

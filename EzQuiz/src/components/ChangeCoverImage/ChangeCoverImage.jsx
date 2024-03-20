@@ -1,10 +1,9 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { deleteCoverImage, uploadCover } from "../../services/storage.service";
 import { defaultCoverGroup, defaultCoverRoom } from "../../constants/constants";
 import PropTypes from "prop-types";
 import toast from "react-hot-toast";
 import "./ChangeCoverImage.css";
-import Loader from "../Loader/Loader";
 
 export default function ChangeCover({
   attachedImg,
@@ -15,10 +14,9 @@ export default function ChangeCover({
   uuid,
   keyComponent,
 }) {
-  const [loading, setLoading] = useState(false);
+
   useEffect(() => {
     if (attachedImg) {
-      setLoading(true);
       uploadCover(keyComponent, uuid, attachedImg)
         .then((url) => setImageUrl(url))
         .then(() => {
@@ -26,10 +24,7 @@ export default function ChangeCover({
             toast.success("Image uploaded successfully!");
           }, 1500);
         })
-        .catch((e) => console.log(e.message))
-        .finally(() => {
-          setLoading(false);
-        });
+        .catch((e) => console.log(e.message));
     }
   }, [attachedImg, uuid]);
 

@@ -2,7 +2,6 @@ import { useContext, useEffect, useState } from "react";
 import GroupSimpleView from "../GroupSimpleView/GroupSimpleView"
 import { AppContext } from "../../../../context/AppContext";
 import { useNavigate } from "react-router-dom";
-import Button from "../../../../components/Button/Button"
 import PropTypes from "prop-types";
 import {
   getUserByHandle,

@@ -38,7 +38,7 @@ export default function AdminDashboard() {
     getGroups();
     getRooms();
     getQuizzes();
-  }, [users]);
+  }, []);
 
   return (
     userData && (

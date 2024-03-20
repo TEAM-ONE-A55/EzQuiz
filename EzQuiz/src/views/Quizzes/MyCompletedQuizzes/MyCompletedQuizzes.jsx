@@ -5,7 +5,6 @@ import { getQuizById } from "../../../services/quiz.service";
 import SimpleQuiz from "../SimpleQuiz/SimpleQuiz";
 import Button from "../../../components/Button/Button";
 import { useNavigate } from "react-router";
-import ButtonLanding from "../../LandingPage/ButtonLanding/ButtonLanding";
 
 export default function MyCompletedQuizzes() {
   const { userData } = useContext(AppContext);

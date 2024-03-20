@@ -1,5 +1,4 @@
-import { useContext, useEffect, useState } from "react";
-import { AppContext } from "../../context/AppContext";
+import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router";
 import { getAllUsers, getUserByHandle } from "../../services/user.service";
 import { getAllHubs } from "../../services/hub.service";
@@ -11,7 +10,6 @@ import {
   faEnvelope,
   faUserCircle,
   faStar,
-  faS,
   faTrophy,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -77,7 +75,7 @@ export default function PublicProfile() {
     getAllHubs("rooms")
       .then((room) =>
         room.filter((room) =>
-          Object.keys(room.participants).includes(user.handle)
+          room.participants && Object.keys(room.participants).includes(user.handle)
         )
       )
       .then((rooms) => setRooms(rooms.length));

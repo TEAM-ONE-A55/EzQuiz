@@ -142,7 +142,7 @@ export default function AllRooms() {
                   )}
 
                   <td className="whitespace-nowrap px-6 py-4">
-                    {Object.keys(room.participants).length}
+                    {room && room.participants && Object.keys(room.participants).length}
                   </td>
                   {room.quizzes ? (
                     <td className="whitespace-nowrap px-6 py-4">

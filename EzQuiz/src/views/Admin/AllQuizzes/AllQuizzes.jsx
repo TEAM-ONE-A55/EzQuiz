@@ -7,7 +7,6 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPen } from "@fortawesome/free-solid-svg-icons";
 import { useNavigate } from "react-router";
 import toast from "react-hot-toast";
-import React from "react";
 import { quizSortingOptions } from "../../../constants/constants";
 import Select from "react-select";
 import { updateUserData } from "../../../services/user.service";
