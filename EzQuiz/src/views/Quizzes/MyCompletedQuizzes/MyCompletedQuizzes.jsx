@@ -49,6 +49,7 @@ export default function MyCompletedQuizzes() {
       navigate(`/single-quiz/${id}`, { state });
     }
   };
+  console.log(scoreData);
   return (
     <>
       {quizzes && quizzes.length !== 0 ? (
@@ -100,8 +101,9 @@ export default function MyCompletedQuizzes() {
           </p>
           <div className="mx-auto mt-12">
             <button
-            className="w-[60%] mx-auto mt-8 block rounded-lg bg-yellow-400 px-6 pt-2.5 pb-2 text-sm font-medium uppercase text-neutral-800 shadow-[0_4px_9px_-4px_#3b71ca] transition duration-150 ease-in-out hover:bg-yellow-500 hover:shadow-neutral-800 focus:outline-none focus:ring-0"
-            onClick={() => navigate("/browse-quizzes")}>
+              className="w-[60%] mx-auto mt-8 block rounded-lg bg-yellow-400 px-6 pt-2.5 pb-2 text-sm font-medium uppercase text-neutral-800 shadow-[0_4px_9px_-4px_#3b71ca] transition duration-150 ease-in-out hover:bg-yellow-500 hover:shadow-neutral-800 focus:outline-none focus:ring-0"
+              onClick={() => navigate("/browse-quizzes")}
+            >
               Start Your Journey with Public Quizzes
             </button>
           </div>

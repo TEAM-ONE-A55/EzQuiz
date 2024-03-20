@@ -21,8 +21,6 @@ export default function Score({ questions, finishTime, quiz, category }) {
     setScore(correctAnswers.length * 10);
   }, []);
 
-  console.log(score)
-
   useEffect(() => {
     if (user && userData && userData.role === "student") {
       if (userData.score) {
@@ -43,16 +41,19 @@ export default function Score({ questions, finishTime, quiz, category }) {
             quiz: quiz,
             category: category,
           });
-          userData.participatedQuizzes = {...userData.participatedQuizzes, [id]: {
-            id: id,
-            questions: questions,
-            finishTime: finishTime,
-            quiz: quiz,
-            category: category,
-            completedOn: Date.now(),
-            score: score
-          }}
-          setContext(prev => prev, userData)
+          userData.participatedQuizzes = {
+            ...userData.participatedQuizzes,
+            [id]: {
+              id: id,
+              questions: questions,
+              finishTime: finishTime,
+              quiz: quiz,
+              category: category,
+              completedOn: Date.now(),
+              score: score,
+            },
+          };
+          setContext((prev) => prev, userData);
         } else if (!userData.participatedQuizzes) {
           updateUserData(userData.handle, `participatedQuizzes/${id}`, {
             id: id,
@@ -61,18 +62,21 @@ export default function Score({ questions, finishTime, quiz, category }) {
             quiz: quiz,
             category: category,
             completedOn: Date.now(),
-            score: score
+            score: score,
           });
-          userData.participatedQuizzes = {...userData.participatedQuizzes, [id]: {
-            id: id,
-            questions: questions,
-            finishTime: finishTime,
-            quiz: quiz,
-            category: category,
-            completedOn: Date.now(),
-            score: score
-          }}
-          setContext(prev => prev, userData)
+          userData.participatedQuizzes = {
+            ...userData.participatedQuizzes,
+            [id]: {
+              id: id,
+              questions: questions,
+              finishTime: finishTime,
+              quiz: quiz,
+              category: category,
+              completedOn: Date.now(),
+              score: score,
+            },
+          };
+          setContext((prev) => prev, userData);
         }
         const quizTakerData = {
           questions: questions,
@@ -84,7 +88,7 @@ export default function Score({ questions, finishTime, quiz, category }) {
           firstName: userData.firstName,
           lastName: userData.lastName,
           completedOn: Date.now(),
-          avatar: userData.avatar
+          avatar: userData.avatar,
         };
         if (
           quiz.quizTakers &&
@@ -136,13 +140,19 @@ export default function Score({ questions, finishTime, quiz, category }) {
       <br />
       <div className=" w-2/4 bg-yellow-400 mx-auto min-w-lg rounded-xl p-8  shadow-neutral-500 shadow-inner">
         <h2 className="mb-6 mt-6 font-extrabold leading-none tracking-tight text-neutral-800 md:text-5xl lg:text-5xl">
-          Your score is {score} out of {questions.length * 10}
+          {userData && userData.role === "student"
+            ? `Your score is ${score} out of ${questions.length * 10}`
+            : `Total score: ${score} out of ${questions.length * 10} `}
         </h2>
         <h3 className="mb-6 mt-6 leading-none tracking-tight text-neutral-800 md:text-2xl lg:text-2xl">
           {Object.values(quiz).length !== 0 &&
             (scorePercent >= +quiz.passingScore
-              ? `Congratulations! You passed with a score of ${scorePercent}%.`
-              : `You did not pass with score of ${scorePercent}%. To pass, you need a minimum of ${quiz.passingScore}% correct answers.`)}
+              ? userData && userData.role === "student"
+                ? `Congratulations! You passed with a score of ${scorePercent}%.`
+                : "The participant has passed the quiz successfully!"
+              : userData && userData.role === "student"
+              ? `You did not pass with score of ${scorePercent}%. To pass, you need a minimum of ${quiz.passingScore}% correct answers.`
+              : "The participant didn't passed.")}
         </h3>
       </div>
       <br />
@@ -163,7 +173,9 @@ export default function Score({ questions, finishTime, quiz, category }) {
         data-te-ripple-color="light"
         className="mb-6 inline-block w-2/4  rounded-lg bg-neutral-800 px-6 pt-2.5 pb-2 text-sm font-medium uppercase leading-normal text-white shadow-lg transition duration-150 ease-in-out hover:bg-neutral-900 hover:shadow-neutral-500 focus:outline-none focus:ring-0 active:bg-neutral-700"
       >
-        View Your Answers
+        {userData && userData.role === "student"
+          ? "View Your Answers"
+          : "Review Answers"}
       </button>
       {showAnswers &&
         questions.map((q, index) => (

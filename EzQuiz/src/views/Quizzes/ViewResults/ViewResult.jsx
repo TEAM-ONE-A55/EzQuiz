@@ -1,13 +1,26 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router";
 import { getQuizById } from "../../../services/quiz.service";
 import Button from "../../../components/Button/Button";
+import { AppContext } from "../../../context/AppContext";
 
 export default function ViewResults() {
   const { id } = useParams();
   const [quiz, setQuiz] = useState([]);
   const [quizTakers, setQuizTakers] = useState([]);
   const [takersSet, setTakersSet] = useState(false);
+  const { userData } = useContext(AppContext);
+
+  const seeResults = (taker) => {    
+    const state = {
+      resFinishTime: taker.finishTime,
+      resCategory: taker.category,
+      resQuiz: taker.quiz,
+      resQuestions: taker.questions,
+      
+    };
+    navigate(`/single-quiz/${id}`, { state });
+  };
 
   const navigate = useNavigate();
 
@@ -75,6 +88,11 @@ export default function ViewResults() {
             <th scope="col" className="px-6 py-4">
               Best Time
             </th>
+            {userData && userData.handle === quiz.creator && (
+              <th scope="col" className="px-6 py-4">
+                Results
+              </th>
+            )}
           </tr>
         </thead>
         <tbody>
@@ -89,8 +107,9 @@ export default function ViewResults() {
               })
               .map((taker, index) => {
                 return (
-                  <tr key={taker.handle}
-                  className="border-b transition duration-300 ease-in-out hover:bg-neutral-100"
+                  <tr
+                    key={taker.handle}
+                    className="border-b transition duration-300 ease-in-out hover:bg-neutral-100"
                   >
                     <td className="whitespace-nowrap py-4 px-6">
                       # {index + 1}{" "}
@@ -118,6 +137,17 @@ export default function ViewResults() {
                     <td className="whitespace-nowrap py-4 px-6">
                       {showBestTime(taker.finishTime)}{" "}
                     </td>
+                    {userData && userData.handle === quiz.creator && (
+                      <td className="max-w-[250px] text-center items-center mt-1.5 mr-4">
+                        <button
+                          type="button"
+                          className="rounded bg-neutral-700 pb-1 pt-1.5 px-2 text-[10px] font-medium uppercase text-neutral-50 transition duration-75 ease-in-out hover:bg-neutral-800"
+                          onClick={() => seeResults(taker)}
+                        >
+                          View Results
+                        </button>
+                      </td>
+                    )}
                   </tr>
                 );
               })}

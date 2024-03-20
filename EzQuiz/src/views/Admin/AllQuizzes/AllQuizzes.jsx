@@ -70,7 +70,6 @@ export default function AllQuizzes() {
   };
 
   const navigate = useNavigate();
-  console.log(quizSortBy);
 
   useEffect(() => {
     try {
