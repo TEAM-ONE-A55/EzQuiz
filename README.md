@@ -1,77 +1,110 @@
-## EzQuiz React Project
+# Forum Web Application - EzQuiz
 
-EzQuiz is an innovative platform designed for creating, sharing, and participating in quizzes. It is a comprehensive solution for educators, recruiters, and enthusiasts to craft quizzes tailored to their needs. The platform has features like public and private quiz settings, a searchable quiz database, and a scoreboard for participant rankings.
+EzQuiz is a forum web application built with React.js for the frontend and Firebase for authentication and database management. The application enables educators to create, share, and participate in quizzes, fostering collaboration and learning in an interactive environment.
 
-## Project Description
+## Features
 
-The application has two main parts:
-
-1. **Organizational**: Here, educators can create and manage quizzes.
-2. **For Students**: Everyone is welcome to register and participate in quizzes. Students can also be invited by educators to become educators.
-
-## Functional Requirements
-
-### Entities
-
-- **Authentication**: Handled by Firebase, no need for an auth entity.
-- **User**: Must have a username, email, phone number, and photo. Users should have a first name and a last name. Users can either be organizers or students.
-- **Quiz**: Must have an id, title, category, type of the quiz (open or invitational), a set of questions, options for answers, and a scoring mechanism.
-- **Scoreboard**: There could be scoreboards for users who completed quizzes in different categories.
-- **Search Functionality**: Feature to search available public quizzes by keywords, categories, or tags.
-- **Groups of Educators**: Educators should be able to participate in groups. Each educator has the right to modify tests made by educators from their group and is not able to modify tests made by educators outside their group.
-
-### Public Part
-
-- **Landing Page**: Showcases the latest quizzes or other compelling content.
-- **Login Form**: Allows users to log in with their username and password.
-- **Register Form**: Registers users as Educators or Students. Requires username, first name, last name, and password.
-- **Quiz Browsing**: Allows anonymous users to browse and search for public quizzes.
+- **User Authentication**: Secure registration, login, and logout using Firebase authentication.
+- **Quiz Creation and Management**: Educators can create quizzes, edit their own quizzes, and delete them. Quizzes can be tailored with various question types and scoring mechanisms.
+- **Participant Interaction**: Students can participate in quizzes, view ongoing and finished quizzes, and see their results on scoreboards.
+- **Group Functionality**: Educators can collaborate in groups to modify quizzes created by fellow educators within the same group.
+- **Quiz Browsing**: Users can browse and search for public quizzes based on keywords, categories, or tags.
 - **Sample Quiz**: Feature for users to try out a sample quiz without registering.
 
-### Private Part
+## Installation
 
-Accessible only to authenticated users.
+1. Clone the repository:
+   ```bash
+   git clone <repository-url>
+2. Navigate into the project directory:
+   ```bash
+   cd EzQuiz
+3. Install dependencies:
+   ```bash
+   npm install
+4. Create a Firebase project and set up authentication and Firestore database.
+5. Copy the Firebase configuration and paste it in src/config/firebase-config.js.
+6. Start the development server: 
+    ```bash
+   npm run dev
+7. Open your browser and navigate to http://localhost:5173/ to view the application.
 
-#### For Educators:
+## Scheme (structure) of the documents in the database
+```js 
 
-- **Create Quiz**: Ability to set up a new quiz with custom questions and answers.
-- **Quiz Management**: Manage quizzes including editing or deleting them.
-- **Invite Students**: Ability to invite students to take quizzes.
-- **View Quizzes**: View ongoing and finished quizzes.
+{
+  groups: {
+   - "NtQVJXJZX0L3QH3oCXo": {
+      creator: "edu"
+      description: "Uniting JavaScript wizards to share, quiz, and code with a sprinkle of magic!"
+      image_cover: "https://firebasestorage.googleapis.com/v0/b/ezquiz-b7ac8.appspot.com/o/groups%2Fce806ab8-e3e9-4cbe-9351-81214a6d099c%2F1702904627069.png874f1752-0873-496d-a8eb-e540f33096c0?alt=media&token=5a646977-e50b-4188-9d9e-a26ac0597016"
+      name: "JS Masters"
+      participants: {
+         ariaofficial: "pending"
+      }
+      quizzes: {
+         -NtQUqzgxG3litImegdV: "NtQUqzgxG3litImegdV"
+      }
+      uuid: "ce806ab8-e3e9-4cbe-9351-81214a6d099c"
+   }
+  }
+  quizzes: {
+   - "NtQUqzgxG3litImegdV" : {
+      category: 18,
+      creator: "edu",
+      creatorAvatar: "https://f4.bcbits.com/img/0031181820_25.jpg",
+      difficulty: "Easy",
+      endDate: "2024-03-31",
+      id: "NtQUqzgxG3litImegdV",
+      passingScore: "60",
+      questions: {}
+      quizTakers: {}
+      startDate: "2024-03-20",
+      timeLimit: "20",
+      title: "JS Noobs Quiz",
+      visibility: "Public"
+   }
+  }
+  rooms: {
+   - "-NtQYs6lRQrR0w1xQksN" : {
+      creator: "edu",
+      image_cover: "",
+      name: "Star Wars Quizzes",
+      participants: {},
+      quizzes: {},
+      uuid: "-92560413-b4d0-4d3c-84ee-6cf4d1a9b48e"
+   }
+  }
+  users: {
+   - "ariaofficial": {
+      address: "Sofia",
+      avatar: "",
+      blocked: false,
+      createdOn: 1710923527551,
+      email: "aria@gmail.com",
+      firstName: "Maria",
+      handle: "ariaofficial",
+      isAdmin: "false",
+      lastName: "Tsvetkova",
+      phoneNumber: "0877701621"
+      role: "educator",
+      uid: "KmjIkVyz4VbLJBjqt9TbrcgaFi32"
+   }
+  }
+} 
+```
 
-#### For Students:
+## Usage
 
-- **View Active Quizzes**: See active quizzes available for participation.
-- **View Participation**: View quizzes the student is currently participating in.
-- **View Scoreboards**: View scoreboards of quizzes they participated in.
+- Register or login to access the platform.
+- Educators can create quizzes, manage their quizzes, and invite students to participate.
+- Students can participate in quizzes, view scoreboards, and engage in learning activities.
+- Explore different quizzes and categories available on the platform.
 
-#### Profile Editing
 
-All users must be able to see and edit their profile information but cannot change their username.
+## Contributing
 
-#### Quiz Requirements
-
-- **Quiz Participation**: Users can participate in multiple quizzes and see their results on respective scoreboards.
-- **Invitation Acceptance**: Users can accept or reject invitations to private quizzes.
-- **Quiz Settings**: Creators can set time limits, question order randomization, and passing scores for their quizzes.
-
-### Administrative Part
-
-Accessible to users with administrative rights.
-
-- **User Management**: Admins can search for users, block/unblock users.
-- **Quiz Management**: Admins can edit or delete any quiz.
-- **Scoreboard Moderation**: Admins can oversee scoreboards for tests and address discrepancies.
-
-### Educator Groups
-
-Educators should be separated into groups. Educators in the same group can edit or delete any quiz created by someone on their team.
-
-## Setup
-
-1. Clone the repository.
-2. Install dependencies: `npm install`.
-3. Start the development server: `npm start`.
+Contributions are welcome! Please fork the repository and submit a pull request for any enhancements or bug fixes.
 
 ## Technologies Used
 
