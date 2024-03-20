@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import { getAllUsers } from "../../services/user.service";
 import { useNavigate } from "react-router";
-import SortingDropdown from "../Dropdown/Dropdown";
 import { getAllHubs } from "../../services/hub.service";
 import { searchingOptions } from "../../constants/constants";
 import { reactSelectStyles } from "../../services/react-select-styles";
@@ -38,13 +37,14 @@ export default function Search() {
       .then((users) => setUsers(users));
   }, [search]);
 
+
   const handleSearchChange = (search) => {
     setSearch(search);
   };
 
-  const handleSearchTermChange = (term) => {
-    setSearchTerm(term);
-  };
+  // const handleSearchTermChange = (term) => {
+  //   setSearchTerm(term);
+  // };
 
   const navigate = useNavigate();
 

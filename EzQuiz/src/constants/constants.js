@@ -57,7 +57,7 @@ export const navigationAdmin = [
   { name: "Dashboard", href: "/dashboard-admin", current: false },
   { name: "Browse Quizzes", href: "/browse-quizzes", current: false },
   { name: "Sample Quiz", href: "/sample-quiz", current: false },
-  { name: "Search", href: "/search", current: false },
+  // { name: "Search", href: "/search", current: false },
 ];
 
 export const navigationLogout = [
