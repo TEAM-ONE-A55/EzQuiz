@@ -59,7 +59,7 @@ export default function ChangeCover({
       />
       {!attachedImg && (
         <label
-          className="inline-block w-11/12 rounded-lg bg-neutral-800 px-6 pt-2.5 pb-2 text-sm font-medium uppercase leading-normal text-white shadow-lg transition duration-150 ease-in-out hover:bg-neutral-900 hover:shadow-neutral-500 focus:outline-none focus:ring-0 active:bg-neutral-700"
+          className="inline-block rounded-lg cursor-pointer absolute z-10 w- bg-neutral-800 px-6 pt-2.5 pb-2 text-sm font-medium uppercase leading-normal text-white shadow-lg transition duration-75 ease-in-out hover:bg-neutral-900"
           data-te-ripple-init
           data-te-ripple-color="light"
           htmlFor="upload-image-input"
@@ -67,7 +67,6 @@ export default function ChangeCover({
           Upload Image
         </label>
       )}
-      {loading && <Loader />}
       <div className="attached-hub-image-container">
         {imageUrl && (
           <img
@@ -82,7 +81,7 @@ export default function ChangeCover({
             onClick={removeAttachedImg}
             data-te-ripple-init
             data-te-ripple-color="light"
-            className="hub-image-button inline-block rounded-lg bg-yellow-400 px-6 pt-2.5 pb-2 text-sm font-bold uppercase leading-normal text-neutral-900 shadow-lg  shadow-neutral-900 transition duration-150 ease-in-out  focus:outline-none focus:ring-0"
+            className="hub-image-button inline-block rounded-lg cursor-pointer absolute z-10 w- bg-neutral-800 px-6 pt-2.5 pb-2 text-sm font-medium uppercase leading-normal text-white shadow-lg transition duration-75 ease-in-out hover:bg-neutral-900"
           >
             Remove
           </button>

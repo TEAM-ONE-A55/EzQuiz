@@ -124,7 +124,7 @@ export default function CreateGroup() {
 
   return (
     <div className=" w-3/5 mx-auto mt-8">
-      <h2 className="font-extrabold leading-none tracking-tight text-neutral-800 md:text-4xl lg:text-4xl">
+      <h2 className="font-extrabold leading-none tracking-tighter text-neutral-800 md:text-4xl lg:text-4xl">
         Create exclusive{" "}
         <span className="text-yellow-400">educator groups</span> for
         collaborative{" "}
@@ -152,7 +152,7 @@ export default function CreateGroup() {
                 onClick={() => setChangeCover(true)}
                 data-te-ripple-init
                 data-te-ripple-color="light"
-                className="hub-image-button  inline-block w-2/6  rounded-lg bg-yellow-400 px-6 pt-2.5 pb-2 text-sm font-bold uppercase leading-normal text-neutral-900 shadow-lg  shadow-neutral-900 transition duration-150 ease-in-out  focus:outline-none focus:ring-0"
+                className="hub-image-button  inline-block w-2/6  rounded-lg bg-yellow-400 px-6 pt-2.5 pb-2 text-sm font-medium uppercase leading-normal text-neutral-900 shadow-lg  shadow-neutral-900 transition duration-75 ease-in-out hover:bg-yellow-500"
               >
                 Change Cover
               </button>
@@ -174,7 +174,7 @@ export default function CreateGroup() {
               Set Group name:
             </p>
             <input
-              className="pl-3 outline-none border-none2 rounded-md p-2 w-full focus:border-blue-500 transition duration-300 ease-in-out shadow-lg shadow-neutral-400 mt-4"
+              className="pl-3 outline-none border-none2 rounded-md p-2 w-full transition duration-75 ease-in-out shadow-lg shadow-neutral-400 mt-4"
               type="text"
               placeholder="Add group name..."
               value={group.name}
@@ -187,7 +187,7 @@ export default function CreateGroup() {
               Write a short description:
             </p>
             <input
-              className="pl-3 outline-none border-none2 rounded-md p-2 w-full focus:border-blue-500 transition duration-300 ease-in-out shadow-lg shadow-neutral-400 mt-4"
+              className="pl-3 outline-none border-none2 rounded-md p-2 w-full transition duration-75 ease-in-out shadow-lg shadow-neutral-400 mt-4"
               type="text"
               placeholder="Write a short description of the group..."
               value={group.description}
@@ -223,7 +223,7 @@ export default function CreateGroup() {
               onClick={handleCreateGroup}
               data-te-ripple-init
               data-te-ripple-color="light"
-              className="mb-6 inline-block w-2/6 ml-5 mt-3 rounded-lg bg-yellow-400 px-6 pt-2.5 pb-2 text-sm font-bold uppercase leading-normal text-neutral-900 shadow-lg  shadow-neutral-400 transition duration-150 ease-in-out  focus:outline-none focus:ring-0"
+              className="mb-6 inline-block w-2/6 ml-5 mt-3 rounded-lg bg-yellow-400 px-6 pt-2.5 pb-2 text-sm font-medium uppercase leading-normal text-neutral-900 shadow-lg hover:bg-yellow-500 transition duration-75 ease-in-out"
             >
               Create Group
             </button>
@@ -235,7 +235,7 @@ export default function CreateGroup() {
               }}
               data-te-ripple-init
               data-te-ripple-color="light"
-              className="mb-6 inline-block w-2/6 ml-5 rounded-lg bg-neutral-900 px-6 pt-2.5 pb-2 text-sm font-medium uppercase leading-normal text-white shadow-lg shadow-neutral-400 transition duration-150 ease-in-out  focus:outline-none focus:ring-0"
+              className="mb-6 inline-block w-2/6 ml-5 rounded-lg bg-neutral-800 hover:bg-neutral-900 px-6 pt-2.5 pb-2 text-sm font-medium uppercase leading-normal text-white shadow-lg shadow-neutral-400 transition duration-75 ease-in-out"
             >
               Reset Settings
             </button>
