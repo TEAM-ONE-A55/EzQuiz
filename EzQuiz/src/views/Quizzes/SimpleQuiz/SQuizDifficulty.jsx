@@ -1,17 +1,17 @@
 import PropTypes from 'prop-types'
 
 export default function SQuizDifficulty({ difficulty }) {
-    if (difficulty === 'easy') {
+    if (difficulty.toLowerCase() === 'easy') {
         return (
-            <p className="text-white bg-green-400 text-xs px-1 py-0.5 rounded mt-1">Easy</p>
+            <p className=" bg-green-400 text-xs uppercase text-white font-medium px-1 py-0.5 rounded mt-1">Easy</p>
         )
-    } else if (difficulty === 'medium') {
+    } else if (difficulty.toLowerCase() === 'medium') {
         return (
-            <p className="text-white bg-yellow-400 text-xs px-1 py-0.5 rounded mt-1">Medium</p>
+            <p className=" bg-yellow-400 text-xs uppercase text-white font-medium px-1 py-0.5 rounded mt-1">Medium</p>
         )
-    } else if (difficulty === 'hard') {
+    } else if (difficulty.toLowerCase() === 'hard') {
         return (
-            <p className="text-white bg-red-400 text-xs px-1 py-0.5 rounded mt-1">Hard</p>
+            <p className=" bg-red-400 text-xs px-1 uppercase text-white font-medium py-0.5 rounded mt-1">Hard</p>
         )
     }
 }
