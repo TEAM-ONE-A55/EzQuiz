@@ -97,7 +97,6 @@ export const handleQuizChange = (quiz, setQuiz, key, value, indexQ = 0, indexO =
       [key]: value,
     });
   }
-  console.log(quiz);
 };
 
 export const addQuestion = (quiz, setQuiz) => {

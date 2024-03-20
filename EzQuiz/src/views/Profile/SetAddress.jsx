@@ -4,7 +4,6 @@ import { updateUserData } from "../../services/user.service";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPen, faTrash, faMapPin } from "@fortawesome/free-solid-svg-icons";
 import toast from "react-hot-toast";
-import Button from "../../components/Button/Button";
 
 export default function SetAddress() {
   const [address, setAddress] = useState(null);

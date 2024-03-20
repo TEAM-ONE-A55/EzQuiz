@@ -3,12 +3,12 @@ import { useEffect, useState } from "react";
 import { deleteHub } from "../../../services/hub.service";
 import toast from "react-hot-toast";
 import "./AllGroups.css";
-import React from "react";
 import { useNavigate } from "react-router";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPen } from "@fortawesome/free-solid-svg-icons";
 import { ref, update } from "firebase/database";
 import { db } from "../../../config/firebase.config";
+import { updateUserData } from "../../../services/user.service";
+import { deleteCoverImage } from "../../../services/storage.service";
+import { defaultCoverGroup } from "../../../constants/constants";
 
 export default function AllGroups() {
   const [groups, setGroups] = useState([]);
@@ -49,13 +49,23 @@ export default function AllGroups() {
     setEditing(false);
   };
 
-  const removeGroup = async (id) => {
+  const removeGroup = async (group) => {
     try {
-      await deleteHub("groups", id);
-      setGroups(groups.filter((group) => group.id !== id));
-      toast.success(`Group ${id} has been deleted`);
+      if (group.participants) {
+        const participants = Object.keys(group.participants);
+        participants.map(async (p) => {
+          await updateUserData(p, "groups", group.id);
+        });
+      }
+
+      if (group.image_cover !== defaultCoverGroup) {
+        await deleteCoverImage("groups", group.uuid);
+      }
+      await deleteHub("groups", group.id);
+      setGroups(groups.filter((g) => g.id !== group.id));
+      toast.success(`Group ${group.name} has been deleted`);
     } catch (error) {
-      toast.error(`Could not delete group ${id}`);
+      toast.error(`Could not delete group ${group.name}`);
     }
   };
 
@@ -63,6 +73,7 @@ export default function AllGroups() {
 
   useEffect(() => {
     getAllGroups();
+    console.log("render");
   }, []);
 
   useEffect(() => {
@@ -70,27 +81,27 @@ export default function AllGroups() {
   }, [editing]);
 
   return (
-    <div>
-      <h1>All Groups</h1>
-      <h2>Total Groups: {groups.length}</h2>
-      <div className="flex justify-center">
-        <div className="mb-3 xl:w-96">
-          <input
-            type="search"
-            onChange={(e) => setSearchTerm(e.target.value)}
-            className="relative m-0 block w-full min-w-0 flex-auto rounded border border-solid border-neutral-300 bg-transparent bg-clip-padding px-3 py-[0.25rem] text-base font-normal leading-[1.6] text-black outline-none transition duration-200 ease-in-out focus:z-[3] focus:border-primary focus:text-neutral-700 focus:shadow-neutral-600 focus:outline-none"
-            id="exampleSearch"
-            placeholder="Search groups..."
-          />
-        </div>
+    <div className="mt-8 max-w-[1350px] mx-auto">
+      <div className="mb-6 mx-auto w-4/5 rounded-xl p-8 bg-neutral-200 shadow-neutral-400 shadow-inner text-neutral-800 font-bold">
+        <h2 className="text-4xl text-neutral-800 ">All Groups</h2>
       </div>
-      <br />
-      <br />
-      <table className="min-w-full text-left text-sm font-light">
-        <thead className="border-b font-medium dark:border-neutral-500">
+      <h2 className="text-xl text-neutral-600 mb-4 -mt-2 ">
+        Total Groups: {groups.length}
+      </h2>
+      <div className="mx-auto w-4/5 flex flex-row">
+        <input
+          type="search"
+          onChange={(e) => setSearchTerm(e.target.value)}
+          className="pl-3 mr-2 h-[38px] outline-none border-none rounded-[4px] p-2 w-full transition duration-75 ease-in-out shadow-lg shadow-neutral-200"
+          id="exampleSearch"
+          placeholder="Search groups..."
+        />
+      </div>
+      <table className="mt-10 mx-auto text-center text-sm font-light min-w-[1300px]">
+        <thead className="border-b bg-neutral-50 font-medium border-neutral-300">
           <tr>
             <th scope="col" className="px-6 py-4">
-              Group name
+              Group Name
             </th>
             <th scope="col" className="px-6 py-4">
               Participants
@@ -98,9 +109,15 @@ export default function AllGroups() {
             <th scope="col" className="px-6 py-4">
               Creator
             </th>
+            <th scope="col" className="px-6 py-4">
+              Total Quizzes
+            </th>
+            <th scope="col" className="px-6 py-4">
+              Action
+            </th>
           </tr>
         </thead>
-        <tbody>
+        <tbody className="">
           {groups
             .filter((group) =>
               group.name.toLowerCase().includes(searchTerm.toLowerCase())
@@ -108,55 +125,69 @@ export default function AllGroups() {
             .map((group) => (
               <tr
                 key={group.id}
-                className="border-b transition duration-300 ease-in-out hover:bg-neutral-100 dark:border-neutral-500 dark:hover:bg-neutral-600"
+                className="border-b transition duration-75 ease-in-out hover:bg-neutral-100 border h-[80px] text-center items-center"
               >
                 {editing && groupEditId === group.id ? (
-                  <div>
-                    <input
-                      type="text"
-                      value={groupName}
-                      onChange={handleChange}
-                    />
+                  <td className="max-w-[250px] text-center items-center mt-1.5 mr-4">
+                    <span>
+                      <input
+                        className="w-[200px] px-3 py-2 text-[12px] outline-none border-none rounded-md transition duration-75"
+                        type="text"
+                        value={groupName}
+                        placeholder="Change name..."
+                        onChange={{ handleChange }}
+                      />
+                    </span>
+                    <span className="w-[100px]">
+                      <button
+                        type="button"
+                        className=" mx-[4px] w-[80px] rounded bg-neutral-700 pb-1 pt-1.5 px-2 text-[10px] font-medium uppercase text-neutral-50 transition duration-75 ease-in-out hover:bg-neutral-800"
+                        onClick={() => handleSave(group, groupName)}
+                      >
+                        Save
+                      </button>
+                    </span>
                     <button
-                      className="hover:cursor-pointer inline-block rounded bg-neutral-800 px-6 pb-2 pt-2.5 text-xs font-medium uppercase leading-normal text-neutral-50 shadow-[0_4px_9px_-4px_rgba(51,45,45,0.7)] transition duration-150 ease-in-out hover:bg-neutral-800 hover:shadow-[0_8px_9px_-4px_rgba(51,45,45,0.2),0_4px_18px_0_rgba(51,45,45,0.1)] focus:bg-neutral-800 focus:shadow-[0_8px_9px_-4px_rgba(51,45,45,0.2),0_4px_18px_0_rgba(51,45,45,0.1)] focus:outline-none focus:ring-0 active:bg-neutral-900 active:shadow-[0_8px_9px_-4px_rgba(51,45,45,0.2),0_4px_18px_0_rgba(51,45,45,0.1)] dark:bg-neutral-900 dark:shadow-[0_4px_9px_-4px_#030202] dark:hover:bg-neutral-900 dark:hover:shadow-[0_8px_9px_-4px_rgba(3,2,2,0.3),0_4px_18px_0_rgba(3,2,2,0.2)] dark:focus:bg-neutral-900 dark:focus:shadow-[0_8px_9px_-4px_rgba(3,2,2,0.3),0_4px_18px_0_rgba(3,2,2,0.2)] dark:active:bg-neutral-900 dark:active:shadow-[0_8px_9px_-4px_rgba(3,2,2,0.3),0_4px_18px_0_rgba(3,2,2,0.2)]"
-                      onClick={() => handleSave(group, groupName)}
-                    >
-                      Save
-                    </button>
-                    <button
-                      className="hover:cursor-pointer inline-block rounded bg-neutral-800 px-6 pb-2 pt-2.5 text-xs font-medium uppercase leading-normal text-neutral-50 shadow-[0_4px_9px_-4px_rgba(51,45,45,0.7)] transition duration-150 ease-in-out hover:bg-neutral-800 hover:shadow-[0_8px_9px_-4px_rgba(51,45,45,0.2),0_4px_18px_0_rgba(51,45,45,0.1)] focus:bg-neutral-800 focus:shadow-[0_8px_9px_-4px_rgba(51,45,45,0.2),0_4px_18px_0_rgba(51,45,45,0.1)] focus:outline-none focus:ring-0 active:bg-neutral-900 active:shadow-[0_8px_9px_-4px_rgba(51,45,45,0.2),0_4px_18px_0_rgba(51,45,45,0.1)] dark:bg-neutral-900 dark:shadow-[0_4px_9px_-4px_#030202] dark:hover:bg-neutral-900 dark:hover:shadow-[0_8px_9px_-4px_rgba(3,2,2,0.3),0_4px_18px_0_rgba(3,2,2,0.2)] dark:focus:bg-neutral-900 dark:focus:shadow-[0_8px_9px_-4px_rgba(3,2,2,0.3),0_4px_18px_0_rgba(3,2,2,0.2)] dark:active:bg-neutral-900 dark:active:shadow-[0_8px_9px_-4px_rgba(3,2,2,0.3),0_4px_18px_0_rgba(3,2,2,0.2)]"
+                      type="button"
+                      className="w-[80px] rounded bg-neutral-700 pb-1 pt-1.5 px-2 text-[10px] font-medium uppercase text-neutral-50 transition duration-75 ease-in-out hover:bg-neutral-800"
                       onClick={handleCancel}
                     >
                       Cancel
                     </button>
-                  </div>
-                ) : (
-                  <td className="whitespace-nowrap px-6 py-4">
-                    {group.name}{" "}
-                    <FontAwesomeIcon
-                      icon={faPen}
-                      onClick={() => handleEdit(group.id)}
-                      className=" hover:cursor-pointer"
-                    ></FontAwesomeIcon>
                   </td>
+                ) : (
+                  <td className="text-center align-middle">{group.name}</td>
                 )}
-                <td className="whitespace-nowrap px-6 py-4">
-                  {Object.keys(group.participants).length}
+                <td className="text-center align-middle">
+                  {group.participants
+                    ? Object.keys(group.participants).length
+                    : 0}
                 </td>
-                <td className="whitespace-nowrap px-6 py-4">
+                <td className="text-center align-middle">
                   <span
-                    className=" hover:cursor-pointer text-primary transition duration-150 ease-in-out hover:text-primary-600 focus:text-primary-600 active:text-primary-700 dark:text-primary-400 dark:hover:text-primary-500 dark:focus:text-primary-500 dark:active:text-primary-600"
+                    className="hover:cursor-pointer font-medium text-primary transition duration-150 ease-in-out hover:text-primary-600 focus:text-primary-600 active:text-primary-700"
                     onClick={() => navigate(`profile/${group.creator}`)}
                   >
                     {group.creator}
                   </span>
                 </td>
-                <td>
+                <td className="text-center align-middle">
+                  {group.quizzes ? Object.keys(group.quizzes).length : 0}
+                </td>
+                <td className="max-w-[250px] grid grid-rows-1 gap-1 text-center items-center mt-1.5 mr-4">
                   <button
-                    onClick={() => removeGroup(group.id)}
-                    className=" hover:cursor-pointer inline-block rounded bg-neutral-800 px-6 pb-2 pt-2.5 text-xs font-medium uppercase leading-normal text-neutral-50 shadow-[0_4px_9px_-4px_rgba(51,45,45,0.7)] transition duration-150 ease-in-out hover:bg-neutral-800 hover:shadow-[0_8px_9px_-4px_rgba(51,45,45,0.2),0_4px_18px_0_rgba(51,45,45,0.1)] focus:bg-neutral-800 focus:shadow-[0_8px_9px_-4px_rgba(51,45,45,0.2),0_4px_18px_0_rgba(51,45,45,0.1)] focus:outline-none focus:ring-0 active:bg-neutral-900 active:shadow-[0_8px_9px_-4px_rgba(51,45,45,0.2),0_4px_18px_0_rgba(51,45,45,0.1)] dark:bg-neutral-900 dark:shadow-[0_4px_9px_-4px_#030202] dark:hover:bg-neutral-900 dark:hover:shadow-[0_8px_9px_-4px_rgba(3,2,2,0.3),0_4px_18px_0_rgba(3,2,2,0.2)] dark:focus:bg-neutral-900 dark:focus:shadow-[0_8px_9px_-4px_rgba(3,2,2,0.3),0_4px_18px_0_rgba(3,2,2,0.2)] dark:active:bg-neutral-900 dark:active:shadow-[0_8px_9px_-4px_rgba(3,2,2,0.3),0_4px_18px_0_rgba(3,2,2,0.2)]"
+                    type="button"
+                    className="rounded bg-neutral-700 pb-1 pt-1.5 px-2 text-[10px] font-medium uppercase text-neutral-50 transition duration-75 ease-in-out hover:bg-neutral-800"
+                    onClick={() => removeGroup(group)}
                   >
                     Delete
+                  </button>
+                  <button
+                    type="button"
+                    className="rounded bg-neutral-700 pb-1 pt-1.5 px-2 text-[10px] font-medium uppercase text-neutral-50 transition duration-75 ease-in-out hover:bg-neutral-800"
+                    onClick={() => handleEdit(group.id)}
+                  >
+                    Edit Title
                   </button>
                 </td>
               </tr>

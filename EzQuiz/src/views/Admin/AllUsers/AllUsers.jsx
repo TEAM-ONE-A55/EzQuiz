@@ -102,7 +102,7 @@ export default function AllUsers() {
             </th>
           </tr>
         </thead>
-        <tbody className="">
+        <tbody>
           {users &&
             sortUsers(users, usersSortBy)
               .filter(
@@ -124,23 +124,24 @@ export default function AllUsers() {
                   className="border-b transition duration-75 ease-in-out hover:bg-neutral-100 border h-[80px] text-center items-center"
                 >
                   <td className=" pl-4">
-                      <img
-                        src={user.avatar}
-                        alt={user.handle}
-                        className="w-8 h-8 rounded-full mr-4 border-none shadow-neutral-600 shadow-sm"
-                      />
+                    <img
+                      src={user.avatar}
+                      alt={user.handle}
+                      className="w-8 h-8 rounded-full mr-4 border-none shadow-neutral-600 shadow-sm"
+                    />
                   </td>
                   <td className="text-center align-middle">
                     <span>
-                    <span className="">{user.handle}</span>
+                      <span
+                        className="hover:cursor-pointer font-medium text-primary transition duration-150 ease-in-out hover:text-primary-600 focus:text-primary-600 active:text-primary-700"
+                        onClick={() => navigate(`profile/${user.handle}`)}
+                      >
+                        {user.handle}
+                      </span>
                     </span>
                   </td>
-                  <td className="text-center align-middle">
-                    {user.firstName}
-                  </td>
-                  <td className="text-center align-middle">
-                    {user.lastName}
-                  </td>
+                  <td className="text-center align-middle">{user.firstName}</td>
+                  <td className="text-center align-middle">{user.lastName}</td>
                   <td className="text-center align-middle">{user.email}</td>
                   <td className="text-center align-middle">
                     {user.role === "admin" ? (

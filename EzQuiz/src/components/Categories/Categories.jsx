@@ -13,7 +13,7 @@ export default function Categories({ setCategory, initialValue = "" }) {
     .then((response) => response.json())
     .then((categories) => {
       setOptions(categories.trivia_categories.filter((c) => c.id !== 13))
-      setOption(categories.trivia_categories.find((c) => c.id === initialValue).name)
+      setOption(categories.trivia_categories.find((c) => c.id === initialValue)?.name)
     })
   }, [initialValue]);
 
