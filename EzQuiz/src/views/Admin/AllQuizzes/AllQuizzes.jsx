@@ -174,16 +174,17 @@ export default function AllQuizzes() {
                   </td>
                 )}
                 <td className="whitespace-nowrap px-6 py-4">
-                  {quiz.visibility === "private" ? (
+                  {console.log(quiz.visibility)}
+                  {quiz.visibility === "Private" ? (
                     <span className="text-red-600">Private</span>
                   ) : (
                     <span className="text-green-600">Public</span>
                   )}
                 </td>
                 <td className="whitespace-nowrap px-6 py-4">
-                  {quiz.difficulty === "easy" ? (
+                  {quiz.difficulty === "Easy" ? (
                     <span className="text-green-600">Easy</span>
-                  ) : quiz.difficulty === "medium" ? (
+                  ) : quiz.difficulty === "Medium" ? (
                     <span className="text-yellow-600">Medium</span>
                   ) : (
                     <span className="text-red-600">Hard</span>
