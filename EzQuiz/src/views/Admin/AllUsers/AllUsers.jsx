@@ -34,6 +34,7 @@ export default function AllUsers() {
 
   const removeUser = async (handle) => {
     try {
+      
       await deleteUser(handle);
       setUsers(users.filter((user) => user.handle !== handle));
       toast.success(`User ${handle} has been deleted`);
