@@ -29,7 +29,7 @@ import StudentsDashboard from "./views/StudentsDashboard/StudentsDashboard";
 import EducatorDashboard from "./views/EducatorDashboard/EducatorDashboard/EducatorDashboard";
 import NotFound from "./views/NotFound/NotFound";
 import Forbidden from "./views/Forbidden/Forbidden";
-import Search from "./components/Search/Search";
+// import Search from "./components/Search/Search";
 import PublicProfile from "./views/Public Profile/PublicProfile";
 import AllGroups from "./views/Admin/AllGroups/AllGroups";
 import AdminDashboard from "./views/Admin/AdminDashboard/AdminDashboard";
@@ -322,7 +322,7 @@ export default function App() {
                 </Authenticated>
               }
             ></Route>
-            <Route
+            {/* <Route
               path="/search"
               element={
                 <Authenticated>
@@ -335,7 +335,7 @@ export default function App() {
                   )}
                 </Authenticated>
               }
-            ></Route>
+            ></Route> */}
             <Route
               path="/profile/:handle"
               element={
