@@ -54,13 +54,14 @@ export default function AllGroups() {
       if (group.participants) {
         const participants = Object.keys(group.participants);
         participants.map(async (p) => {
-          await updateUserData(p, "groups", group.id);
+          await updateUserData(p, `groups/${group.id}`, null);
         });
       }
 
       if (group.image_cover !== defaultCoverGroup) {
         await deleteCoverImage("groups", group.uuid);
       }
+      await updateUserData(group.creator, `groups/${group.id}`, null);
       await deleteHub("groups", group.id);
       setGroups(groups.filter((g) => g.id !== group.id));
       toast.success(`Group ${group.name} has been deleted`);
@@ -94,6 +95,7 @@ export default function AllGroups() {
           className="pl-3 mr-2 h-[38px] outline-none border-none rounded-[4px] p-2 w-full transition duration-75 ease-in-out shadow-lg shadow-neutral-200"
           id="exampleSearch"
           placeholder="Search groups..."
+          value={searchTerm}
         />
       </div>
       <table className="mt-10 mx-auto text-center text-sm font-light min-w-[1300px]">
@@ -116,7 +118,7 @@ export default function AllGroups() {
             </th>
           </tr>
         </thead>
-        <tbody className="">
+        <tbody>
           {groups
             .filter((group) =>
               group.name.toLowerCase().includes(searchTerm.toLowerCase())
@@ -134,7 +136,7 @@ export default function AllGroups() {
                         type="text"
                         value={groupName}
                         placeholder="Change name..."
-                        onChange={{ handleChange }}
+                        onChange={(e) => handleChange(e)}
                       />
                     </span>
                     <span className="w-[100px]">

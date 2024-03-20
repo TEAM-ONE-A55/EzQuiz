@@ -76,7 +76,7 @@ export default function CreateRoom() {
           "pending"
         );
 
-        await updateUserData(userData.handle, `rooms/${id}`, room);
+        await updateUserData(userData.handle, `rooms/${id}`, id);
       }
       for (const quiz in selectedQuizzes) {
         await updateHub(
@@ -88,12 +88,12 @@ export default function CreateRoom() {
         );
       }
 
-      updateUserData(userData.handle, `rooms/${id}`, room);
+      updateUserData(userData.handle, `rooms/${id}`, id);
       toast.success("Your room has been successfully created!");
     } catch (e) {
       toast.error(e.message);
     } finally {
-      userData.rooms = { ...userData.rooms, [id]: room };
+      userData.rooms = { ...userData.rooms, [id]: id };
       setContext((prev) => prev, userData);
       reset();
     }

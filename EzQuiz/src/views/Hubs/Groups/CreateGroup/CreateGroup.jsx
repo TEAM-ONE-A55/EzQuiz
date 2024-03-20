@@ -95,13 +95,13 @@ export default function CreateGroup() {
         );
       }
 
-      await updateUserData(userData.handle, `groups/${id}`, group);
+      await updateUserData(userData.handle, `groups/${id}`, id);
 
       toast.success("Your group has been successfully created!");
     } catch (e) {
       toast.error(e.message);
     } finally {
-      userData.groups = { ...userData.groups, [id]: group };
+      userData.groups = { ...userData.groups, [id]: id };
       setContext((prev) => prev, userData);
       reset();
     }
