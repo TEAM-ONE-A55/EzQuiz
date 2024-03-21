@@ -9,7 +9,7 @@ export default function Dashboard({ children }) {
   return (
     <div>
       <div className="flex">
-        <div className="relative duration-200 flex flex-col bg-clip-border bg-neutral-900 text-neutral-100 h-[100vh] w-full max-w-[16rem] p-4 shadow-xl shadow-blue-gray-900/5">
+        <div className="relative duration-200 flex flex-col bg-clip-border bg-neutral-900 text-neutral-100 w-full max-w-[16rem] p-4 shadow-xl shadow-blue-gray-900/5">
           {user && userData && userData.role !== "admin" ? (
             <div className="">
               <NavLink

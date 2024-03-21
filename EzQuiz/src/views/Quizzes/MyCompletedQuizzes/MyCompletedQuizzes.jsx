@@ -54,7 +54,7 @@ export default function MyCompletedQuizzes() {
     <>
       {quizzes && quizzes.length !== 0 ? (
         <>
-          <div className="create-room-container w-3/5 mx-auto">
+          <div className="create-room-container w-3/5 mx-auto mt-16">
             <h2 className="mb-4 font-extrabold leading-none tracking-tight text-neutral-800 md:text-4xl lg:text-4xl">
               View completed quizzes and results
             </h2>

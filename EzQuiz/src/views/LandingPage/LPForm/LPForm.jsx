@@ -3,6 +3,7 @@ import { register } from "../../../services/register-validations";
 import { useState } from "react";
 import Select from "react-select";
 import { roles } from "../../../constants/constants";
+import { reactSelectStyles } from "../../../services/react-select-styles";
 
 export default function LPForm() {
   const [form, setForm] = useState({
@@ -149,19 +150,20 @@ export default function LPForm() {
 
       <div className="relative mb-6" data-te-input-wrapper-init>
         <br />
-        <p className="text-gray-500 dark:text-neutral-800 ">Select a role:</p>
+        <p className="text-gray-500 dark:text-neutral-800 ml-2">Select a role:</p>
 
         <Select
           name="roles"
           options={roles.map((role) => role)}
-          className="basic-select"
-          classNamePrefix="select"
           value={selectedRole}
           onChange={handleSelectedOptionsUsers}
           placeholder={selectedRole.label}
           hideSelectedOptions={true}
+          className="basic-multi-select w-full mx-auto"
+          styles={reactSelectStyles}
         />
         <br />
+        <br />  
         {form.role === "educator" && (
           <div className="relative mb-6" data-te-input-wrapper-init>
             <input
@@ -184,7 +186,7 @@ export default function LPForm() {
         )}
       </div>
 
-      <div className="mb-6 flex min-h-[1.5rem] justify-center pl-[1.5rem] font-sans"></div>
+      <div className="flex min-h-[1.5rem] justify-center pl-[1.5rem] font-sans"></div>
       <button
         type="button"
         onClick={() => {
@@ -193,7 +195,7 @@ export default function LPForm() {
         }}
         data-te-ripple-init
         data-te-ripple-color="light"
-        className="mb-6 inline-block w-full rounded bg-neutral-800 px-6 pt-2.5 pb-2 text-sm font-medium uppercase leading-normal text-white shadow-lg transition duration-150 ease-in-out hover:bg-neutral-900 hover:shadow-neutral-500 focus:outline-none focus:ring-0 active:bg-neutral-700"
+        className="inline-block w-full rounded bg-neutral-800 px-6 pt-2.5 pb-2 text-sm font-medium uppercase leading-normal text-white shadow-lg transition duration-150 ease-in-out hover:bg-neutral-900 hover:shadow-neutral-500 focus:outline-none focus:ring-0 active:bg-neutral-700"
       >
         Sign up
       </button>

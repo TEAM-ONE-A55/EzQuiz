@@ -424,7 +424,6 @@ export default function App() {
               }
             />
           </Routes>
-          <Footer />
         </AppContext.Provider>
       </BrowserRouter>
     </div>

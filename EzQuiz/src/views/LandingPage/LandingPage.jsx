@@ -48,7 +48,7 @@ export default function LandingPage() {
               </div>
             </div>
           </div>
-          <Benefits heading="Why is so great?">
+          <Benefits heading="Why EzQuiz?">
             <BenefitSimple
               iconPath={
                 <path
@@ -110,15 +110,7 @@ export default function LandingPage() {
               text="Track your performance over time and stay motivated by monitoring your progress and seeing how you improve with each quiz you take."
             />
           </Benefits>
-          <Benefits heading="Ready to try? Start with a sample quiz now!">
-            <br />
-            <div className="w-2/4 mx-auto">
-              <Button onClick={() => navigate("/sample-quiz")}>
-                Get Started
-              </Button>
-            </div>
-          </Benefits>
-
+          
           <ButtonLanding
             onClick={() => setSeeEducatorBenefits(!seeEducatorBenefits)}
           >
