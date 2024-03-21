@@ -22,9 +22,12 @@ export default function Score({ questions, finishTime, quiz, category }) {
   }, []);
 
   useEffect(() => {
+    let currScore = 0
     if (user && userData && userData.role === "student") {
       if (userData.score) {
-        updateUserData(userData.handle, "score", (userData.score += +score));
+        currScore = +userData.score
+        
+        updateUserData(userData.handle, "score", (currScore += +score));
       } else {
         updateUserData(userData.handle, "score", +score);
       }
@@ -50,7 +53,7 @@ export default function Score({ questions, finishTime, quiz, category }) {
               quiz: quiz,
               category: category,
               completedOn: Date.now(),
-              score: score,
+              score: +score,
             },
           };
           setContext((prev) => prev, userData);
@@ -62,7 +65,7 @@ export default function Score({ questions, finishTime, quiz, category }) {
             quiz: quiz,
             category: category,
             completedOn: Date.now(),
-            score: score,
+            score: +score,
           });
           userData.participatedQuizzes = {
             ...userData.participatedQuizzes,
@@ -73,7 +76,7 @@ export default function Score({ questions, finishTime, quiz, category }) {
               quiz: quiz,
               category: category,
               completedOn: Date.now(),
-              score: score,
+              score: +score,
             },
           };
           setContext((prev) => prev, userData);
@@ -83,7 +86,7 @@ export default function Score({ questions, finishTime, quiz, category }) {
           finishTime: finishTime,
           quiz: quiz,
           category: category,
-          score: score,
+          score: +score,
           handle: userData.handle,
           firstName: userData.firstName,
           lastName: userData.lastName,
