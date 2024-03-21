@@ -1,0 +1,22 @@
+{
+  "rules": {
+    ".read": true,
+    ".write": true,
+    "users": {
+      ".indexOn": ["uid", "email"]
+    },
+    "admins": {
+        ".indexOn": "uid"
+    },
+    "quizzes": {
+      ".indexOn": ["creator", "createdOn", "createdBy", "assignedTo", "id"]
+    },
+    "rooms": {
+      ".indexOn": ["uid", "creator"]
+    },
+      
+    "groups": {
+      ".indexOn": ["uid", "creator"]
+    }
+  }
+}
