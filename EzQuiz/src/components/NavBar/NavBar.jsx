@@ -231,7 +231,7 @@ export default function NavBar({ notifications, setNotifications }) {
                 </div>
               ) : (
                 <button 
-                className="inline-block w-36 rounded bg-yellow-400 px-6 pt-2.5 pb-2 text-sm font-medium uppercase leading-normal text-neutral-900 transition duration-75 ease-in-out hover:bg-yellow-500"
+                className="inline-block w-36 rounded bg-yellow-400 px-6 pt-2.5 pb-2 text-base font-medium uppercase leading-normal text-neutral-900 transition duration-75 ease-in-out hover:bg-yellow-500"
                 onClick={() => navigate("/signin")}>Sign in</button>
               )}
             </div>
