@@ -121,10 +121,10 @@ Contributions are welcome! Please fork the repository and submit a pull request 
 
 ### Test Accounts:
 - Student: 
-  - email: student@test.com
+  - email: nerd@gmail.com
   - pass: 123456
 - Educator: 
-  - email: edu@test.com
+  - email: edu@gmail.com
   - pass: 123456
 - Admin:
   - email: boss@admin.com
