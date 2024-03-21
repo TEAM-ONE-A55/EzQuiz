@@ -49,7 +49,7 @@ export default function MyCompletedQuizzes() {
       navigate(`/single-quiz/${id}`, { state });
     }
   };
-  console.log(scoreData);
+  
   return (
     <>
       {quizzes && quizzes.length !== 0 ? (

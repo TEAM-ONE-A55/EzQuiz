@@ -69,7 +69,6 @@ export default function MyQuizzes() {
           userData &&
           userData.participatedQuizzes
         ) {
-          console.log(allQuizzes);
           const filtered = allQuizzes.filter((quiz) => 
             !Object.keys(userData.participatedQuizzes).includes(quiz.id)
           );

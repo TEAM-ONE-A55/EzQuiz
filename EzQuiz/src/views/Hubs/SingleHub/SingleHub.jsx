@@ -203,7 +203,6 @@ export default function SingleHub({
           }
         });
       }
-      console.log(room.participants);
 
       if (coverUrl !== defaultCoverRoom) {
         const coverImage = await getCoverImage(hubType, uuid);
